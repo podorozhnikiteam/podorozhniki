@@ -1,4 +1,4 @@
 podorozhniki
 ============
 
-This is automation testing project for Podorozhniki
+This is test automation for Podorozhniki project.
