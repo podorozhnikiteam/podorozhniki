@@ -14,7 +14,7 @@ public class Driver {
 
     private Driver() {}
 
-    public static void setDriver(WebDriver driverInput) {
+    public static void set(WebDriver driverInput) {
         driver = driverInput;
     }
 
