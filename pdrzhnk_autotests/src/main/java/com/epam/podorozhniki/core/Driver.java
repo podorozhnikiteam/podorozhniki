@@ -26,4 +26,9 @@ public class Driver {
     public static void tearDown() {
         getInstance().quit();
     }
+    
+    public static void main(String[] args) { 
+    	System.out.println("Hello world ");
+    } 
 }
+ 
