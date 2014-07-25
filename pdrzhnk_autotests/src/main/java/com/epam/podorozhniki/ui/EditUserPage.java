@@ -32,7 +32,7 @@ public class EditUserPage {
     @FindBy(id = "skype")
     private WebElement skypeField;
 
-    @FindBy(xpath = ".//*[@id='edit_profile']/fieldset/div[8]/a")
+    @FindBy(xpath = "//a[text()='Add']")
     private WebElement addSocialNetworkButton;
 
     @FindBy(id = "project")
@@ -41,9 +41,15 @@ public class EditUserPage {
     @FindBy(id = "additionalInfo")
     private WebElement additionalInforField;
 
-    @FindBy(xpath = ".//*[@id='edit_profile']/fieldset/div[13]/div/button[1]")
+    @FindBy(xpath = ".//button[text()='Confirm changes']")
     private WebElement confirmChangesButton;
 
-    @FindBy(xpath = ".//*[@id='edit_profile']/fieldset/div[13]/div/button[2]")
+    @FindBy(xpath = ".//button[text()='Cancel']")
     private WebElement cancelButton;
+
+    @FindBy(xpath = "html/body/div[1]/div[3]/div/div[2]/div/a")
+    private WebElement registerNewCarButton;
+
+    @FindBy(xpath = "//td/a[text()='Edit']")
+    private WebElement editCarButton;
 }
