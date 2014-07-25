@@ -41,13 +41,13 @@ public class EditUserPage {
     @FindBy(id = "additionalInfo")
     private WebElement additionalInforField;
 
-    @FindBy(xpath = ".//button[text()='Confirm changes']")
+    @FindBy(xpath = "//button[text()='Confirm changes']")
     private WebElement confirmChangesButton;
 
-    @FindBy(xpath = ".//button[text()='Cancel']")
+    @FindBy(xpath = "//button[text()='Cancel']")
     private WebElement cancelButton;
 
-    @FindBy(xpath = "html/body/div[1]/div[3]/div/div[2]/div/a")
+    @FindBy(xpath = "//a[text()='Register a new car']")
     private WebElement registerNewCarButton;
 
     @FindBy(xpath = "//td/a[text()='Edit']")
