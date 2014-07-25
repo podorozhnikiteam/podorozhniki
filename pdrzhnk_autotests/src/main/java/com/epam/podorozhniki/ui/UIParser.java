@@ -10,13 +10,19 @@ public class UIParser {
     private String elementName;
     private String locatorName;
     private String locatorValue;
+
+    public Map getLocators() {
+        return locators;
+    }
+
     private Map locators = new HashMap<String, By>();
 
-    public void addToMap(String text) throws Exception {
-        pageName = text.split("\\.")[0];
-        elementName = text.split("\\.")[1].split(":")[0];
-        locatorName = text.split("\\.")[1].split(":")[1].split("=")[0];
-        locatorValue = text.split("\\.")[1].split(":")[1].split("=")[1];
+    public void addToMap(String text) throws IllegalArgumentException {
+        String[] splitText = text.split("\\.", 4);
+        pageName = splitText[0];
+        elementName = splitText[1];
+        locatorName = splitText[2];
+        locatorValue = splitText[3];
 
         switch (locatorName) {
             case "id":
@@ -29,7 +35,7 @@ public class UIParser {
                 locators.put(locatorName, By.className(locatorValue));
                 break;
             default:
-                throw new Exception();
+                throw new IllegalArgumentException();
         }
     }
 }
