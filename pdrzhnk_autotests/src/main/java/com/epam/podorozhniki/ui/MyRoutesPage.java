@@ -8,8 +8,7 @@ import org.openqa.selenium.support.PageFactory;
  */
 public class MyRoutesPage {
     public MyRoutesPage(){
-        PageFactory.initElements(Driver.get(), this);
+        PageFactory.initElements(Driver.getInstance(), this);
     }
-
-
+    //Zoja
 }
