@@ -7,4 +7,7 @@ public enum UITitles {
     // pageName.elementName:locatorName=locatorValue
 
     LOGINFIELD("MainPageNotLogged.loginFieldLocator.id.inputUsername");
+
+     UITitles(String s) {
+    }
 }
