@@ -25,7 +25,7 @@ public class MethodsPage {
 	public MainPageBeforeLogin logoutPerform() {
 		waitForElementFindBy(logout);
 		logout.click();
-		return new MainPageBeforeLogin(wdriver);
+		return new MainPageBeforeLogin();
 	}
 
 }
