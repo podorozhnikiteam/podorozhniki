@@ -12,10 +12,6 @@ public class MethodsPage {
 
 	protected WebDriver wdriver;
 
-	public MethodsPage(WebDriver driver) {
-		this.wdriver = driver;
-	}
-
 	@FindBy(xpath = "//a[@class='btn btn-default']")
 	private WebElement logout;
 
