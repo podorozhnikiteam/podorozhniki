@@ -26,10 +26,6 @@ public class MethodsPage {
 		return this;
 	}
 
-	public void waitForPageLoad() {
-		wdriver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-	}
-
 	public MainPageBeforeLogin logoutPerform() {
 		waitForElementFindBy(logout);
 		logout.click();
