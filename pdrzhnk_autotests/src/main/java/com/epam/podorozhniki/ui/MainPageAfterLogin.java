@@ -10,7 +10,7 @@ import org.openqa.selenium.support.PageFactory;
 import com.epam.podorozhniki.core.Driver;
 
 /**
- * Created by Zoja_Sharova on 7/25/2014.
+ * Created by Zoja_Sharova on 7/25/2014
  */
 
 public class MainPageAfterLogin extends MethodsPage {
