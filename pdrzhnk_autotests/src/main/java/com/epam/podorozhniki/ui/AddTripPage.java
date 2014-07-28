@@ -15,7 +15,7 @@ import static junit.framework.TestCase.assertEquals;
 
 public class AddTripPage extends MethodsPage {
 
-    public AddTripPage(WebDriver driver) {
+    public AddTripPage() {
         PageFactory.initElements(Driver.getInstance(), this);
     }
 
