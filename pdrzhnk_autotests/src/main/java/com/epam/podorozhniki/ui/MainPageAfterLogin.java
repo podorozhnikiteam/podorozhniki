@@ -15,13 +15,10 @@ import com.epam.podorozhniki.core.Driver;
 
 public class MainPageAfterLogin extends MethodsPage {
 
-	protected WebDriver wdriver;
 	private static Logger log = Logger.getLogger(MainPageAfterLogin.class);
 
 	public MainPageAfterLogin(WebDriver driver) {
-		super(driver);
-		this.wdriver = driver;
-		PageFactory.initElements(Driver.getInstance(), this);
+        PageFactory.initElements(Driver.getInstance(), this);
 	}
 
 	@FindBy(xpath = "//a[@class='btn btn-default']")

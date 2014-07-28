@@ -12,14 +12,10 @@ public class MethodsPage {
 
 	protected WebDriver wdriver;
 
-	public MethodsPage(WebDriver driver) {
-		this.wdriver = driver;
-	}
-
 	@FindBy(xpath = "//a[@class='btn btn-default']")
 	private WebElement logout;
 
-	// for ZoyaS
+	// for ZoyaS  - it's my method!!!!
 	public MethodsPage waitForElementFindBy(WebElement element) {
 		WebDriverWait wait = new WebDriverWait(wdriver, 15, 1);
 		wait.until(ExpectedConditions.visibilityOf(element));
