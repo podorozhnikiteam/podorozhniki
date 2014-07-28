@@ -5,6 +5,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.Reporter;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Enumeration;
@@ -25,21 +26,22 @@ public class Driver {
     }
 
     public static void init() {
-        Properties properties = new Properties();
-        FileInputStream propFile;
+        Properties prop = new Properties();
         try {
-            propFile = new FileInputStream("test.properties");
-            properties.load(propFile);
+            File file = new File("test.properties");
+            FileInputStream fis = new FileInputStream(file.getAbsolutePath());
+            prop.load(fis);
+            fis.close();
         } catch (IOException e) {
             e.printStackTrace();
             Assert.fail(e.getMessage());
         }
         @SuppressWarnings("unchecked")
-        Enumeration<String> e = (Enumeration<String>) properties.propertyNames();
+        Enumeration<String> e = (Enumeration<String>) prop.propertyNames();
         while (e.hasMoreElements()) {
             String key = e.nextElement();
-            System.setProperty(key, properties.getProperty(key));
-            Reporter.log(key + " - " + properties.getProperty(key), 2, true);
+            System.setProperty(key, prop.getProperty(key));
+            Reporter.log(key + " - " + prop.getProperty(key), 2, true);
         }
         WebDriver driverInput = new FirefoxDriver();
         driverInput.manage().timeouts().implicitlyWait(
@@ -53,4 +55,3 @@ public class Driver {
         getInstance().quit();
     }
 }
- 
