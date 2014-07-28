@@ -28,7 +28,7 @@ public class MainPageBeforeLogin {
     @FindBy(xpath = "//a[contains(@href, 'registr')]")
     private WebElement registrationLink;
 
-    public MainPageBeforeLogin(WebDriver driver) {
+    public MainPageBeforeLogin() {
         PageFactory.initElements(Driver.getInstance(), this);
     }
 
