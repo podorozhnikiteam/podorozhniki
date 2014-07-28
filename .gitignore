@@ -1,5 +1,16 @@
+<<<<<<< HEAD
 .classpath
 .iml
 .idea/
 .project
 bin
+=======
+/target/
+/.classpath
+/.project
+/.settings/
+.idea*/**
+*.iml
+target/**
+/bin
+>>>>>>> c4154d09987dc0aa6831bf1c76a49a441e4b4021
