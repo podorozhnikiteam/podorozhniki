@@ -9,6 +9,7 @@ public class DBConnection {
 	private static final String DB_USER = "postgres";
 	private static final String DB_PASSWORD = "123";
 
+	// method that executes query
 	public  ResultSet queryExecutor(String query) throws SQLException {
 		Connection dbConnection = null;
 		Statement st = null;
