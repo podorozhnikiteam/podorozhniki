@@ -15,7 +15,7 @@ public class MethodsPage {
 	@FindBy(xpath = "//a[@class='btn btn-default']")
 	private WebElement logout;
 
-	// for ZoyaS  - it's my method!!!!
+	// for ZoyaS  
 	public MethodsPage waitForElementFindBy(WebElement element) {
 		WebDriverWait wait = new WebDriverWait(wdriver, 15, 1);
 		wait.until(ExpectedConditions.visibilityOf(element));
