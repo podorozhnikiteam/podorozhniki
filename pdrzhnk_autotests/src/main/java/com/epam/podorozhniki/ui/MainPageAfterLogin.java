@@ -17,7 +17,7 @@ public class MainPageAfterLogin extends MethodsPage {
 
 	private static Logger log = Logger.getLogger(MainPageAfterLogin.class);
 
-	public MainPageAfterLogin(WebDriver driver) {
+	public MainPageAfterLogin() {
         PageFactory.initElements(Driver.getInstance(), this);
 	}
 

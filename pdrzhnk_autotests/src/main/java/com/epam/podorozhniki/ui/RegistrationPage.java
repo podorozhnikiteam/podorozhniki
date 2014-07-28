@@ -1,7 +1,5 @@
 package com.epam.podorozhniki.ui;
 
-import static org.junit.Assert.assertTrue;
-
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
