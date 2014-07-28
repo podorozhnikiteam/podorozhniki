@@ -21,9 +21,6 @@ public class AddTripPage extends MethodsPage {
 
     private boolean acceptNextAlert = true;
 
-    @FindBy(xpath = "test")
-    public static WebElement xxx;
-
     @FindBy(xpath = "//*[@id='starttimepicker']")
     public static WebElement timeField;
 
