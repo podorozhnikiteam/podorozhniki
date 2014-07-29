@@ -10,8 +10,8 @@ import static org.junit.Assert.assertTrue;
 /**
  * Created by Viktoriia_Ishchuk on 7/25/2014.
  */
-public class MyRoutesPage extends MethodsPage{
-    public MyRoutesPage(){
+public class MyTripsPage extends MethodsPage{
+    public MyTripsPage(){
         PageFactory.initElements(Driver.getInstance(), this);
     }
 
@@ -169,7 +169,7 @@ public class MyRoutesPage extends MethodsPage{
 
     public void verifyTripStatusAsPassengerByWeekFilter(String verifyWord){
         passengerCalendarWeekFilter.click();
-        getCurrentScreenshots("D:\\Viktoriia_Ishchuk\\\\gitProjects\\\\podorozhniki_us11\\\\screenshots\\","verifyWeek");
+        getCurrentScreenshots("D:\\Viktoriia_Ishchuk\\\\gitProjects\\\\podorozhniki_us11\\\\screenshots\\", "verifyWeek");
         assertTrue(passengerCalendarWeekMessage.getText().matches(".*" + verifyWord + ".*"));
     }
 
