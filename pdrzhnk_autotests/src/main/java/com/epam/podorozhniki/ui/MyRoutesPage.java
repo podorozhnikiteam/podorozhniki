@@ -5,6 +5,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import static org.junit.Assert.assertTrue;
+
 /**
  * Created by Viktoriia_Ishchuk on 7/25/2014.
  */
@@ -15,37 +17,37 @@ public class MyRoutesPage extends MethodsPage{
 
     //Tabs
     @FindBy(id = "li_passenger")
-    private WebElement asPassengerTab;
+    protected WebElement asPassengerTab;
 
     @FindBy(id = "li_driver")
-    private WebElement asDriverTab;
+    protected WebElement asDriverTab;
 
     @FindBy(id = "li_driverCalendar")
-    private WebElement driverCalendarTab;
+    protected WebElement driverCalendarTab;
 
     @FindBy(id = "li_passengerCalendar")
-    private WebElement passengerCalendarTab;
+    protected WebElement passengerCalendarTab;
 
     //As Passenger Tab
 
     //As Driver Tab
     @FindBy(xpath ="//div[@class ='control-group span8']/a")
-    private WebElement asDriverAddTripButton;
+    protected WebElement asDriverAddTripButton;
 
     @FindBy(xpath ="//tr[1]//a[contains(text(),'Details')]")
-    private WebElement asDriverDetailsButton;
+    protected WebElement asDriverDetailsButton;
 
     @FindBy(id = "accept0")
-    private WebElement asDriverAcceptedButton;
+    protected WebElement asDriverAcceptedButton;
 
     @FindBy(id = "deny0")
-    private WebElement asDriverDeniedButton;
+    protected WebElement asDriverDeniedButton;
 
     @FindBy(xpath ="//input[@value='Confirm']")
-    private WebElement asDriverConfirmButton;
+    protected WebElement asDriverConfirmButton;
 
     @FindBy(xpath = "//tr[1]//a[contains(text(),'Remove')]")
-    private WebElement asDriverRemoveLink;
+    protected WebElement asDriverRemoveLink;
 
     @FindBy(xpath = "//div[@id='removeModalWithPassengers']//button[contains(text(),'Remove')]")
     protected WebElement  asDriverRemoveWithPassengersButton;
@@ -56,42 +58,60 @@ public class MyRoutesPage extends MethodsPage{
 
     //Driver Calendar
     @FindBy(xpath ="//div[@id='driverCalendar']//button[@ data-calendar-nav='prev']")
-    private WebElement driverCalendarPrevButton;
+    protected WebElement driverCalendarPrevButton;
 
     @FindBy(xpath ="//div[@id='driverCalendar']//button[@ data-calendar-nav='next']")
-    private WebElement driverCalendarNextButton;
+    protected WebElement driverCalendarNextButton;
 
     @FindBy(xpath ="//div[@id = 'driverCalendar']//button[@data-calendar-view = 'day']")
-    private WebElement driverCalendarDayFilter;
+    protected WebElement driverCalendarDayFilter;
 
     @FindBy(xpath ="//div[@id = 'driverCalendar']//button[@data-calendar-view = 'week']")
-    private WebElement driverCalendarWeekFilter;
+    protected WebElement driverCalendarWeekFilter;
 
     @FindBy(xpath ="//div[@id = 'driverCalendar']//button[@data-calendar-view = 'month']")
-    private WebElement driverCalendarMonthFilter;
+    protected WebElement driverCalendarMonthFilter;
 
     @FindBy(xpath ="//div[@id = 'driverCalendar']//button[@data-calendar-view = 'year']")
-    private WebElement driverCalendarYearFilter;
+    protected WebElement driverCalendarYearFilter;
 
 
     //Passenger Calendar
     @FindBy(xpath ="//div[@id='passengerCalendar']//button[@ data-calendar-nav='prev']")
-    private WebElement passengerCalendarPrevButton;
+    protected WebElement passengerCalendarPrevButton;
 
     @FindBy(xpath ="//div[@id='passengerCalendar']//button[@ data-calendar-nav='next']")
-    private WebElement passengerCalendarNextButton;
+    protected WebElement passengerCalendarNextButton;
 
     @FindBy(xpath ="//div[@id = 'passengerCalendar']//button[@data-calendar-view = 'day']")
-    private WebElement passengerCalendarDayFilter;
+    protected WebElement passengerCalendarDayFilter;
 
     @FindBy(xpath ="//div[@id = 'passengerCalendar']//button[@data-calendar-view = 'week']")
-    private WebElement passengerCalendarWeekFilter;
+    protected WebElement passengerCalendarWeekFilter;
 
     @FindBy(xpath ="//div[@id = 'passengerCalendar']//button[@data-calendar-view = 'month']")
-    private WebElement passengerCalendarMonthFilter;
+    protected WebElement passengerCalendarMonthFilter;
 
     @FindBy(xpath ="//div[@id = 'passengerCalendar']//button[@data-calendar-view = 'year']")
-    private WebElement passengerCalendarYearFilter;
+    protected WebElement passengerCalendarYearFilter;
+
+    @FindBy(xpath = "//div[@class = 'pull-left day-event day-highlight dh-event-important']")
+    protected WebElement passengerCalendarDayMessage;
+
+    @FindBy(xpath = "//div[@data-event-class='event-important']")
+    protected WebElement passengerCalendarWeekMessage;
+
+    @FindBy(xpath = "//div[@class='events-list']")
+    protected WebElement passengerCalendarMonthMessage;
+
+    @FindBy(xpath = "//a[@class='event-item']")
+    protected WebElement passengerCalendarMonthItem;
+
+    @FindBy(xpath = "//div[@id ='calendarPassender']/div/div[2]/div[3]")
+    protected WebElement passengerCalendarYearMessage;
+
+    @FindBy(xpath = "//a[@class='event-item']")
+    protected WebElement passengerCalendarYearItem;
 
     //Methods
     public void gotoAsDriverTab(){
@@ -142,5 +162,28 @@ public class MyRoutesPage extends MethodsPage{
         asDriverRemoveWithOutPassengersButton.click();
     }
 
+    public void verifyTripStatusAsPassengerByDayFilter(String verifyWord){
+        getCurrentScreenshots("D:\\Viktoriia_Ishchuk\\gitProjects\\podorozhniki_us11\\screenshots\\","verifyDay");
+        assertTrue(passengerCalendarDayMessage.getText().matches(".*" + verifyWord + ".*"));
+    }
 
+    public void verifyTripStatusAsPassengerByWeekFilter(String verifyWord){
+        passengerCalendarWeekFilter.click();
+        getCurrentScreenshots("D:\\Viktoriia_Ishchuk\\\\gitProjects\\\\podorozhniki_us11\\\\screenshots\\","verifyWeek");
+        assertTrue(passengerCalendarWeekMessage.getText().matches(".*" + verifyWord + ".*"));
+    }
+
+    public void verifyTripStatusAsPassengerByMonthFilter(String verifyWord){
+        passengerCalendarMonthFilter.click();
+        passengerCalendarMonthMessage.click();
+        assertTrue(passengerCalendarMonthItem.getText().matches(".*" + verifyWord + ".*"));
+        getCurrentScreenshots("D:\\Viktoriia_Ishchuk\\gitProjects\\podorozhniki_us11\\screenshots\\","verifyMonth");
+    }
+
+    public void verifyTripStatusAsPassengerByYearFilter(String verifyWord){
+        passengerCalendarYearFilter.click();
+        passengerCalendarYearMessage.click();
+        assertTrue(passengerCalendarYearItem.getText().matches(".*" + verifyWord + ".*"));
+        getCurrentScreenshots("D:\\Viktoriia_Ishchuk\\gitProjects\\podorozhniki_us11\\screenshots\\","verifyYear");
+    }
 }
