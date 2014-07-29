@@ -15,6 +15,9 @@ public class MyTripsPage extends MethodsPage{
         PageFactory.initElements(Driver.getInstance(), this);
     }
 
+    @FindBy(xpath = "//div[@class='logo-container']/a")
+    public WebElement mainPageLink;
+
     //Tabs
     @FindBy(id = "li_passenger")
     protected WebElement asPassengerTab;
@@ -54,6 +57,9 @@ public class MyTripsPage extends MethodsPage{
 
     @FindBy(xpath = "//div[@id='removeModalWithoutPassengers']//button[contains(text(),'Remove')]")
     protected WebElement  asDriverRemoveWithOutPassengersButton;
+
+    @FindBy(xpath = "//div[@id='routeResults']//td[1]/a")
+    protected WebElement fromTripLink;
 
 
     //Driver Calendar
@@ -114,6 +120,8 @@ public class MyTripsPage extends MethodsPage{
     protected WebElement passengerCalendarYearItem;
 
     //Methods
+    public MainPageAfterLogin gotoMainPage(){mainPageLink.click();return new MainPageAfterLogin()}
+
     public void gotoAsDriverTab(){
         asDriverTab.click();
     }
@@ -160,6 +168,13 @@ public class MyTripsPage extends MethodsPage{
         asDriverTab.click();
         asDriverRemoveLink.click();
         asDriverRemoveWithOutPassengersButton.click();
+    }
+
+    public String getTripId(){
+        String idtr = "";
+        idtr = fromTripLink.getAttribute("href");
+        idtr = idtr.substring(21,25);
+        return idtr;
     }
 
     public void verifyTripStatusAsPassengerByDayFilter(String verifyWord){
