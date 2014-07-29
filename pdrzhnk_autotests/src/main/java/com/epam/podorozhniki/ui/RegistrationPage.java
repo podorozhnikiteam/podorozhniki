@@ -1,10 +1,13 @@
 package com.epam.podorozhniki.ui;
 
+import java.sql.SQLException;
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import com.epam.podorozhniki.core.Driver;
+import com.epam.podorozhniki.db.DBConnection;
 
 public class RegistrationPage {
 	
@@ -59,5 +62,17 @@ public class RegistrationPage {
 	public MainPageAfterLogin typeSubmitButton() {
 		this.submitButton.click();
 		return new MainPageAfterLogin();
+	}
+	
+	public void deleteNewUserFromDB() throws SQLException{
+		DBConnection db = new DBConnection();
+		//3 delete statements
+		String deleteIDFromPerson = "DELETE FROM person WHERE ID_CLIENT IN (SELECT id_client FROM client WHERE login = '"+System.getProperty("test.loginForRegistrationNewUser")+"')";
+		String deleteIDFromRoles = "DELETE FROM roles WHERE id_client in (select id_client from client where login = '"+System.getProperty("test.loginForRegistrationNewUser")+"')";
+		String deleteLoginFromClient = "DELETE FROM client WHERE id_client in (select id_client from client where login = '"+System.getProperty("test.loginForRegistrationNewUser")+"')";
+		db.queryExecutor(deleteIDFromPerson);
+		db.queryExecutor(deleteIDFromRoles);
+		db.queryExecutor(deleteLoginFromClient);
+
 	}
 }
