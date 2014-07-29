@@ -8,7 +8,7 @@ import org.openqa.selenium.support.PageFactory;
 /**
  * Created by Viktoriia_Ishchuk on 7/25/2014.
  */
-public class MyRoutesPage {
+public class MyRoutesPage extends MethodsPage{
     public MyRoutesPage(){
         PageFactory.initElements(Driver.getInstance(), this);
     }
@@ -43,6 +43,15 @@ public class MyRoutesPage {
 
     @FindBy(xpath ="//input[@value='Confirm']")
     private WebElement asDriverConfirmButton;
+
+    @FindBy(xpath = "//tr[1]//a[contains(text(),'Remove')]")
+    private WebElement asDriverRemoveLink;
+
+    @FindBy(xpath = "//div[@id='removeModalWithPassengers']//button[contains(text(),'Remove')]")
+    protected WebElement  asDriverRemoveWithPassengersButton;
+
+    @FindBy(xpath = "//div[@id='removeModalWithoutPassengers']//button[contains(text(),'Remove')]")
+    protected WebElement  asDriverRemoveWithOutPassengersButton;
 
 
     //Driver Calendar
@@ -120,4 +129,18 @@ public class MyRoutesPage {
         asDriverDeniedButton.click();
         asDriverConfirmButton.click();
     }
+
+    public void removePassengerTripWithPassengers(){
+        asDriverTab.click();
+        asDriverRemoveLink.click();
+        asDriverRemoveWithPassengersButton.click();
+    }
+
+    public void removePassengerTripWithOutPassengers(){
+        asDriverTab.click();
+        asDriverRemoveLink.click();
+        asDriverRemoveWithOutPassengersButton.click();
+    }
+
+
 }
