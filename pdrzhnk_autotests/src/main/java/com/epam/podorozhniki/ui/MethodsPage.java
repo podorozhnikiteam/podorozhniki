@@ -1,7 +1,14 @@
 package com.epam.podorozhniki.ui;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -22,10 +29,17 @@ public class MethodsPage {
 		return this;
 	}
 
-	public MainPageBeforeLogin logoutPerform() {
-		waitForElementFindBy(logout);
-		logout.click();
-		return new MainPageBeforeLogin();
-	}
-
+    public void getCurrentScreenshots(String filePath, String fileName){
+        try {
+            String screenPath = filePath;
+            String timeStamp = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss").format(Calendar.getInstance().getTime());
+            String fileID = fileName + "_" + timeStamp;
+            String screenName = String.format("%s.png", fileID);
+            screenPath = screenPath +screenName;
+            File screenshot = ((TakesScreenshot) wdriver).getScreenshotAs(OutputType.FILE);
+            FileUtils.copyFile(screenshot, new File(screenPath));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
