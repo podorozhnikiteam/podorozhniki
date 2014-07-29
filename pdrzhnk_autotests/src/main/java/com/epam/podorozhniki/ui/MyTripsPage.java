@@ -19,16 +19,16 @@ public class MyTripsPage extends MethodsPage{
     public WebElement mainPageLink;
 
     //Tabs
-    @FindBy(id = "li_passenger")
+    @FindBy(xpath = "//li[@id='li_passenger']/a")
     protected WebElement asPassengerTab;
 
-    @FindBy(id = "li_driver")
+    @FindBy(xpath = "//li[@id='li_driver']/a")
     protected WebElement asDriverTab;
 
-    @FindBy(id = "li_driverCalendar")
+    @FindBy(xpath = "//li]@id='li_driverCalendar']/a")
     protected WebElement driverCalendarTab;
 
-    @FindBy(id = "li_passengerCalendar")
+    @FindBy(xpath = "//li[@id='li_passengerCalendar']/a")
     protected WebElement passengerCalendarTab;
 
     //As Passenger Tab
@@ -120,7 +120,7 @@ public class MyTripsPage extends MethodsPage{
     protected WebElement passengerCalendarYearItem;
 
     //Methods
-    public MainPageAfterLogin gotoMainPage(){mainPageLink.click();return new MainPageAfterLogin()}
+    public MainPageAfterLogin gotoMainPage(){mainPageLink.click();return new MainPageAfterLogin();}
 
     public void gotoAsDriverTab(){
         asDriverTab.click();
