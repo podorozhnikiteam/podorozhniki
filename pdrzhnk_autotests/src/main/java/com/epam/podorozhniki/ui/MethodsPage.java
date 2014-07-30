@@ -19,14 +19,13 @@ import static org.junit.Assert.assertTrue;
 
 public class MethodsPage {
 
-	protected WebDriver wdriver = Driver.getInstance();
 	protected int numFromPage;
 
 	@FindBy(xpath = "//a[@class='btn btn-default']")
 	private WebElement logout;
 
 	public MethodsPage waitForElementFindBy(WebElement element) {
-		WebDriverWait wait = new WebDriverWait(wdriver, 15, 1);
+		WebDriverWait wait = new WebDriverWait(Driver.getInstance(), 15, 1);
 		wait.until(ExpectedConditions.visibilityOf(element));
 		return this;
 	}
@@ -40,7 +39,7 @@ public class MethodsPage {
 			String fileID = fileName + "_" + timeStamp;
 			String screenName = String.format("%s.png", fileID);
 			screenPath = screenPath + screenName;
-			File screenshot = ((TakesScreenshot) wdriver)
+			File screenshot = ((TakesScreenshot) Driver.getInstance())
 					.getScreenshotAs(OutputType.FILE);
 			FileUtils.copyFile(screenshot, new File(screenPath));
 		} catch (IOException e) {
@@ -51,9 +50,9 @@ public class MethodsPage {
 	// Accept alert with correct alert message.
 	public void checkAlert(String alertMessage) {
 		try {
-			WebDriverWait wait = new WebDriverWait(wdriver, 20);
+			WebDriverWait wait = new WebDriverWait(Driver.getInstance(), 20);
 			wait.until(ExpectedConditions.alertIsPresent());
-			Alert alert = wdriver.switchTo().alert();
+			Alert alert = Driver.getInstance().switchTo().alert();
 			assertTrue(alert.getText().matches(".*" + alertMessage + ".*"));
 			alert.accept();
 		} catch (Exception e) {
@@ -63,7 +62,7 @@ public class MethodsPage {
 
 	// count trips on the page
 	public int countTripsOnThePage(By button_for_list, By nextPage) {
-		List<WebElement> buttonJoins = wdriver.findElements(button_for_list);
+		List<WebElement> buttonJoins = Driver.getInstance().findElements(button_for_list);
 		int numElem = buttonJoins.size();
 		if (numElem == 0) {
 			numFromPage = 0;
@@ -73,15 +72,15 @@ public class MethodsPage {
 		} else {
 			numFromPage = 0;
 			try {
-				List<WebElement> allPages = wdriver.findElements(nextPage);
+				List<WebElement> allPages = Driver.getInstance().findElements(nextPage);
 				int next = allPages.size();
 				outer: while (next != 0) {
-					buttonJoins = wdriver.findElements(button_for_list);
+					buttonJoins = Driver.getInstance().findElements(button_for_list);
 					numFromPage = numFromPage + buttonJoins.size();
-					if (wdriver.findElement(nextPage).getText().contains("»")) {
+					if (Driver.getInstance().findElement(nextPage).getText().contains("»")) {
 						break;
 					} else {
-						(new WebDriverWait(wdriver, 10)).until(
+						(new WebDriverWait(Driver.getInstance(), 10)).until(
 								ExpectedConditions
 										.visibilityOfElementLocated(nextPage))
 								.click();
