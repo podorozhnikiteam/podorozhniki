@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import com.epam.podorozhniki.core.Driver;
@@ -13,9 +14,13 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.epam.podorozhniki.core.Driver;
+
 import static org.junit.Assert.assertTrue;
 
 public class MethodsPage {
+
+	public int numFromPage;
 
 	public MethodsPage waitForElementFindBy(WebElement element) {
 		WebDriverWait wait = new WebDriverWait(Driver.getInstance(), 15, 1);
@@ -38,14 +43,58 @@ public class MethodsPage {
         }
     }
 
-    //Accept alert with correct alert message.
-    public void checkAlert(String alertMessage) {
-        try {
-            WebDriverWait wait = new WebDriverWait(Driver.getInstance(), 20);
-            wait.until(ExpectedConditions.alertIsPresent());
-            Alert alert = Driver.getInstance().switchTo().alert();
-            assertTrue(alert.getText().matches(".*"+alertMessage+".*"));
-            alert.accept();
-        } catch (Exception e) {}
-    }
+	// Accept alert with correct alert message.
+	public void checkAlert(String alertMessage) {
+		try {
+			WebDriverWait wait = new WebDriverWait(Driver.getInstance(), 20);
+			wait.until(ExpectedConditions.alertIsPresent());
+			Alert alert = Driver.getInstance().switchTo().alert();
+			assertTrue(alert.getText().matches(".*" + alertMessage + ".*"));
+			alert.accept();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	// count trips on the page
+	public int countTripsOnThePage(By button_for_list, By nextPage) {
+		List<WebElement> buttonJoins = Driver.getInstance().findElements(button_for_list);
+		int numElem = buttonJoins.size();
+		if (numElem == 0) {
+			numFromPage = 0;
+			// log.error("Preconditions are wrong: there is no trip");
+			System.out.println("There are no trip on the page");
+
+		} else {
+			numFromPage = 0;
+			try {
+				List<WebElement> allPages = Driver.getInstance().findElements(nextPage);
+				int next = allPages.size();
+				outer: while (next != 0) {
+					buttonJoins = Driver.getInstance().findElements(button_for_list);
+					numFromPage = numFromPage + buttonJoins.size();
+					if (Driver.getInstance().findElement(nextPage).getText().contains("�")) {
+						break;
+					} else {
+						(new WebDriverWait(Driver.getInstance(), 10)).until(
+								ExpectedConditions
+										.visibilityOfElementLocated(nextPage))
+								.click();
+						try {
+							Thread.sleep(5000);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+						continue outer;
+					}
+				}
+			} catch (NotFoundException e) {
+				e.printStackTrace();
+			}
+		}
+		// log.info("there are " + numFromPage + " trips on the main page");
+		System.out.println("there are " + numFromPage
+				+ " trips on the main page");
+		return numFromPage;
+	}
 }
