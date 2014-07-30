@@ -19,7 +19,7 @@ import static org.junit.Assert.assertTrue;
 
 public class MethodsPage {
 
-	protected int numFromPage;
+	public int numFromPage;
 
 	@FindBy(xpath = "//a[@class='btn btn-default']")
 	private WebElement logout;
