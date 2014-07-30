@@ -4,28 +4,31 @@ import com.epam.podorozhniki.core.Driver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
+import org.openqa.selenium.TimeoutException;
 import static org.junit.Assert.assertTrue;
 
 /**
  * Created by Viktoriia_Ishchuk on 7/25/2014.
  */
-public class MyRoutesPage extends MethodsPage{
-    public MyRoutesPage(){
+public class MyTripsPage extends MethodsPage{
+    public MyTripsPage(){
         PageFactory.initElements(Driver.getInstance(), this);
     }
 
+    @FindBy(xpath = "//div[@class='logo-container']/a")
+    public WebElement mainPageLink;
+
     //Tabs
-    @FindBy(id = "li_passenger")
+    @FindBy(xpath = "//li[@id='li_passenger']/a")
     protected WebElement asPassengerTab;
 
-    @FindBy(id = "li_driver")
+    @FindBy(xpath = "//li[@id='li_driver']/a")
     protected WebElement asDriverTab;
 
-    @FindBy(id = "li_driverCalendar")
+    @FindBy(xpath = "//li]@id='li_driverCalendar']/a")
     protected WebElement driverCalendarTab;
 
-    @FindBy(id = "li_passengerCalendar")
+    @FindBy(xpath = "//li[@id='li_passengerCalendar']/a")
     protected WebElement passengerCalendarTab;
 
     //As Passenger Tab
@@ -54,6 +57,9 @@ public class MyRoutesPage extends MethodsPage{
 
     @FindBy(xpath = "//div[@id='removeModalWithoutPassengers']//button[contains(text(),'Remove')]")
     protected WebElement  asDriverRemoveWithOutPassengersButton;
+
+    @FindBy(xpath = "//div[@id='routeResults']//td[1]/a")
+    protected WebElement fromTripLink;
 
 
     //Driver Calendar
@@ -114,6 +120,8 @@ public class MyRoutesPage extends MethodsPage{
     protected WebElement passengerCalendarYearItem;
 
     //Methods
+    public MainPageAfterLogin gotoMainPage(){mainPageLink.click();return new MainPageAfterLogin();}
+
     public void gotoAsDriverTab(){
         asDriverTab.click();
     }
@@ -150,16 +158,29 @@ public class MyRoutesPage extends MethodsPage{
         asDriverConfirmButton.click();
     }
 
-    public void removePassengerTripWithPassengers(){
+    public void removePassengerTrip(){
         asDriverTab.click();
         asDriverRemoveLink.click();
-        asDriverRemoveWithPassengersButton.click();
+        try {
+            asDriverRemoveWithPassengersButton.click();
+        }
+        catch (TimeoutException e1){
+           e1.printStackTrace();
+        }
+        try {
+            asDriverRemoveWithOutPassengersButton.click();
+        }
+        catch (TimeoutException e2){
+            e2.printStackTrace();
+        }
     }
 
-    public void removePassengerTripWithOutPassengers(){
-        asDriverTab.click();
-        asDriverRemoveLink.click();
-        asDriverRemoveWithOutPassengersButton.click();
+
+    public String getTripId(){
+        String idtr = "";
+        idtr = fromTripLink.getAttribute("href");
+        idtr = idtr.substring(21,25);
+        return idtr;
     }
 
     public void verifyTripStatusAsPassengerByDayFilter(String verifyWord){
@@ -169,7 +190,7 @@ public class MyRoutesPage extends MethodsPage{
 
     public void verifyTripStatusAsPassengerByWeekFilter(String verifyWord){
         passengerCalendarWeekFilter.click();
-        getCurrentScreenshots("D:\\Viktoriia_Ishchuk\\\\gitProjects\\\\podorozhniki_us11\\\\screenshots\\","verifyWeek");
+        getCurrentScreenshots("D:\\Viktoriia_Ishchuk\\\\gitProjects\\\\podorozhniki_us11\\\\screenshots\\", "verifyWeek");
         assertTrue(passengerCalendarWeekMessage.getText().matches(".*" + verifyWord + ".*"));
     }
 
