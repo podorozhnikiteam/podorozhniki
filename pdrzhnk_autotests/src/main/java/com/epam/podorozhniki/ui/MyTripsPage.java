@@ -4,7 +4,7 @@ import com.epam.podorozhniki.core.Driver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
+import org.openqa.selenium.TimeoutException;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -158,17 +158,23 @@ public class MyTripsPage extends MethodsPage{
         asDriverConfirmButton.click();
     }
 
-    public void removePassengerTripWithPassengers(){
+    public void removePassengerTrip(){
         asDriverTab.click();
         asDriverRemoveLink.click();
-        asDriverRemoveWithPassengersButton.click();
+        try {
+            asDriverRemoveWithPassengersButton.click();
+        }
+        catch (TimeoutException e1){
+           e1.printStackTrace();
+        }
+        try {
+            asDriverRemoveWithOutPassengersButton.click();
+        }
+        catch (TimeoutException e2){
+            e2.printStackTrace();
+        }
     }
 
-    public void removePassengerTripWithOutPassengers(){
-        asDriverTab.click();
-        asDriverRemoveLink.click();
-        asDriverRemoveWithOutPassengersButton.click();
-    }
 
     public String getTripId(){
         String idtr = "";
