@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
@@ -17,6 +18,7 @@ import static org.junit.Assert.assertTrue;
 public class MethodsPage {
 
 	protected WebDriver wdriver;
+	protected int numFromPage;
 
 	@FindBy(xpath = "//a[@class='btn btn-default']")
 	private WebElement logout;
@@ -55,4 +57,44 @@ public class MethodsPage {
             e.printStackTrace();
         }
     }
+    
+    public int countRowsOnThePage(By button_for_list, By nextPage){ 
+    	List<WebElement> buttonJoins = wdriver.findElements(button_for_list);
+		int numElem = buttonJoins.size();
+		if (numElem == 0) {
+			numFromPage = 0;
+//			log.error("Preconditions are wrong: there is no trip");
+			System.out.println("There are no trip on the page");
+			
+		} else {
+			numFromPage = 0;
+			try {
+				List<WebElement> allPages = wdriver.findElements(nextPage);
+				int next = allPages.size();
+				outer: while (next != 0) {
+					buttonJoins = wdriver.findElements(button_for_list);
+					numFromPage = numFromPage + buttonJoins.size();
+					if (wdriver.findElement(nextPage).getText().contains("»")) {
+						break;
+					} else {
+						(new WebDriverWait(wdriver, 10)).until(
+								ExpectedConditions
+										.visibilityOfElementLocated(nextPage))
+								.click();
+						try {
+							Thread.sleep(5000);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+						continue outer;
+					}
+				}
+			} catch (NotFoundException e) {
+				e.printStackTrace();
+			}
+		}
+//		log.info("there are " + numFromPage + " trips on the main page");
+		System.out.println("there are " + numFromPage + " trips on the main page"); 
+		return numFromPage;
+	}
 }
