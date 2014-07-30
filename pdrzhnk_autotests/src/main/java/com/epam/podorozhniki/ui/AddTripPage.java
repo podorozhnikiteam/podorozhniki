@@ -39,6 +39,9 @@ public class AddTripPage extends MethodsPage {
     @FindBy(xpath = "//*[@id='findroute']/div/form/fieldset/div[10]/div/a")
     private WebElement backToTripsBtn;
 
+    @FindBy(xpath = "//*[@id='seats']")
+    private WebElement passengerSeatsField;
+
     private String closeAlertAndGetItsText() {
         try {
             Alert alert = Driver.getInstance().switchTo().alert();
@@ -63,5 +66,27 @@ public class AddTripPage extends MethodsPage {
         createTripBtn.click();
         assertEquals("Your trip successfully saved!", closeAlertAndGetItsText());
         backToTripsBtn.click();
+    }
+
+    public void setFromField(String text) {
+        fromField.clear();
+        fromField.sendKeys(text);
+    }
+
+    public void setToField(String text) {
+        toField.clear();
+        toField.sendKeys(text);
+    }
+
+    public void clickOnBuildOnMapButton() {
+        buildOnMapBtn.click();
+    }
+
+    public void setPassengerSeats(Integer num) {
+        passengerSeatsField.sendKeys(num.toString());
+    }
+
+    public void clickOnCreateTripBtn() {
+        createTripBtn.click();
     }
 }
