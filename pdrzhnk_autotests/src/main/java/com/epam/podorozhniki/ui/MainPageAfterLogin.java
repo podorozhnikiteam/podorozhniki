@@ -69,8 +69,7 @@ public class MainPageAfterLogin extends MethodsPage {
         toAddressField.sendKeys(toAddress);
         anyDateCheckPoint.click();
         findTripButton.click();
-        //wdriver.findElement(By.xpath("//button[@idtr='" + idtr + "']")).click();
-        joinTripButton.click();
+        Driver.getInstance().findElement(By.xpath("//button[@idtr='" + idtr + "']")).click();
         joinSeatsOkButton.click();
         checkAlert("Successfully");
     }
