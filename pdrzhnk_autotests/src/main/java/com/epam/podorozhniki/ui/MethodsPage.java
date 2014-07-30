@@ -13,17 +13,18 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.epam.podorozhniki.core.Driver;
+
 import static org.junit.Assert.assertTrue;
 
 public class MethodsPage {
 
-	protected WebDriver wdriver;
+	protected WebDriver wdriver = Driver.getInstance();
 	protected int numFromPage;
 
 	@FindBy(xpath = "//a[@class='btn btn-default']")
 	private WebElement logout;
 
-	// for ZoyaS
 	public MethodsPage waitForElementFindBy(WebElement element) {
 		WebDriverWait wait = new WebDriverWait(wdriver, 15, 1);
 		wait.until(ExpectedConditions.visibilityOf(element));
@@ -60,7 +61,8 @@ public class MethodsPage {
 		}
 	}
 
-	public int countRowsOnThePage(By button_for_list, By nextPage) {
+	// count trips on the page
+	public int countTripsOnThePage(By button_for_list, By nextPage) {
 		List<WebElement> buttonJoins = wdriver.findElements(button_for_list);
 		int numElem = buttonJoins.size();
 		if (numElem == 0) {
@@ -76,7 +78,7 @@ public class MethodsPage {
 				outer: while (next != 0) {
 					buttonJoins = wdriver.findElements(button_for_list);
 					numFromPage = numFromPage + buttonJoins.size();
-					if (wdriver.findElement(nextPage).getText().contains("Â»")) {
+					if (wdriver.findElement(nextPage).getText().contains("»")) {
 						break;
 					} else {
 						(new WebDriverWait(wdriver, 10)).until(
