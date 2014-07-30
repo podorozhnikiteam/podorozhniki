@@ -2,7 +2,6 @@ package com.epam.podorozhniki.ui;
 
 import com.epam.podorozhniki.core.Driver;
 import org.openqa.selenium.Alert;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -57,7 +56,7 @@ public class AddTripPage extends MethodsPage {
         }
     }
 
-    public void addTrip(String from, String to) throws InterruptedException {
+    public MyTripsPage addTrip(String from, String to) throws InterruptedException {
         fromField.clear();
         fromField.sendKeys(from);
         toField.clear();
@@ -66,6 +65,7 @@ public class AddTripPage extends MethodsPage {
         createTripBtn.click();
         assertEquals("Your trip successfully saved!", closeAlertAndGetItsText());
         backToTripsBtn.click();
+        return new MyTripsPage();
     }
 
     public void setFromField(String text) {

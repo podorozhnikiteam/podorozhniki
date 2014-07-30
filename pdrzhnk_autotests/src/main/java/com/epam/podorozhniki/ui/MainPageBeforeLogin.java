@@ -47,7 +47,6 @@ public class MainPageBeforeLogin {
 
     public MainPageAfterLogin pressTheLoginButton() {
         SubmitBtn.click();
-        //waitForElementPresent(logoutButton);
         return new MainPageAfterLogin();
     }
 
