@@ -58,6 +58,7 @@ public class MainPageAfterLogin extends MethodsPage {
 	}
 
     public MainPageBeforeLogin logout(){
+        waitForElementFindBy(logoutButton);
         logoutButton.click();
         return new MainPageBeforeLogin();
     }

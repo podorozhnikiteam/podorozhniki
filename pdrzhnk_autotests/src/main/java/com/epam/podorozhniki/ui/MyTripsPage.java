@@ -1,10 +1,10 @@
 package com.epam.podorozhniki.ui;
 
 import com.epam.podorozhniki.core.Driver;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.TimeoutException;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -135,6 +135,7 @@ public class MyTripsPage extends MethodsPage{
     }
 
     public void gotoPassengerCalendar(){
+        waitForElementFindBy(passengerCalendarTab);
         passengerCalendarTab.click();
     }
 
@@ -144,16 +145,16 @@ public class MyTripsPage extends MethodsPage{
         return new AddTripPage();
     }
 
-    public void acceptPassengerTrip(){
+    public void acceptPassengerTrip(String idtr){
         asDriverTab.click();
-        asDriverDetailsButton.click();
+        Driver.getInstance().findElement(By.xpath("//a[@href='javascript:getPassengersCountForJoining(" + idtr + ")']")).click();
         asDriverAcceptedButton.click();
         asDriverConfirmButton.click();
     }
 
-    public void rejectPassengerTrip(){
+    public void rejectPassengerTrip(String idtr){
         asDriverTab.click();
-        asDriverDetailsButton.click();
+        Driver.getInstance().findElement(By.xpath("//a[@href='javascript:getPassengersCountForJoining(" + idtr + ")']")).click();
         asDriverDeniedButton.click();
         asDriverConfirmButton.click();
     }
@@ -164,15 +165,11 @@ public class MyTripsPage extends MethodsPage{
         try {
             asDriverRemoveWithPassengersButton.click();
         }
-        catch (TimeoutException e1){
-           e1.printStackTrace();
-        }
+        catch (Exception e1){}
         try {
             asDriverRemoveWithOutPassengersButton.click();
         }
-        catch (TimeoutException e2){
-            e2.printStackTrace();
-        }
+        catch (Exception e2){ }
     }
 
 

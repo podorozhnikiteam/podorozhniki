@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
+import com.epam.podorozhniki.core.Driver;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
@@ -16,14 +17,8 @@ import static org.junit.Assert.assertTrue;
 
 public class MethodsPage {
 
-	protected WebDriver wdriver;
-
-	@FindBy(xpath = "//a[@class='btn btn-default']")
-	private WebElement logout;
-
-	// for ZoyaS  
 	public MethodsPage waitForElementFindBy(WebElement element) {
-		WebDriverWait wait = new WebDriverWait(wdriver, 15, 1);
+		WebDriverWait wait = new WebDriverWait(Driver.getInstance(), 15, 1);
 		wait.until(ExpectedConditions.visibilityOf(element));
 		return this;
 	}
@@ -36,7 +31,7 @@ public class MethodsPage {
             String fileID = fileName + "_" + timeStamp;
             String screenName = String.format("%s.png", fileID);
             screenPath = screenPath +screenName;
-            File screenshot = ((TakesScreenshot) wdriver).getScreenshotAs(OutputType.FILE);
+            File screenshot = ((TakesScreenshot) Driver.getInstance()).getScreenshotAs(OutputType.FILE);
             FileUtils.copyFile(screenshot, new File(screenPath));
         } catch (IOException e) {
             e.printStackTrace();
@@ -46,13 +41,11 @@ public class MethodsPage {
     //Accept alert with correct alert message.
     public void checkAlert(String alertMessage) {
         try {
-            WebDriverWait wait = new WebDriverWait(wdriver, 20);
+            WebDriverWait wait = new WebDriverWait(Driver.getInstance(), 20);
             wait.until(ExpectedConditions.alertIsPresent());
-            Alert alert = wdriver.switchTo().alert();
+            Alert alert = Driver.getInstance().switchTo().alert();
             assertTrue(alert.getText().matches(".*"+alertMessage+".*"));
             alert.accept();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        } catch (Exception e) {}
     }
 }
