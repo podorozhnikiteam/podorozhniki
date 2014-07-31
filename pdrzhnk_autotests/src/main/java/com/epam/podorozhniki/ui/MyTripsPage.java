@@ -207,4 +207,6 @@ public class MyTripsPage extends MethodsPage{
         assertTrue(passengerCalendarYearItem.getText().matches(".*" + verifyWord + ".*"));
         getCurrentScreenshots("D:\\Viktoriia_Ishchuk\\gitProjects\\podorozhniki_us11\\screenshots\\","verifyYear");
     }
+    
+    
 }
