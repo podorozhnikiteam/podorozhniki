@@ -37,4 +37,8 @@ public class VerifyNumbersOfTrips {
 		}
 
 	}
+	
+	public MainPageAfterLogin goToMainPage(){
+		return new MainPageAfterLogin(); 
+	}
 }

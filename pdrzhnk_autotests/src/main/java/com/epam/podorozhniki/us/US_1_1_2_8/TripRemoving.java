@@ -51,7 +51,7 @@ public class TripRemoving {
 
 	// deleting trip as driver
 	public void removingTripAsDriver() {
-		log.info("removingTripAsDriver"); 
+		log.info("removingTripAsDriver");
 		mainPageBeforeLogin.enterLoginAndPass(driver_username, driver_password);
 		mainPageAfterLogin = mainPageBeforeLogin.pressTheLoginButton();
 		myTripsPage = mainPageAfterLogin.goToMyTripsPage();
@@ -61,6 +61,8 @@ public class TripRemoving {
 		mainPageBeforeLogin = mainPageAfterLogin.logout();
 	}
 
- 
+	public countTripAsDriver goTocountTripPage() {
+		return new countTripAsDriver();
+	}
 
 }

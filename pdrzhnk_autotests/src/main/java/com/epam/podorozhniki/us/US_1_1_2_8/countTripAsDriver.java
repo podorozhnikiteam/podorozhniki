@@ -26,12 +26,15 @@ public class countTripAsDriver {
 
 	protected int numFromPageBeforeDeleting;
 	protected int numFromPageAfterDeleting;
+	private TripRemoving tripRemoving;
+	private countTripAsDriver countTripAsDriver;
+	private VerifyNumbersOfTrips verifyNumbersOfTrips;
 
 	private static Logger log = Logger.getLogger(MainPageAfterLogin.class);
 
 	private By details_Button = By.xpath("//a[contains(text(),'Details')]");
 	private By nextPage = By.xpath("//div[@id='routeResults']//li[3]/a");
-	
+
 	public countTripAsDriver() {
 		PageFactory.initElements(Driver.getInstance(), this);
 	}
@@ -49,6 +52,7 @@ public class countTripAsDriver {
 				+ "on the AsDriverPage before deleting");
 		mainPageAfterLogin = myTripsPage.gotoMainPage();
 		mainPageAfterLogin.logout();
+
 	}
 
 	// count trips after deleting
@@ -65,4 +69,11 @@ public class countTripAsDriver {
 		mainPageBeforeLogin = mainPageAfterLogin.logout();
 	}
 
+	public TripRemoving goToTripRemoving() {
+		return new TripRemoving();
+	}
+
+	public VerifyNumbersOfTrips goToVerifyNumbersOfTripsPage() {
+		return new VerifyNumbersOfTrips();
+	}
 }

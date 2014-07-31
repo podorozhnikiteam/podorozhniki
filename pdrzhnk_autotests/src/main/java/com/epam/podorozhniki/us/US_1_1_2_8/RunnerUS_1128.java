@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.openqa.selenium.support.PageFactory;
 
 import com.epam.podorozhniki.core.Driver;
 import com.epam.podorozhniki.ui.AddTripPage;
@@ -17,6 +18,11 @@ public class RunnerUS_1128 {
 	private MainPageBeforeLogin mainPageBeforeLogin;
 	private MyTripsPage myTripsPage;
 	private AddTripPage addTripPage;
+	
+	private TripRemoving tripRemoving; 
+	private countTripAsDriver countTripAsDriver; 
+	private VerifyNumbersOfTrips verifyNumbersOfTrips; 
+	
 	public String from_address = "Киев, ул. Комарова, 12";
 	public String to_address = "Киев, ул. Верхний Вал, 57";
 	public String driver_username = "creditnew";
@@ -25,6 +31,7 @@ public class RunnerUS_1128 {
 
 	protected int numFromPageBeforeDeleting;
 	protected int numFromPageAfterDeleting;
+	
 
 	private static Logger log = Logger.getLogger(MainPageAfterLogin.class);
 	
@@ -47,7 +54,15 @@ public class RunnerUS_1128 {
 
 	@Test 
 	public void Runner() {
-		
+		countTripAsDriver = PageFactory.initElements(Driver.getInstance(),countTripAsDriver.class);
+		tripRemoving = countTripAsDriver.goToTripRemoving(); 
+		tripRemoving.removingTripAsDriver();
+		countTripAsDriver = tripRemoving.goTocountTripPage(); 
+		countTripAsDriver.countingTripsAFterDeleting();
+		verifyNumbersOfTrips = countTripAsDriver.goToVerifyNumbersOfTripsPage(); 
+		verifyNumbersOfTrips.checkingNumber();
+		mainPageAfterLogin= verifyNumbersOfTrips.goToMainPage(); 
+		mainPageBeforeLogin = mainPageAfterLogin.logout();
 	}
 	
 	
