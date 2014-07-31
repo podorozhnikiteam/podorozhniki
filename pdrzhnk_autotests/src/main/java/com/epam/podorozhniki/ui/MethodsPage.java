@@ -20,7 +20,7 @@ import static org.junit.Assert.assertTrue;
 public class MethodsPage {
 
 
-	public int numFromPage;
+	public static int numFromPage;
 	public MethodsPage waitForElementFindBy(WebElement element) {
 		WebDriverWait wait = new WebDriverWait(Driver.getInstance(), 15, 1);
 		wait.until(ExpectedConditions.visibilityOf(element));
@@ -95,7 +95,7 @@ public class MethodsPage {
 		}
 		// log.info("there are " + numFromPage + " trips on the main page");
 		System.out.println("there are " + numFromPage
-				+ " trips on the main page");
+				+ " trips on the nessesary page");
 		return numFromPage;
 	}
 }
