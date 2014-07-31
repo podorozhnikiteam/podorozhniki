@@ -19,6 +19,10 @@ import static org.junit.Assert.assertTrue;
 
 public class MethodsPage {
 
+<<<<<<< HEAD
+=======
+	protected WebDriver wdriver = Driver.getInstance();
+>>>>>>> branch 'Zoja' of https://github.com/podorozhnikiteam/podorozhniki
 	public int numFromPage;
 
 	@FindBy(xpath = "//a[@class='btn btn-default']")
