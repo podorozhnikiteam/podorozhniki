@@ -19,15 +19,8 @@ import static org.junit.Assert.assertTrue;
 
 public class MethodsPage {
 
-<<<<<<< HEAD
-=======
-	protected WebDriver wdriver = Driver.getInstance();
->>>>>>> branch 'Zoja' of https://github.com/podorozhnikiteam/podorozhniki
+
 	public int numFromPage;
-
-	@FindBy(xpath = "//a[@class='btn btn-default']")
-	private WebElement logout;
-
 	public MethodsPage waitForElementFindBy(WebElement element) {
 		WebDriverWait wait = new WebDriverWait(Driver.getInstance(), 15, 1);
 		wait.until(ExpectedConditions.visibilityOf(element));
