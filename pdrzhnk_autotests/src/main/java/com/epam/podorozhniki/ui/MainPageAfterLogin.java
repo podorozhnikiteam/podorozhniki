@@ -85,11 +85,5 @@ public class MainPageAfterLogin extends MethodsPage {
 		checkAlert("Successfully");
 	}
 
-	// count trips on the main page
-	public int countTripsOnTheMainPage(By button_for_list, By next_page_button) {
-		methodsPage = PageFactory.initElements(Driver.getInstance(), MethodsPage.class);
-		countTripsOnThePage(join_button, nextPage);
-		return numFromPage; 
-	}
 
 }
