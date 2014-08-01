@@ -1,9 +1,16 @@
 package com.epam.podorozhniki.ui;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import com.epam.podorozhniki.core.Driver;
+import com.epam.podorozhniki.db.DBConnection;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.TimeoutException;
 import static org.junit.Assert.assertTrue;
 
@@ -17,6 +24,8 @@ public class MyTripsPage extends MethodsPage{
 
     @FindBy(xpath = "//div[@class='logo-container']/a")
     public WebElement mainPageLink;
+    @FindBy(css=".btn.btn-default")
+    public WebElement logout;
 
     //Tabs
     @FindBy(xpath = "//li[@id='li_passenger']/a")
@@ -25,7 +34,7 @@ public class MyTripsPage extends MethodsPage{
     @FindBy(xpath = "//li[@id='li_driver']/a")
     protected WebElement asDriverTab;
 
-    @FindBy(xpath = "//li]@id='li_driverCalendar']/a")
+    @FindBy(xpath = "//li[@id='li_driverCalendar']/a")
     protected WebElement driverCalendarTab;
 
     @FindBy(xpath = "//li[@id='li_passengerCalendar']/a")
@@ -118,6 +127,29 @@ public class MyTripsPage extends MethodsPage{
 
     @FindBy(xpath = "//a[@class='event-item']")
     protected WebElement passengerCalendarYearItem;
+    
+    //Filters on Driver's Calendar Page
+    
+    @FindBy (id = "from_id")
+    protected WebElement locatorForFromFilter;
+    
+    @FindBy (id = "to_id")
+    protected WebElement locatorForToFilter;
+    
+    @FindBy (id = "trip_status_id")
+    protected WebElement locatorForTripStatusFilter;
+    
+    @FindBy (id = "total_seats_id")
+    protected WebElement locatorForSeatsTotalFilter;
+    
+    @FindBy (id = "occupied_seats")
+    protected WebElement locatorForSeatsOccupiedFilter;
+    
+    @FindBy (id = "free_seats")
+    protected WebElement locatorForSeatsFreeFilter;
+    
+    @FindBy (id = "requests")
+    protected WebElement locatorForRequestsFilter;
 
     //Methods
     public MainPageAfterLogin gotoMainPage(){mainPageLink.click();return new MainPageAfterLogin();}
@@ -207,4 +239,132 @@ public class MyTripsPage extends MethodsPage{
         assertTrue(passengerCalendarYearItem.getText().matches(".*" + verifyWord + ".*"));
         getCurrentScreenshots("D:\\Viktoriia_Ishchuk\\gitProjects\\podorozhniki_us11\\screenshots\\","verifyYear");
     }
+
+    //Methods for US01_4_2   
+    public boolean isFilterFromPresent() {
+		return isElementPresent(locatorForFromFilter);
+	}
+	
+	public boolean isFilterToPresent() {
+		return isElementPresent(locatorForToFilter);
+	}
+	
+	public boolean isFilterTripStatusPresent() {
+		return isElementPresent(locatorForTripStatusFilter);
+	}
+	
+	public boolean isFilterSeatsTotalPresent() {
+		return isElementPresent(locatorForSeatsTotalFilter);
+	}
+	
+	public boolean isFilterSeatsOccupiedPresent() {
+		return isElementPresent(locatorForSeatsOccupiedFilter);
+	}
+	
+	public boolean isFilterSeatsFreePresent() {
+		return isElementPresent(locatorForSeatsFreeFilter);
+	}
+	
+	public boolean isFilterRequestsPresent() {
+		return isElementPresent(locatorForRequestsFilter);
+	}
+
+    public void particularSelectionInFilter(WebElement element) {
+		Select select = new Select(element);
+		// selecting option in Drop-down using Index
+		select.selectByIndex(1);
+	}
+	
+	public void particularSelectionInFromFilter(){
+		particularSelectionInFilter(locatorForFromFilter);
+	}
+	
+	public void particularSelectionInToFilter(){
+		particularSelectionInFilter(locatorForToFilter);
+	}
+	
+	public void particularSelectionInTripStatusFilter(){
+		particularSelectionInFilter(locatorForTripStatusFilter);
+	}
+	
+	public void particularSelectionInSeatsTotalFilter(){
+		particularSelectionInFilter(locatorForSeatsTotalFilter);
+	}
+	
+	public void particularSelectionInSeatsOccupiedFilter(){
+		particularSelectionInFilter(locatorForSeatsOccupiedFilter);
+	}
+	
+	public void particularSelectionInSeatsFreeFilter(){
+		particularSelectionInFilter(locatorForSeatsFreeFilter);
+	}
+	
+	public void particularSelectionInRequestsFilter(){
+		particularSelectionInFilter(locatorForRequestsFilter);
+	}
+	
+	public void selectAllInFilter(WebElement element) {
+		Select select = new Select(element);
+		// selecting option in Drop-down using Index
+		select.selectByIndex(0);
+	}
+	
+	public void selectAllInFromFilter(){
+		selectAllInFilter(locatorForFromFilter);
+	}
+	
+	public void selectAllInToFilter(){
+		selectAllInFilter(locatorForToFilter);
+	}
+	
+	public void selectAllInTripStatusFilter(){
+		selectAllInFilter(locatorForTripStatusFilter);
+	}
+	
+	public void selectAllInSeatsTotalFilter(){
+		selectAllInFilter(locatorForSeatsTotalFilter);
+	}
+	
+	public void selectAllInSeatsOccupiedFilter(){
+		selectAllInFilter(locatorForSeatsOccupiedFilter);
+	}
+	
+	public void selectAllInSeatsFreeFilter(){
+		selectAllInFilter(locatorForSeatsFreeFilter);
+	}
+	
+	public void selectAllInRequestsFilter(){
+		selectAllInFilter(locatorForRequestsFilter);
+	}
+
+	public int countTripsInColume(int num) {
+		MethodsPage method = new MethodsPage();
+		
+		int n = 1;
+		int count = 0;
+				
+		while (method.isElementPresent(By
+				.xpath(".//*[@id='routeResults']/div/table/tbody/tr[" + n
+						+ "]/td["+num+"]"))) {
+			count++;
+			n++;
+		}
+		return count;
+	}
+
+
+	public int countRecordsInColumnFromDb(String query) throws SQLException{
+			DBConnection db = new DBConnection();
+			String countTrips = "select count(*)as qty"
+					+ " from point"
+					+ " where name = '"+query+"'";
+			ResultSet expectedResult = db.queryExecutor(countTrips);
+			expectedResult.next();
+				
+			int count = expectedResult.getInt(1);
+			
+		return count;
+		
+	}
+
 }
