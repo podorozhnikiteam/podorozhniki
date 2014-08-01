@@ -14,7 +14,7 @@ public class MyTripsPage extends MethodsPage{
     public MyTripsPage(){
         PageFactory.initElements(Driver.getInstance(), this);
     }
-
+    
     @FindBy(xpath = "//div[@class='logo-container']/a")
     public WebElement mainPageLink;
 
@@ -129,7 +129,7 @@ public class MyTripsPage extends MethodsPage{
     public void gotoAsPassengerTab(){
         asPassengerTab.click();
     }
-
+    
     public void gotoDriverCalendar(){
         driverCalendarTab.click();
     }

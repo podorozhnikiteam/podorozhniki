@@ -1,5 +1,7 @@
 package com.epam.podorozhniki.us.US_1_1_2_8;
 
+import java.sql.SQLException;
+
 import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
@@ -7,22 +9,20 @@ import org.junit.Test;
 import org.openqa.selenium.support.PageFactory;
 
 import com.epam.podorozhniki.core.Driver;
-import com.epam.podorozhniki.ui.AddTripPage;
 import com.epam.podorozhniki.ui.MainPageAfterLogin;
 import com.epam.podorozhniki.ui.MainPageBeforeLogin;
-import com.epam.podorozhniki.ui.MyTripsPage;
-
 
 public class RunnerUS_1128 {
 	private MainPageAfterLogin mainPageAfterLogin;
 	private MainPageBeforeLogin mainPageBeforeLogin;
-	private MyTripsPage myTripsPage;
-	private AddTripPage addTripPage;
-	
-	private TripRemoving tripRemoving; 
-	private countTripAsDriver countTripAsDriver; 
-	private VerifyNumbersOfTrips verifyNumbersOfTrips; 
-	
+
+	private TripRemoving tripRemoving;
+	private CountTripOnPage countTripOnPAge;
+	private VerifyNumbersOfTrips verifyNumbersOfTrips;
+	private PreconditionsPage preconditionsPage;
+	private PostconditionsPage postconditionsPage;
+	private CountTripsInDatabase countTripsInDatabase;
+
 	public String from_address = "Киев, ул. Комарова, 12";
 	public String to_address = "Киев, ул. Верхний Вал, 57";
 	public String driver_username = "creditnew";
@@ -31,51 +31,57 @@ public class RunnerUS_1128 {
 
 	protected int numFromPageBeforeDeleting;
 	protected int numFromPageAfterDeleting;
-	
 
 	private static Logger log = Logger.getLogger(MainPageAfterLogin.class);
-	
+
 	@Before
 	public void setUp() throws InterruptedException {
 		Driver.init();
 		Driver.getInstance().manage().window().maximize();
 		Driver.getInstance().get(
 				"http://evbyminsd7238.minsk.epam.com:8080/pdrzh/main");
-		mainPageBeforeLogin = new MainPageBeforeLogin();
-		mainPageBeforeLogin.enterLoginAndPass(driver_username, driver_password);
-		mainPageAfterLogin = mainPageBeforeLogin.pressTheLoginButton();
-		myTripsPage = mainPageAfterLogin.goToMyTripsPage();
-		addTripPage = myTripsPage.gotoAddTripPage();
-		myTripsPage = addTripPage.addTrip(from_address, to_address);
-		idtr = myTripsPage.getTripId();
-		mainPageAfterLogin = myTripsPage.gotoMainPage();
+		preconditionsPage = PageFactory.initElements(Driver.getInstance(),
+				PreconditionsPage.class);
+		preconditionsPage.addingTripsAsDriver();
+		preconditionsPage.addingToTripAsPassenger();
+		mainPageAfterLogin = preconditionsPage.goToMainPageAfterLogin();
+		mainPageAfterLogin.logout();
+	}
+
+	@Test
+	public void Runner() throws SQLException {
+		countTripOnPAge = PageFactory.initElements(Driver.getInstance(),
+				CountTripOnPage.class);
+		countTripOnPAge.countingTripsBeforeDeletingAsDriver();
+		countTripOnPAge.countingTripsBeforeDeletingAsPassenger();
+		countTripsInDatabase = countTripOnPAge.goToDB();
+		countTripsInDatabase.countingTripsBeforeDeletingAsDriver();
+		countTripsInDatabase.countingTripsBeforeDeletingAsPassenger();
+		tripRemoving = countTripsInDatabase.goToTripRemovingPage();
+		tripRemoving.removingTripAsDriver();
+		countTripOnPAge = tripRemoving.goTocountTripPage();
+		countTripOnPAge.countingTripsAsDriverAFterDeleting();
+		countTripOnPAge.countingTripsAsPassengerAFterDeleting();
+		countTripsInDatabase = countTripOnPAge.goToDB();
+		countTripsInDatabase.countingTripsAfterDeletingAsDriver();
+		countTripsInDatabase.countingTripsAfterDeletingAsPassenger();
+		verifyNumbersOfTrips = countTripsInDatabase.goToVerifyNumbersOfTrips();
+		verifyNumbersOfTrips.VerifyNumberOfTripsOnthePageAsDriver();
+		verifyNumbersOfTrips.VerifyNumberOfTripsInTheDBAsPassenger();
+		verifyNumbersOfTrips.VerifyNumberOfTripsInTheDBAsDriver();
+		verifyNumbersOfTrips.VerifyNumberOfTripsInTheDBAsPassenger();
+		mainPageAfterLogin = verifyNumbersOfTrips.goToMainPage();
 		mainPageBeforeLogin = mainPageAfterLogin.logout();
 	}
 
-	@Test 
-	public void Runner() {
-		countTripAsDriver = PageFactory.initElements(Driver.getInstance(),countTripAsDriver.class);
-		tripRemoving = countTripAsDriver.goToTripRemoving(); 
-		tripRemoving.removingTripAsDriver();
-		countTripAsDriver = tripRemoving.goTocountTripPage(); 
-		countTripAsDriver.countingTripsAFterDeleting();
-		verifyNumbersOfTrips = countTripAsDriver.goToVerifyNumbersOfTripsPage(); 
-		verifyNumbersOfTrips.checkingNumber();
-		mainPageAfterLogin= verifyNumbersOfTrips.goToMainPage(); 
-		mainPageBeforeLogin = mainPageAfterLogin.logout();
-	}
-	
-	
 	@After
-	public void afterTest() {
+	public void afterTest() throws SQLException {
 		mainPageBeforeLogin.enterLoginAndPass(driver_username, driver_password);
 		mainPageAfterLogin = mainPageBeforeLogin.pressTheLoginButton();
-		myTripsPage = mainPageAfterLogin.goToMyTripsPage();
-		myTripsPage.removePassengerTrip();
-		mainPageAfterLogin = myTripsPage.gotoMainPage();
+		postconditionsPage = mainPageAfterLogin.goPostconditionsPage();
+		mainPageAfterLogin = postconditionsPage.DeletingTripsFromDB();
 		mainPageBeforeLogin = mainPageAfterLogin.logout();
 		Driver.tearDown();
 	}
-
 
 }

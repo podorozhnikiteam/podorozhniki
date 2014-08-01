@@ -14,6 +14,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.epam.podorozhniki.core.Driver;
+import com.epam.podorozhniki.us.US_1_1_2_8.PostconditionsPage;
 
 /**
  * Created by Zoja_Sharova on 7/25/2014
@@ -85,5 +86,8 @@ public class MainPageAfterLogin extends MethodsPage {
 		checkAlert("Successfully");
 	}
 
+	public PostconditionsPage goPostconditionsPage() {
+		return new PostconditionsPage();
+	}
 
 }
