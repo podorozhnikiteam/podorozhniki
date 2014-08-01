@@ -1,22 +1,29 @@
 package com.epam.podorozhniki.ui;
 
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
 
-import com.epam.podorozhniki.core.Driver;
 import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.*;
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NotFoundException;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import static org.junit.Assert.assertTrue;
+import com.epam.podorozhniki.core.Driver;
 
 public class MethodsPage {
-	
+
 	public int numFromPage;
 
 	public MethodsPage waitForElementFindBy(WebElement element) {
@@ -76,7 +83,7 @@ public class MethodsPage {
 							button_for_list);
 					numFromPage = numFromPage + buttonJoins.size();
 					if (Driver.getInstance().findElement(nextPage).getText()
-							.contains("�")) {
+							.contains("»")) {
 						break;
 					} else {
 						(new WebDriverWait(Driver.getInstance(), 10)).until(
@@ -100,7 +107,7 @@ public class MethodsPage {
 				+ " trips on the main page");
 		return numFromPage;
 	}
-
+	
 	public boolean isElementPresent(By locator) {
 		Driver.getInstance().manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
 		List<WebElement> elements = Driver.getInstance().findElements(locator);
