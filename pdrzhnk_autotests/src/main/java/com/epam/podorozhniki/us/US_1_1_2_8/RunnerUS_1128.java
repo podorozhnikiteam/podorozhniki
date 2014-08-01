@@ -48,6 +48,7 @@ public class RunnerUS_1128 {
 		mainPageAfterLogin.logout();
 	}
 
+	// для TESTNG разбить на тесты - проверка до удаления на странице и в базе, проверка после и сравнение , три теста 
 	@Test
 	public void Runner() throws SQLException {
 		countTripOnPAge = PageFactory.initElements(Driver.getInstance(),
