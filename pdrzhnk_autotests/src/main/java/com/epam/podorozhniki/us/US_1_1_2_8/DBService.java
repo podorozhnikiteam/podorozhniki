@@ -12,10 +12,8 @@ import com.epam.podorozhniki.ui.MainPageAfterLogin;
 import com.epam.podorozhniki.ui.MyTripsPage;
 
 public class DBService {
-
-	protected int numFromBaseAsDriver;
-	protected int numFromBaseAsPass;
-	protected int numDriverPage; 
+	
+	protected int numDriverBase; 
 	protected int numPassBase;
 
 	public String from_address = "Киев, ул. Комарова, 12";
@@ -39,7 +37,7 @@ public class DBService {
 		dbConnection = new DBConnection();
 		ResultSet rs = dbConnection.queryExecutor(query);
 		while (rs.next()) {
-			numDriverPage = rs.getInt(1);
+			numDriverBase = rs.getInt(1);
 		}
 	}
 
@@ -56,20 +54,12 @@ public class DBService {
 	public void deletingTripsAsDriver(String query) throws SQLException {
 		dbConnection = new DBConnection();
 		ResultSet rs = dbConnection.queryExecutor(query);
-		while (rs.next()) {
-			System.out.println(rs);
-		}
-		log.info("Driver's trips were deleted from DB");
 	}
 
 	public void deletingTripsAsPassenger(String query)
 			throws SQLException {
 		dbConnection = new DBConnection();
 		ResultSet rs = dbConnection.queryExecutor(query);
-		while (rs.next()) {
-			System.out.println(rs.getStatement()); 
-		}
-		log.info("Passenger's trips were deleted from DB");
 	}
 
 	public VerifyNumbersOfTrips goToVerifyNumbersOfTrips() {

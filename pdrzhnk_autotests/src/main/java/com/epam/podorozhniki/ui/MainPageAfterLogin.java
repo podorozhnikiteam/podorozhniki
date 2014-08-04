@@ -58,11 +58,6 @@ public class MainPageAfterLogin extends MethodsPage {
 		return new MyTripsPage();
 	}
 
-	public MainPageBeforeLogin logout() {
-		logoutButton.click();
-		return new MainPageBeforeLogin();
-	}
-
 	public void joinTripByPassenger(String fromAddress, String toAddress,
 			String idtr) {
 		fromAddressField.clear();

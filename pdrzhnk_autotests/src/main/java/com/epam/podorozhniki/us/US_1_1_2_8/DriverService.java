@@ -20,7 +20,7 @@ public class DriverService extends MethodsPage {
 	public DriverService() {
 		PageFactory.initElements(Driver.getInstance(), this);
 	}
-	
+
 	private MainPageAfterLogin mainPageAfterLogin;
 	private MainPageBeforeLogin mainPageBeforeLogin;
 	private DBService dbService;
@@ -28,84 +28,81 @@ public class DriverService extends MethodsPage {
 	private AddTripPage addTripPage;
 
 	public String idtr;
-	public String from_address = "Киев, ул. Комарова, 12";
-	public String to_address = "Киев, ул. Верхний Вал, 57";
-	public String from_address_1 = "Киев, бул. Кольцова, 25";
-	public String to_address_1 = "Киев, ул. Нижний Вал, 69";
-	public String from_address_2 = "Киев, ул. Жилянская, 18";
-	public String to_address_2 = "Киев, ул. Киприанова, 8";
-	
-	public int numDriverPage; 
-	public int numDriverBase; 
+	public String from_address;
+	public String to_address;
+	public String from_address_1;
+	public String to_address_1;
+	public String from_address_2;
+	public String to_address_2;
 
-
-	private By details_Button = By.xpath("//a[contains(text(),'Details')]");
-	private By nextPageDriver = By.xpath("//div[@id='routeResults']//li[3]/a");
-	private By nextPagePass = By.xpath("//div[@id='PassengerTrips']//li[3]/a");
+	public int numDriverPage;
+	public int numDriverBase;
 
 	private static Logger log = Logger.getLogger(DriverService.class);
 
 	public void addingTrips(String driver_username, String driver_password)
 			throws InterruptedException {
+
+		driver_username = System.getProperty("US1128.driver_login");
+		driver_password = System.getProperty("US1128.driver_password");
+		from_address = System.getProperty("US1128.from_adress");
+		to_address = System.getProperty("US1128.to_adress");
+		from_address_1 = System.getProperty("US1128.from_adress_1");
+		to_address_1 = System.getProperty("US1128.to_adress_1");
+		from_address_2 = System.getProperty("US1128.from_adress_2");
+		to_address_2 = System.getProperty("US1128.to_adress_2");
+
 		mainPageBeforeLogin = new MainPageBeforeLogin();
 		mainPageBeforeLogin.enterLoginAndPass(driver_username, driver_password);
 		mainPageAfterLogin = mainPageBeforeLogin.pressTheLoginButton();
 		myTripsPage = mainPageAfterLogin.goToMyTripsPage();
 		addTripPage = myTripsPage.gotoAddTripPage();
-		myTripsPage = addTripPage.addTrip(from_address, to_address);
+		myTripsPage = addTripPage.addTripZoja(from_address, to_address);
 		idtr = myTripsPage.getTripId();
 		System.out.println(idtr);
-//		addTripPage = myTripsPage.gotoAddTripPage();
-//		myTripsPage = addTripPage.addTrip(from_address_1, to_address_1);
-//		addTripPage = myTripsPage.gotoAddTripPage();
-//		myTripsPage = addTripPage.addTrip(from_address_2, to_address_2);
+		addTripPage = myTripsPage.gotoAddTripPage();
+		myTripsPage = addTripPage.addTripZoja(from_address_1, to_address_1);
+		addTripPage = myTripsPage.gotoAddTripPage();
+		myTripsPage = addTripPage.addTripZoja(from_address_2, to_address_2);
 		mainPageAfterLogin = myTripsPage.gotoMainPage();
 		mainPageAfterLogin.logout();
 	}
 
 	public void deletingTripAsDriver(String driver_username,
-			String driver_password, String idtr) throws SQLException, InterruptedException {
+			String driver_password, String idtr_for_delete)
+			throws SQLException, InterruptedException {
 		mainPageBeforeLogin = new MainPageBeforeLogin();
 		mainPageBeforeLogin.enterLoginAndPass(driver_username, driver_password);
 		mainPageAfterLogin = mainPageBeforeLogin.pressTheLoginButton();
 		myTripsPage = mainPageAfterLogin.goToMyTripsPage();
-		myTripsPage.removeSpecificTrip(idtr);
+		myTripsPage.removeSpecificTrip(idtr_for_delete);
 		mainPageAfterLogin = myTripsPage.gotoMainPage();
 		mainPageAfterLogin.logout();
 	}
 
-	public void countTripsOnPage(String driver_username,
-			String driver_password) throws SQLException, InterruptedException {
+	public void countTripsOnPage(String driver_username, String driver_password)
+			throws SQLException, InterruptedException {
 		mainPageBeforeLogin = new MainPageBeforeLogin();
 		mainPageBeforeLogin.enterLoginAndPass(driver_username, driver_password);
 		mainPageAfterLogin = mainPageBeforeLogin.pressTheLoginButton();
 		myTripsPage = mainPageAfterLogin.goToMyTripsPage();
 		myTripsPage.gotoAsDriverTab();
-		//		 myTripsPage.countTripsOnThePage(details_Button, nextPageDriver);
-//		 numDriverPage = myTripsPage.countTripsOnThePage(
-//		 details_Button, nextPageDriver);
 		Thread.sleep(3000);
-		myTripsPage.countTripsInColume(1);
-		numDriverPage = myTripsPage.countTripsInColume(1);
+		myTripsPage.countTripsOnPage();
+		numDriverPage = myTripsPage.countTripsOnPage();
 		mainPageAfterLogin = myTripsPage.gotoMainPage();
 		mainPageAfterLogin.logout();
 	}
 
-	public void countTripsinDB(String query)
-			throws SQLException, InterruptedException {
+	public void countTripsinDB(String query) throws SQLException,
+			InterruptedException {
 		dbService = new DBService();
 		dbService.countingTripsAsDriver(query);
-		numDriverBase = dbService.numDriverPage;
+		numDriverBase = dbService.numDriverBase;
 	}
 
-	public void deletingDriverFromDB(String query) throws SQLException {
-		dbService = new DBService();
-		dbService.deletingTripsAsPassenger(query);
-
-	}
-	
-	public VerifyNumbersOfTrips goToVerifyTrips(){
-		return new VerifyNumbersOfTrips(); 
+	public VerifyNumbersOfTrips goToVerifyTrips() {
+		return new VerifyNumbersOfTrips();
 	}
 
 }

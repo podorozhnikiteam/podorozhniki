@@ -18,8 +18,11 @@ import com.epam.podorozhniki.core.Driver;
 import static org.junit.Assert.assertTrue;
 
 public class MethodsPage {
-
+	
 	public static int numFromPage;
+	
+	@FindBy(xpath = "//ul[@class = 'button-list']/li[2]/a")
+	protected WebElement logoutButton;
 
 	public MethodsPage waitForElementFindBy(WebElement element) {
 		WebDriverWait wait = new WebDriverWait(Driver.getInstance(), 15, 1);
@@ -65,50 +68,7 @@ public class MethodsPage {
 			e.printStackTrace();
 		}
 	}
-
-	// count trips on the page
-	public int countTripsOnThePage(By button_for_list, By nextPage) {
-		List<WebElement> buttonJoins = Driver.getInstance().findElements(
-				button_for_list);
-		int numElem = buttonJoins.size();
-		if (numElem == 0) {
-			numFromPage = 0;
-			System.out.println("There are no trip on the page");
-
-		} else {
-			numFromPage = 0;
-			try {
-				List<WebElement> allPages = Driver.getInstance().findElements(
-						nextPage);
-				int next = allPages.size();
-				outer: while (next != 0) {
-					buttonJoins = Driver.getInstance().findElements(
-							button_for_list);
-					numFromPage = numFromPage + buttonJoins.size();
-					if (Driver.getInstance().findElement(nextPage).getText()
-							.contains("»")) {
-						break;
-					} else {
-						(new WebDriverWait(Driver.getInstance(), 10)).until(
-								ExpectedConditions
-										.visibilityOfElementLocated(nextPage))
-								.click();
-						try {
-							Thread.sleep(5000);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-						continue outer;
-					}
-				}
-			} catch (NotFoundException e) {
-				e.printStackTrace();
-			}
-		}
-		return numFromPage;
-	}
-
-	public int countTripsInColume(int num) {
+	public int countTripsOnPage( ) {
 		MethodsPage method = new MethodsPage();
 
 		int n = 1;
@@ -116,10 +76,28 @@ public class MethodsPage {
 
 		while (method.isElementPresent(By
 				.xpath(".//*[@id='routeResults']/div/table/tbody/tr[" + n
-						+ "]/td[" + num + "]"))) {
+						+ "]/td[1]"))) {
 			count++;
 			n++;
 		}
 		return count;
+	}
+	
+	public int countTripsOnPassTab( ) {
+		MethodsPage method = new MethodsPage();
+
+		int n = 1;
+		int count = 0;
+
+		while (method.isElementPresent(By
+				.xpath(".//*[@id='PassengerTrips']/div/table/tbody/tr["+n+"]/td[1]"))) {
+			count++;
+			n++;
+		}
+		return count;
+	}
+	
+	public void logout() {
+		logoutButton.click();
 	}
 }

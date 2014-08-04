@@ -24,11 +24,7 @@ public class PassengerService extends MethodsPage {
 
 	public int numPassPage;
 	public int numPassBase;
-	public String idtr; 
-
-	private By details_Button = By.xpath("//a[contains(text(),'Remove')]");
-	private By nextPageDriver = By.xpath("//div[@id='routeResults']//li[3]/a");
-	private By nextPagePass = By.xpath("//div[@id='PassengerTrips']//li[3]/a");
+	public String idtr;
 
 	private static Logger log = Logger.getLogger(PassengerService.class);
 
@@ -41,11 +37,8 @@ public class PassengerService extends MethodsPage {
 		myTripsPage = mainPageAfterLogin.goToMyTripsPage();
 		myTripsPage.gotoAsPassengerTab();
 		Thread.sleep(3000);
-		// myTripsPage.countTripsOnThePage(details_Button, nextPagePass);
-		// numPassPage = myTripsPage.countTripsOnThePage(details_Button,
-		// nextPagePass);
-		myTripsPage.countTripsInColume(1);
-		numPassPage = myTripsPage.countTripsInColume(1);
+		myTripsPage.countTripsOnPage();
+		numPassPage = myTripsPage.countTripsOnPassTab();
 		mainPageAfterLogin = myTripsPage.gotoMainPage();
 		mainPageAfterLogin.logout();
 	}
@@ -54,23 +47,18 @@ public class PassengerService extends MethodsPage {
 			SQLException {
 		dbService = new DBService();
 		dbService.countingTripsAsPassenger(query);
-		numPassPage = dbService.numPassBase;
+		numPassBase = dbService.numPassBase;
 	}
 
 	public void joinToTrip(String passenger_username,
-			String passenger_password, String from_address, String to_address, String idtr ) {
+			String passenger_password, String from_address, String to_address,
+			String idtr) {
 		mainPageBeforeLogin = new MainPageBeforeLogin();
 		mainPageBeforeLogin.enterLoginAndPass(passenger_username,
 				passenger_password);
 		mainPageAfterLogin = mainPageBeforeLogin.pressTheLoginButton();
 		mainPageAfterLogin.joinTripByPassenger(from_address, to_address, idtr);
 		mainPageAfterLogin.logout();
-	}
-
-	public void deletingPassFromDB(String query) throws SQLException {
-		dbService = new DBService();
-		dbService.deletingTripsAsPassenger(query);
-
 	}
 
 	public VerifyNumbersOfTrips goToVerifyTrips() {

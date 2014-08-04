@@ -40,7 +40,6 @@ public class VerifyNumbersOfTrips extends MethodsPage {
 					numFromPageAsDriverAfterDelet);
 			System.out.println("VerifyNumberOfTripsOnthePageAsDriver- OK");
 		} catch (AssertionError e1) {
-			e1.printStackTrace();
 			System.out
 					.println("ERROR VerifyNumberOfTripsOnthePageAsDriver");
 		}
@@ -54,7 +53,6 @@ public class VerifyNumbersOfTrips extends MethodsPage {
 					numFromPagePassAfterDelet);
 			System.out.println("VerifyNumberOfTripsOnthePageAsPassenger- OK");
 		} catch (AssertionError e1) {
-			e1.printStackTrace();
 			System.out
 					.println("ERROR VerifyNumberOfTripsOnthePageAsPassenger");
 		}
@@ -69,7 +67,6 @@ public class VerifyNumbersOfTrips extends MethodsPage {
 					numFromDatabaseAsDriverAfterDelet);
 			System.out.println("VerifyNumberOfTripsInTheDBAsDriver- OK");
 		} catch (AssertionError e1) {
-			e1.printStackTrace();
 			System.out.println("VerifyNumberOfTripsInTheDBAsDriver- ERROR");
 		}
 
@@ -83,7 +80,6 @@ public class VerifyNumbersOfTrips extends MethodsPage {
 					numFromDatabasePassAfterDelet);
 			System.out.println("VerifyNumberOfTripsInTheDBAsPassenger- OK");
 		} catch (AssertionError e1) {
-			e1.printStackTrace();
 			System.out.println("VerifyNumberOfTripsInTheDBAsPassenger- ERROR");
 		}
 

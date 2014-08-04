@@ -18,6 +18,7 @@ public class MyTripsPage extends MethodsPage {
 	public MyTripsPage() {
 		PageFactory.initElements(Driver.getInstance(), this);
 	}
+	
 	@FindBy(xpath = "//div[@class='logo-container']/a")
 	public WebElement mainPageLink;
 
@@ -182,18 +183,18 @@ public class MyTripsPage extends MethodsPage {
 		asDriverRemoveLink = Driver.getInstance().findElement(By.xpath("//a[@href = 'javascript:checkIsTripHasPassenger(" + idtr +")']")); 
 		asDriverRemoveLink.click();
 		try {
-//			try {
-//				waitForElementFindBy(asDriverRemoveWithPassengersButton);
-//				asDriverRemoveWithPassengersButton.click();
-//			} catch (TimeoutException e1) {
-//				e1.printStackTrace();
-//			}
-//			try {
+			try {
+				waitForElementFindBy(asDriverRemoveWithPassengersButton);
+				asDriverRemoveWithPassengersButton.click();
+			} catch (TimeoutException e1) {
+				e1.printStackTrace();
+			}
+			try {
 				waitForElementFindBy(asDriverRemoveWithOutPassengersButton);
 				asDriverRemoveWithOutPassengersButton.click();
-//			} catch (TimeoutException e2) {
-//				e2.printStackTrace();
-//			}
+			} catch (TimeoutException e2) {
+				e2.printStackTrace();
+			}
 		} catch (Exception e) {
 			System.out.println("Remove_button was not find");
 		}
