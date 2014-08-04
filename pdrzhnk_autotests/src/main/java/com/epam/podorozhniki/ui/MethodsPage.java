@@ -19,12 +19,21 @@ import static org.junit.Assert.assertTrue;
 
 public class MethodsPage {
 
-
 	public static int numFromPage;
+
 	public MethodsPage waitForElementFindBy(WebElement element) {
 		WebDriverWait wait = new WebDriverWait(Driver.getInstance(), 15, 1);
 		wait.until(ExpectedConditions.visibilityOf(element));
 		return this;
+	}
+
+	public boolean isElementPresent(By locator) {
+		Driver.getInstance().manage().timeouts()
+				.implicitlyWait(0, TimeUnit.SECONDS);
+		List<WebElement> elements = Driver.getInstance().findElements(locator);
+		Driver.getInstance().manage().timeouts()
+				.implicitlyWait(30, TimeUnit.SECONDS);
+		return elements.size() > 0 && elements.get(0).isDisplayed();
 	}
 
 	// Get screenshots of current page
@@ -59,22 +68,25 @@ public class MethodsPage {
 
 	// count trips on the page
 	public int countTripsOnThePage(By button_for_list, By nextPage) {
-		List<WebElement> buttonJoins = Driver.getInstance().findElements(button_for_list);
+		List<WebElement> buttonJoins = Driver.getInstance().findElements(
+				button_for_list);
 		int numElem = buttonJoins.size();
 		if (numElem == 0) {
 			numFromPage = 0;
-			// log.error("Preconditions are wrong: there is no trip");
 			System.out.println("There are no trip on the page");
 
 		} else {
 			numFromPage = 0;
 			try {
-				List<WebElement> allPages = Driver.getInstance().findElements(nextPage);
+				List<WebElement> allPages = Driver.getInstance().findElements(
+						nextPage);
 				int next = allPages.size();
 				outer: while (next != 0) {
-					buttonJoins = Driver.getInstance().findElements(button_for_list);
+					buttonJoins = Driver.getInstance().findElements(
+							button_for_list);
 					numFromPage = numFromPage + buttonJoins.size();
-					if (Driver.getInstance().findElement(nextPage).getText().contains("»")) {
+					if (Driver.getInstance().findElement(nextPage).getText()
+							.contains("»")) {
 						break;
 					} else {
 						(new WebDriverWait(Driver.getInstance(), 10)).until(
@@ -93,9 +105,21 @@ public class MethodsPage {
 				e.printStackTrace();
 			}
 		}
-		// log.info("there are " + numFromPage + " trips on the main page");
-		System.out.println("there are " + numFromPage
-				+ " trips on the nessesary page");
 		return numFromPage;
+	}
+
+	public int countTripsInColume(int num) {
+		MethodsPage method = new MethodsPage();
+
+		int n = 1;
+		int count = 0;
+
+		while (method.isElementPresent(By
+				.xpath(".//*[@id='routeResults']/div/table/tbody/tr[" + n
+						+ "]/td[" + num + "]"))) {
+			count++;
+			n++;
+		}
+		return count;
 	}
 }

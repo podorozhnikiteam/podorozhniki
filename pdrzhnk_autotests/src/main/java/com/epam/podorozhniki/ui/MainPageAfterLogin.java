@@ -1,29 +1,19 @@
 package com.epam.podorozhniki.ui;
 
-import java.util.List;
-
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.NotFoundException;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.epam.podorozhniki.core.Driver;
-import com.epam.podorozhniki.us.US_1_1_2_8.PostconditionsPage;
+import com.epam.podorozhniki.us.US_001.MainPageService;
 
 /**
- * Created by Zoja_Sharova on 7/25/2014
+ * Created by Zoja_Sharova
  */
 
 public class MainPageAfterLogin extends MethodsPage {
-
-	private static Logger log = Logger.getLogger(MainPageAfterLogin.class);
-	private MethodsPage methodsPage;
 
 	public MainPageAfterLogin() {
 		PageFactory.initElements(Driver.getInstance(), this);
@@ -58,7 +48,7 @@ public class MainPageAfterLogin extends MethodsPage {
 
 	@FindBy(xpath = "//tr[1]//button[contains(text(),'Join')]")
 	protected WebElement joinTripButton;
-	
+
 	private By join_button = By.xpath("//button[contains(text(),'Join')]");
 	private By nextPage = By
 			.xpath("//li[@class='active']/following-sibling::*[1]/self::li/a");
@@ -78,16 +68,13 @@ public class MainPageAfterLogin extends MethodsPage {
 		fromAddressField.clear();
 		fromAddressField.sendKeys(fromAddress);
 		toAddressField.clear();
-//		toAddressField.sendKeys(toAddress);
+		toAddressField.sendKeys(toAddress);
 		anyDateCheckPoint.click();
 		findTripButton.click();
-		Driver.getInstance().findElement(By.xpath("//button[@idtr='" + idtr + "']")).click();
+		Driver.getInstance()
+				.findElement(By.xpath("//button[@idtr='" + idtr + "']"))
+				.click();
 		joinSeatsOkButton.click();
 		checkAlert("Successfully");
 	}
-
-	public PostconditionsPage goPostconditionsPage() {
-		return new PostconditionsPage();
-	}
-
 }

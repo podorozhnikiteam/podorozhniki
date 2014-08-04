@@ -26,76 +26,65 @@ public class VerifyNumbersOfTrips extends MethodsPage {
 	protected int numFromDatabaseAsDriverAfterDelet;
 	protected int numFromDatabasePassAfterDelet;
 
-	private CountTripOnPage countTripOnPage;
-	private CountTripsInDatabase countTripsInDatabase;
-
 	public VerifyNumbersOfTrips() {
 		PageFactory.initElements(Driver.getInstance(), this);
 	}
 
 	private static Logger log = Logger.getLogger(MainPageAfterLogin.class);
 
-	public void VerifyNumberOfTripsOnthePageAsDriver() {
-		countTripOnPage = PageFactory.initElements(Driver.getInstance(),
-				CountTripOnPage.class);
-		numFromPageAsDriverBeforeDelet = countTripOnPage.numFromPageAsDriverBeforeDelet;
-		numFromPageAsDriverAfterDelet = countTripOnPage.numFromPageAsDriverAfterDelet;
-
+	public void VerifyNumberOfTripsOnthePageAsDriver(
+			int numFromPageAsDriverBeforeDelet,
+			int numFromPageAsDriverAfterDelet) {
 		try {
-			assertEquals(
-					"Number of trips on driver page before deleting is not equal of number of trips on driver page after deleting",
-					numFromPageAsDriverBeforeDelet,
+			assertEquals(numFromPageAsDriverBeforeDelet - 1,
 					numFromPageAsDriverAfterDelet);
+			System.out.println("VerifyNumberOfTripsOnthePageAsDriver- OK");
 		} catch (AssertionError e1) {
 			e1.printStackTrace();
+			System.out
+					.println("ERROR VerifyNumberOfTripsOnthePageAsDriver");
 		}
 
 	}
 
-	public void VerifyNumberOfTripsOnthePageAsPassenger() {
-		countTripOnPage = PageFactory.initElements(Driver.getInstance(),
-				CountTripOnPage.class);
-		numFromPagePassBeforeDelet = countTripOnPage.numFromPageAsPassengerBeforeDelet;
-		numFromPagePassAfterDelet = countTripOnPage.numFromPageAsPassengerAfterDelet;
-
+	public void VerifyNumberOfTripsOnthePageAsPassenger(
+			int numFromPagePassBeforeDelet, int numFromPagePassAfterDelet) {
 		try {
-			assertEquals(
-					"Number of trips on passenger page before deleting is not equal of number of trips on passenger page after deleting",
-					numFromPagePassBeforeDelet, numFromPagePassAfterDelet);
+			assertEquals(numFromPagePassBeforeDelet - 1,
+					numFromPagePassAfterDelet);
+			System.out.println("VerifyNumberOfTripsOnthePageAsPassenger- OK");
 		} catch (AssertionError e1) {
 			e1.printStackTrace();
+			System.out
+					.println("ERROR VerifyNumberOfTripsOnthePageAsPassenger");
 		}
 
 	}
 
-	public void VerifyNumberOfTripsInTheDBAsDriver() {
-		countTripsInDatabase = PageFactory.initElements(Driver.getInstance(),
-				CountTripsInDatabase.class);
-		numFromDatabaseAsDriverBeforeDelet = countTripsInDatabase.numFromBaseAsDriverBeforeDelet;
-		numFromDatabaseAsDriverAfterDelet = countTripsInDatabase.numFromBaseAsDriverAfterDelet;
+	public void VerifyNumberOfTripsInTheDBAsDriver(
+			int numFromDatabaseAsDriverBeforeDelet,
+			int numFromDatabaseAsDriverAfterDelet) {
 		try {
-			assertEquals(
-					"Number of driver's trips in the DB before deleting is not equal of driver's trips in the DB after deleting",
-					numFromDatabaseAsDriverBeforeDelet,
+			assertEquals(numFromDatabaseAsDriverBeforeDelet - 1,
 					numFromDatabaseAsDriverAfterDelet);
+			System.out.println("VerifyNumberOfTripsInTheDBAsDriver- OK");
 		} catch (AssertionError e1) {
 			e1.printStackTrace();
+			System.out.println("VerifyNumberOfTripsInTheDBAsDriver- ERROR");
 		}
 
 	}
 
-	public void VerifyNumberOfTripsInTheDBAsPassenger() {
-		countTripsInDatabase = PageFactory.initElements(Driver.getInstance(),
-				CountTripsInDatabase.class);
-		numFromDatabasePassBeforeDelet = countTripsInDatabase.numFromBaseAsPassBeforeDelet;
-		numFromDatabasePassAfterDelet = countTripsInDatabase.numFromBaseAsPassAfterDelet;
+	public void VerifyNumberOfTripsInTheDBAsPassenger(
+			int numFromDatabasePassBeforeDelet,
+			int numFromDatabasePassAfterDelet) {
 		try {
-			assertEquals(
-					"Number of passenger's trips in the DB before deleting is not equal of passenger's trips in the DB after deleting",
-					numFromDatabasePassBeforeDelet,
+			assertEquals(numFromDatabasePassBeforeDelet - 1,
 					numFromDatabasePassAfterDelet);
+			System.out.println("VerifyNumberOfTripsInTheDBAsPassenger- OK");
 		} catch (AssertionError e1) {
 			e1.printStackTrace();
+			System.out.println("VerifyNumberOfTripsInTheDBAsPassenger- ERROR");
 		}
 
 	}
