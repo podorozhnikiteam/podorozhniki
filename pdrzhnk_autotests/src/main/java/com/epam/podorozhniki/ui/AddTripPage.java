@@ -1,7 +1,9 @@
 package com.epam.podorozhniki.ui;
 
 import com.epam.podorozhniki.core.Driver;
+import com.epam.podorozhniki.us.US_1_1_2_8.DriverService;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
@@ -20,6 +22,7 @@ public class AddTripPage extends MethodsPage {
 		PageFactory.initElements(Driver.getInstance(), this);
 	}
 
+	private static Logger log = Logger.getLogger(AddTripPage.class);
 	private boolean acceptNextAlert = true;
 
 	@FindBy(id = "my_trips")
@@ -69,35 +72,9 @@ public class AddTripPage extends MethodsPage {
 		toField.sendKeys(to);
 		buildOnMapBtn.click();
 		createTripBtn.click();
-		Thread.sleep(1000);
+		Thread.sleep(500);
 		assertEquals("Your trip successfully saved!", closeAlertAndGetItsText());
 		backToTripsBtn.click();
 		return new MyTripsPage();
 	}
-
-	@SuppressWarnings("finally")
-	public MyTripsPage addTripZoja(String from, String to)
-			throws InterruptedException, WebDriverException {
-		waitForElementFindBy(fromField);
-		fromField.clear();
-		fromField.sendKeys(from);
-		waitForElementFindBy(toField);
-		toField.clear();
-		toField.sendKeys(to);
-		waitForElementFindBy(buildOnMapBtn);
-		buildOnMapBtn.click();
-		waitForElementFindBy(createTripBtn);
-		createTripBtn.click();
-		try {
-			assertEquals("Your trip successfully saved!",
-					closeAlertAndGetItsText());
-			waitForElementFindBy(backToTripsBtn);
-			backToTripsBtn.click();
-		} catch (WebDriverException e) {
-			e.printStackTrace();
-		} finally {
-			return new MyTripsPage();
-		}
-	}
-
 }

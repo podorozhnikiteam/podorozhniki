@@ -3,13 +3,10 @@ package com.epam.podorozhniki.us.US_1_1_2_8;
 import java.sql.SQLException;
 
 import org.apache.log4j.Logger;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.openqa.selenium.By;
 import org.openqa.selenium.support.PageFactory;
 
 import com.epam.podorozhniki.core.Driver;
+import com.epam.podorozhniki.db.DBService;
 import com.epam.podorozhniki.ui.AddTripPage;
 import com.epam.podorozhniki.ui.MainPageAfterLogin;
 import com.epam.podorozhniki.ui.MainPageBeforeLogin;
@@ -57,13 +54,14 @@ public class DriverService extends MethodsPage {
 		mainPageAfterLogin = mainPageBeforeLogin.pressTheLoginButton();
 		myTripsPage = mainPageAfterLogin.goToMyTripsPage();
 		addTripPage = myTripsPage.gotoAddTripPage();
-		myTripsPage = addTripPage.addTripZoja(from_address, to_address);
+		log.info("Driver adds the trips");
+		myTripsPage = addTripPage.addTrip(from_address, to_address);
 		idtr = myTripsPage.getTripId();
-		System.out.println(idtr);
 		addTripPage = myTripsPage.gotoAddTripPage();
-		myTripsPage = addTripPage.addTripZoja(from_address_1, to_address_1);
+		myTripsPage = addTripPage.addTrip(from_address_1, to_address_1);
 		addTripPage = myTripsPage.gotoAddTripPage();
-		myTripsPage = addTripPage.addTripZoja(from_address_2, to_address_2);
+		myTripsPage = addTripPage.addTrip(from_address_2, to_address_2);
+		myTripsPage.catchAlert();
 		mainPageAfterLogin = myTripsPage.gotoMainPage();
 		mainPageAfterLogin.logout();
 	}
@@ -75,7 +73,9 @@ public class DriverService extends MethodsPage {
 		mainPageBeforeLogin.enterLoginAndPass(driver_username, driver_password);
 		mainPageAfterLogin = mainPageBeforeLogin.pressTheLoginButton();
 		myTripsPage = mainPageAfterLogin.goToMyTripsPage();
+		log.info("Drives removes specific trip"); 
 		myTripsPage.removeSpecificTrip(idtr_for_delete);
+		myTripsPage.catchAlert();
 		mainPageAfterLogin = myTripsPage.gotoMainPage();
 		mainPageAfterLogin.logout();
 	}
@@ -88,6 +88,7 @@ public class DriverService extends MethodsPage {
 		myTripsPage = mainPageAfterLogin.goToMyTripsPage();
 		myTripsPage.gotoAsDriverTab();
 		Thread.sleep(3000);
+		log.info("Driver counts trips on the page");
 		myTripsPage.countTripsOnPage();
 		numDriverPage = myTripsPage.countTripsOnPage();
 		mainPageAfterLogin = myTripsPage.gotoMainPage();
@@ -96,6 +97,7 @@ public class DriverService extends MethodsPage {
 
 	public void countTripsinDB(String query) throws SQLException,
 			InterruptedException {
+		log.info("Driver counts trips in the DB");
 		dbService = new DBService();
 		dbService.countingTripsAsDriver(query);
 		numDriverBase = dbService.numDriverBase;

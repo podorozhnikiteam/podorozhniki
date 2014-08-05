@@ -1,24 +1,28 @@
 package com.epam.podorozhniki.ui;
 
-import com.epam.podorozhniki.core.Driver;
-import com.epam.podorozhniki.us.US_1_1_2_8.DBService;
+import static org.junit.Assert.assertTrue;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.TimeoutException;
 
-import static org.junit.Assert.assertTrue;
+import com.epam.podorozhniki.core.Driver;
+import com.epam.podorozhniki.us.US_1_1_2_8.TC_1_2;
 
 /**
  * Created by Viktoriia_Ishchuk on 7/25/2014.
  */
+
 public class MyTripsPage extends MethodsPage {
 	public MyTripsPage() {
 		PageFactory.initElements(Driver.getInstance(), this);
 	}
-	
+
+	private static Logger log = Logger.getLogger(TC_1_2.class);
+
 	@FindBy(xpath = "//div[@class='logo-container']/a")
 	public WebElement mainPageLink;
 
@@ -120,7 +124,7 @@ public class MyTripsPage extends MethodsPage {
 
 	@FindBy(xpath = "//a[@class='event-item']")
 	protected WebElement passengerCalendarYearItem;
-	
+
 	// Methods
 	public MainPageAfterLogin gotoMainPage() {
 		mainPageLink.click();
@@ -170,6 +174,7 @@ public class MyTripsPage extends MethodsPage {
 			asDriverRemoveWithPassengersButton.click();
 		} catch (TimeoutException e1) {
 			e1.printStackTrace();
+
 		}
 		try {
 			asDriverRemoveWithOutPassengersButton.click();
@@ -180,26 +185,27 @@ public class MyTripsPage extends MethodsPage {
 
 	public void removeSpecificTrip(String idtr) {
 		asDriverTab.click();
-		asDriverRemoveLink = Driver.getInstance().findElement(By.xpath("//a[@href = 'javascript:checkIsTripHasPassenger(" + idtr +")']")); 
+		asDriverRemoveLink = Driver.getInstance().findElement(
+				By.xpath("//a[@href = 'javascript:checkIsTripHasPassenger("
+						+ idtr + ")']"));
 		asDriverRemoveLink.click();
 		try {
-			try {
-				waitForElementFindBy(asDriverRemoveWithPassengersButton);
-				asDriverRemoveWithPassengersButton.click();
-			} catch (TimeoutException e1) {
-				e1.printStackTrace();
-			}
-			try {
-				waitForElementFindBy(asDriverRemoveWithOutPassengersButton);
-				asDriverRemoveWithOutPassengersButton.click();
-			} catch (TimeoutException e2) {
-				e2.printStackTrace();
-			}
-		} catch (Exception e) {
-			System.out.println("Remove_button was not find");
+			waitForElementFindBy(asDriverRemoveWithPassengersButton);
+			asDriverRemoveWithPassengersButton.click();
+		} catch (TimeoutException e1) {
+			e1.printStackTrace();
+			log.error("asDriverRemoveWithPassengersButton was niot found");
 		}
+		try {
+			waitForElementFindBy(asDriverRemoveWithOutPassengersButton);
+			asDriverRemoveWithOutPassengersButton.click();
+		} catch (TimeoutException e2) {
+			e2.printStackTrace();
+			log.error("asDriverRemoveWithoutPassengersButton was niot found");
+		}
+		catchAlert();
 	}
-	
+
 	public String getTripId() {
 		String idtr = "";
 		idtr = fromTripLink.getAttribute("href");

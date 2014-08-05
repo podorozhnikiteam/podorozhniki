@@ -3,10 +3,10 @@ package com.epam.podorozhniki.us.US_1_1_2_8;
 import java.sql.SQLException;
 
 import org.apache.log4j.Logger;
-import org.openqa.selenium.By;
 import org.openqa.selenium.support.PageFactory;
 
 import com.epam.podorozhniki.core.Driver;
+import com.epam.podorozhniki.db.DBService;
 import com.epam.podorozhniki.ui.MainPageAfterLogin;
 import com.epam.podorozhniki.ui.MainPageBeforeLogin;
 import com.epam.podorozhniki.ui.MethodsPage;
@@ -37,6 +37,7 @@ public class PassengerService extends MethodsPage {
 		myTripsPage = mainPageAfterLogin.goToMyTripsPage();
 		myTripsPage.gotoAsPassengerTab();
 		Thread.sleep(3000);
+		log.info("Passenger counts trips on the page");
 		myTripsPage.countTripsOnPage();
 		numPassPage = myTripsPage.countTripsOnPassTab();
 		mainPageAfterLogin = myTripsPage.gotoMainPage();
@@ -45,6 +46,7 @@ public class PassengerService extends MethodsPage {
 
 	public void countTripsonInDB(String query) throws InterruptedException,
 			SQLException {
+		log.info("Passenger counts trips in the DB");
 		dbService = new DBService();
 		dbService.countingTripsAsPassenger(query);
 		numPassBase = dbService.numPassBase;
@@ -57,6 +59,7 @@ public class PassengerService extends MethodsPage {
 		mainPageBeforeLogin.enterLoginAndPass(passenger_username,
 				passenger_password);
 		mainPageAfterLogin = mainPageBeforeLogin.pressTheLoginButton();
+		log.info("Passenger joins to the specific trip");
 		mainPageAfterLogin.joinTripByPassenger(from_address, to_address, idtr);
 		mainPageAfterLogin.logout();
 	}

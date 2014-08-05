@@ -5,9 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.sql.SQLException;
 
 import org.apache.log4j.Logger;
-import org.junit.After;
 import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -15,8 +13,6 @@ import org.openqa.selenium.By;
 import com.epam.podorozhniki.core.Driver;
 import com.epam.podorozhniki.ui.MainPageAfterLogin;
 import com.epam.podorozhniki.ui.MainPageBeforeLogin;
-import com.epam.podorozhniki.ui.MethodsPage;
-import com.epam.podorozhniki.us.US_1_1_2_8.TC_1128_1;
 
 public class TC_001 {
 
@@ -31,11 +27,7 @@ public class TC_001 {
 	private MainPageAfterLogin mainPageAfterLogin;
 	private MainPageBeforeLogin mainPageBeforeLogin;
 
-	private By buttonJoin = By.xpath("//button[contains(text(),'Join')]");
-	private By nextPage = By
-			.xpath("//li[@class='active']/following-sibling::*[1]/self::li/a");
-
-	private static Logger log = Logger.getLogger(TC_1128_1.class);
+	private static Logger log = Logger.getLogger(TC_001.class);
 
 	@BeforeClass
 	public static void setUp() throws InterruptedException {
@@ -53,7 +45,7 @@ public class TC_001 {
 		mainPageBeforeLogin = new MainPageBeforeLogin();
 		mainPageBeforeLogin.enterLoginAndPass(driver_username, driver_password);
 		mainPageAfterLogin = mainPageBeforeLogin.pressTheLoginButton();
-		mainPageAfterLogin.countTripsOnThePage(buttonJoin, nextPage);
+		mainPageAfterLogin.countTripsOnPage();
 		mainPageAfterLogin.logout();
 		mainPageService = new MainPageService();
 		mainPageService.countTripsInDatabase(query);

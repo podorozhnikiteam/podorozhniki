@@ -11,6 +11,7 @@ import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.epam.podorozhniki.core.Driver;
@@ -18,9 +19,9 @@ import com.epam.podorozhniki.core.Driver;
 import static org.junit.Assert.assertTrue;
 
 public class MethodsPage {
-	
+
 	public static int numFromPage;
-	
+
 	@FindBy(xpath = "//ul[@class = 'button-list']/li[2]/a")
 	protected WebElement logoutButton;
 
@@ -62,13 +63,27 @@ public class MethodsPage {
 			WebDriverWait wait = new WebDriverWait(Driver.getInstance(), 20);
 			wait.until(ExpectedConditions.alertIsPresent());
 			Alert alert = Driver.getInstance().switchTo().alert();
+			Thread.sleep(2000);
 			assertTrue(alert.getText().matches(".*" + alertMessage + ".*"));
 			alert.accept();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	public int countTripsOnPage( ) {
+
+	public void catchAlert() {
+		Alert alert = null;
+		Wait<WebDriver> wait = new WebDriverWait(Driver.getInstance(), 5);
+		try {
+			alert = wait.until(ExpectedConditions.alertIsPresent());
+		} catch (TimeoutException ignored) {
+		}
+		if (alert != null) {
+			alert.accept();
+		}
+	}
+
+	public int countTripsOnPage() {
 		MethodsPage method = new MethodsPage();
 
 		int n = 1;
@@ -82,21 +97,22 @@ public class MethodsPage {
 		}
 		return count;
 	}
-	
-	public int countTripsOnPassTab( ) {
+
+	public int countTripsOnPassTab() {
 		MethodsPage method = new MethodsPage();
 
 		int n = 1;
 		int count = 0;
 
 		while (method.isElementPresent(By
-				.xpath(".//*[@id='PassengerTrips']/div/table/tbody/tr["+n+"]/td[1]"))) {
+				.xpath(".//*[@id='PassengerTrips']/div/table/tbody/tr[" + n
+						+ "]/td[1]"))) {
 			count++;
 			n++;
 		}
 		return count;
 	}
-	
+
 	public void logout() {
 		logoutButton.click();
 	}

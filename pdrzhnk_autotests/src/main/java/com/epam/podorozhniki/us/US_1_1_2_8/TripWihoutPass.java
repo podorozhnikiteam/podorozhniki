@@ -3,7 +3,7 @@ package com.epam.podorozhniki.us.US_1_1_2_8;
 import java.sql.SQLException;
 
 import org.apache.log4j.Logger;
-import org.openqa.selenium.WebDriverException;
+import org.junit.Test;
 import org.openqa.selenium.remote.ErrorHandler.UnknownServerException;
 import org.openqa.selenium.support.PageFactory;
 
@@ -34,8 +34,9 @@ public class TripWihoutPass extends MethodsPage {
 	protected int numFromBaseAsDriverBeforeDelet;
 	protected int numFromBaseAsDriverAfterDelet;
 
-	private static Logger log = Logger.getLogger(TC_1128_1.class);
+	private static Logger log = Logger.getLogger(TripWihoutPass.class);
 
+	@Test
 	public VerifyNumbersOfTrips withoutPassCheckTrips()
 			throws InterruptedException, SQLException, UnknownServerException {
 
@@ -44,28 +45,28 @@ public class TripWihoutPass extends MethodsPage {
 		queryDeletingAllDriverTrips = System
 				.getProperty("US1128.queryDeletingAllDriverTrips");
 		queryAsDriver = System.getProperty("US1128.queryAsDriver");
+		
 		driverService = new DriverService();
 		driverService.addingTrips(driver_username, driver_password);
 		driverService.countTripsOnPage(driver_username, driver_password);
 		numFromPageAsDriverBeforeDelet = driverService.numDriverPage;
-		System.out.println("Driver has " + numFromPageAsDriverBeforeDelet
+		log.info("Driver has " + numFromPageAsDriverBeforeDelet
 				+ " trips on the page before deleting");
 		driverService.countTripsinDB(queryAsDriver);
 		numFromBaseAsDriverBeforeDelet = driverService.numDriverBase;
 		idtr = driverService.idtr;
 		idtr_for_delete = idtr;
-		System.out.println("Driver has " + numFromBaseAsDriverBeforeDelet
+		log.info("Driver has " + numFromBaseAsDriverBeforeDelet
 				+ " trips in the DB before deleting");
 		driverService.deletingTripAsDriver(driver_username, driver_password,
 				idtr_for_delete);
-		System.out.println("WebDriverException got");
 		driverService.countTripsOnPage(driver_username, driver_password);
 		numFromPageAsDriverAfterDelet = driverService.numDriverPage;
-		System.out.println("Driver has " + numFromPageAsDriverAfterDelet
+		log.info("Driver has " + numFromPageAsDriverAfterDelet
 				+ " trips on the page after deleting");
 		driverService.countTripsinDB(queryAsDriver);
 		numFromBaseAsDriverAfterDelet = driverService.numDriverBase;
-		System.out.println("Driver has " + numFromBaseAsDriverAfterDelet
+		log.info("Driver has " + numFromBaseAsDriverAfterDelet
 				+ " trips in the DB after deleting");
 
 		return new VerifyNumbersOfTrips();

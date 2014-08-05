@@ -49,10 +49,6 @@ public class MainPageAfterLogin extends MethodsPage {
 	@FindBy(xpath = "//tr[1]//button[contains(text(),'Join')]")
 	protected WebElement joinTripButton;
 
-	private By join_button = By.xpath("//button[contains(text(),'Join')]");
-	private By nextPage = By
-			.xpath("//li[@class='active']/following-sibling::*[1]/self::li/a");
-
 	public MyTripsPage goToMyTripsPage() {
 		myTripsLink.click();
 		return new MyTripsPage();

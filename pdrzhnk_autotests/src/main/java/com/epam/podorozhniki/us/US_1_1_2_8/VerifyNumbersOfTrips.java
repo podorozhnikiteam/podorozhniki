@@ -1,8 +1,7 @@
 package com.epam.podorozhniki.us.US_1_1_2_8;
 
-import static org.junit.Assert.assertEquals;
-
 import org.apache.log4j.Logger;
+import org.junit.Assert;
 import org.openqa.selenium.support.PageFactory;
 
 import com.epam.podorozhniki.core.Driver;
@@ -10,12 +9,6 @@ import com.epam.podorozhniki.ui.MainPageAfterLogin;
 import com.epam.podorozhniki.ui.MethodsPage;
 
 public class VerifyNumbersOfTrips extends MethodsPage {
-
-	public String from_address = "Киев, ул. Комарова, 12";
-	public String to_address = "Киев, ул. Верхний Вал, 57";
-	public String driver_username = "creditnew";
-	public String driver_password = "1234567";
-	public String idtr = "";
 
 	protected int numFromPageAsDriverBeforeDelet;
 	protected int numFromPagePassBeforeDelet;
@@ -35,54 +28,33 @@ public class VerifyNumbersOfTrips extends MethodsPage {
 	public void VerifyNumberOfTripsOnthePageAsDriver(
 			int numFromPageAsDriverBeforeDelet,
 			int numFromPageAsDriverAfterDelet) {
-		try {
-			assertEquals(numFromPageAsDriverBeforeDelet - 1,
-					numFromPageAsDriverAfterDelet);
-			System.out.println("VerifyNumberOfTripsOnthePageAsDriver- OK");
-		} catch (AssertionError e1) {
-			System.out
-					.println("ERROR VerifyNumberOfTripsOnthePageAsDriver");
-		}
-
+		Assert.assertEquals("ERROR ", numFromPageAsDriverBeforeDelet - 1,
+				numFromPageAsDriverAfterDelet);
+		log.info("OK: Verifying number of trips on the page as driver");
 	}
 
 	public void VerifyNumberOfTripsOnthePageAsPassenger(
 			int numFromPagePassBeforeDelet, int numFromPagePassAfterDelet) {
-		try {
-			assertEquals(numFromPagePassBeforeDelet - 1,
-					numFromPagePassAfterDelet);
-			System.out.println("VerifyNumberOfTripsOnthePageAsPassenger- OK");
-		} catch (AssertionError e1) {
-			System.out
-					.println("ERROR VerifyNumberOfTripsOnthePageAsPassenger");
-		}
+		Assert.assertEquals("ERROR ", numFromPagePassBeforeDelet - 1,
+				numFromPagePassAfterDelet);
+		System.out.println("OK: Verifying number of trips on the page as passenger");
 
 	}
 
 	public void VerifyNumberOfTripsInTheDBAsDriver(
 			int numFromDatabaseAsDriverBeforeDelet,
 			int numFromDatabaseAsDriverAfterDelet) {
-		try {
-			assertEquals(numFromDatabaseAsDriverBeforeDelet - 1,
-					numFromDatabaseAsDriverAfterDelet);
-			System.out.println("VerifyNumberOfTripsInTheDBAsDriver- OK");
-		} catch (AssertionError e1) {
-			System.out.println("VerifyNumberOfTripsInTheDBAsDriver- ERROR");
-		}
-
+		Assert.assertEquals("ERROR ", numFromDatabaseAsDriverBeforeDelet - 1,
+				numFromDatabaseAsDriverAfterDelet);
+		System.out.println("OK: Verifying number of trips in the database as driver");
 	}
 
 	public void VerifyNumberOfTripsInTheDBAsPassenger(
 			int numFromDatabasePassBeforeDelet,
 			int numFromDatabasePassAfterDelet) {
-		try {
-			assertEquals(numFromDatabasePassBeforeDelet - 1,
-					numFromDatabasePassAfterDelet);
-			System.out.println("VerifyNumberOfTripsInTheDBAsPassenger- OK");
-		} catch (AssertionError e1) {
-			System.out.println("VerifyNumberOfTripsInTheDBAsPassenger- ERROR");
-		}
-
+		Assert.assertEquals("ERROR ", numFromDatabasePassBeforeDelet - 1,
+				numFromDatabasePassAfterDelet);
+		System.out.println("OK: Verifying number of trips in the database as passenger");
 	}
 
 	public MainPageAfterLogin goToMainPage() {
