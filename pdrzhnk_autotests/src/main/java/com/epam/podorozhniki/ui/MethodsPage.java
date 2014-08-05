@@ -15,6 +15,7 @@ import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -24,6 +25,15 @@ public class MethodsPage {
 
 	public int numFromPage;
 
+
+    @FindBy(xpath = "//ul[@class = 'button-list']/li[2]/a")
+    protected WebElement logoutButton;
+
+    public MainPageBeforeLogin logout(){
+        waitForElementFindBy(logoutButton);
+        logoutButton.click();
+        return new MainPageBeforeLogin();
+    }
 
 	public MethodsPage waitForElementFindBy(WebElement element) {
 		WebDriverWait wait = new WebDriverWait(Driver.getInstance(), 15, 1);
@@ -78,7 +88,7 @@ public class MethodsPage {
 				outer: while (next != 0) {
 					buttonJoins = Driver.getInstance().findElements(button_for_list);
 					numFromPage = numFromPage + buttonJoins.size();
-					if (Driver.getInstance().findElement(nextPage).getText().contains("»")) {
+					if (Driver.getInstance().findElement(nextPage).getText().contains("ï¿½")) {
 						break;
 					} else {
 						(new WebDriverWait(Driver.getInstance(), 10)).until(

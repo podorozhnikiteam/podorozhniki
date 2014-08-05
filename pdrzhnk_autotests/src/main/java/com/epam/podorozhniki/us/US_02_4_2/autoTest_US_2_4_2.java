@@ -42,7 +42,7 @@ public class autoTest_US_2_4_2 {
         logger.info("OPEN ADD ROUTE PAGE.");
         addTripPage = myTripsPage.gotoAddTripPage();
         logger.info("DRIVER CREATE NEW TRIP FOR PASSENGER.");
-        myTripsPage = addTripPage.addTrip(System.getProperty("US11.fromAddress"), System.getProperty("US11.toAddress"));
+        myTripsPage = addTripPage.addTrip(System.getProperty("US11.fromAddress"), System.getProperty("US11.toAddress"), System.getProperty("AlertTripSaved"));
         logger.info("OPEN MY TRIPS PAGE");
         logger.info("GET NEW TRIP ID.");
         idtr = myTripsPage.getTripId();
@@ -60,7 +60,7 @@ public class autoTest_US_2_4_2 {
         mainPageBeforeLogin.enterLoginAndPass(System.getProperty("US11.passengerLoginName"), System.getProperty("US11.passengerLoginPassword"));
         mainPageAfterLogin = mainPageBeforeLogin.pressTheLoginButton();
         logger.info("PASSENGER FIND CURRENT DRIVER'S TRIP AND JOIN IT.");
-        mainPageAfterLogin.joinTripByPassenger(System.getProperty("US11.fromAddress"), System.getProperty("US11.toAddress"), idtr);
+        mainPageAfterLogin.joinTripByPassenger(System.getProperty("US11.fromAddress"), System.getProperty("US11.toAddress"), idtr, "1");
         logger.info("PASSENGER OPEN 'My Trips' TAB.");
         myTripsPage = mainPageAfterLogin.goToMyTripsPage();
         logger.info("PASSENGER OPEN 'Passenger Calendar' Tab.");
@@ -85,7 +85,7 @@ public class autoTest_US_2_4_2 {
         mainPageBeforeLogin.enterLoginAndPass(System.getProperty("US11.passengerLoginName"), System.getProperty("US11.passengerLoginPassword"));
         mainPageAfterLogin = mainPageBeforeLogin.pressTheLoginButton();
         logger.info("PASSENGER FIND CURRENT DRIVER'S TRIP AND JOIN IT.");
-        mainPageAfterLogin.joinTripByPassenger(System.getProperty("US11.fromAddress"), System.getProperty("US11.toAddress"), idtr);
+        mainPageAfterLogin.joinTripByPassenger(System.getProperty("US11.fromAddress"), System.getProperty("US11.toAddress"), idtr, "1");
         logger.info("PASSENGER LOGOUT FROM THE SYSTEM.");
         mainPageBeforeLogin = mainPageAfterLogin.logout();
         logger.info("DRIVER LOGIN INTO THE SYSTEM.");
@@ -126,7 +126,7 @@ public class autoTest_US_2_4_2 {
         mainPageBeforeLogin.enterLoginAndPass(System.getProperty("US11.passengerLoginName"), System.getProperty("US11.passengerLoginPassword"));
         mainPageAfterLogin = mainPageBeforeLogin.pressTheLoginButton();
         logger.info("PASSENGER FIND CURRENT DRIVER'S TRIP AND JOIN IT.");
-        mainPageAfterLogin.joinTripByPassenger(System.getProperty("US11.fromAddress"), System.getProperty("US11.toAddress"), idtr);
+        mainPageAfterLogin.joinTripByPassenger(System.getProperty("US11.fromAddress"), System.getProperty("US11.toAddress"), idtr, "1");
         logger.info("PASSENGER LOGOUT FROM THE SYSTEM.");
         mainPageBeforeLogin = mainPageAfterLogin.logout();
         logger.info("DRIVER LOGIN INTO THE SYSTEM.");
