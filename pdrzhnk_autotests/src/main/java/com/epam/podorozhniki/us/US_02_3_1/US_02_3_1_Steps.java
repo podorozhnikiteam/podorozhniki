@@ -66,7 +66,7 @@ public class US_02_3_1_Steps {
         mainPageBeforeLogin.assertFieldsArePresent();
         mainPageBeforeLogin.enterLoginAndPass(System.getProperty("LoginPassenger"), System.getProperty("PasswordPassenger"));
         mainPageAfterLogin = mainPageBeforeLogin.pressTheLoginButton();
-        mainPageAfterLogin.joinTripByPassenger(System.getProperty("from"), System.getProperty("to"), idtr, "2");
+        mainPageAfterLogin.joinTripByPassenger(System.getProperty("from"), System.getProperty("to"), idtr, System.getProperty("ammOfSeats"));
         myTripsPage = mainPageAfterLogin.goToMyTripsPage();
         myTripsPage.gotoAsPassengerTab();
         myTripsPage.statusIsSubmitted(System.getProperty("verificationSubmitted"));
@@ -92,7 +92,7 @@ public class US_02_3_1_Steps {
         mainPageBeforeLogin.assertFieldsArePresent();
         mainPageBeforeLogin.enterLoginAndPass(System.getProperty("LoginPassenger"), System.getProperty("PasswordPassenger"));
         mainPageAfterLogin = mainPageBeforeLogin.pressTheLoginButton();
-        mainPageAfterLogin.joinTripByPassenger(System.getProperty("from"), System.getProperty("to"), idtr, "2");
+        mainPageAfterLogin.joinTripByPassenger(System.getProperty("from"), System.getProperty("to"), idtr, System.getProperty("ammOfSeats"));
         mainPageBeforeLogin = myTripsPage.logout();
         mainPageBeforeLogin.assertFieldsArePresent();
         mainPageBeforeLogin.enterLoginAndPass(System.getProperty("LoginDriver"), System.getProperty("PasswordDriver"));
