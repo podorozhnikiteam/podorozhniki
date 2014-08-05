@@ -3,6 +3,7 @@ package com.epam.podorozhniki.us.US_1_1_2_8;
 import java.sql.SQLException;
 
 import org.apache.log4j.Logger;
+import org.openqa.selenium.By;
 import org.openqa.selenium.support.PageFactory;
 
 import com.epam.podorozhniki.core.Driver;
@@ -24,6 +25,10 @@ public class PassengerService extends MethodsPage {
 	public int numPassPage;
 	public int numPassBase;
 	public String idtr;
+	
+	private By buttonRemove = By.xpath("//div[@id='PassengerTrips']//td[4]/a");
+	private By nextPage = By
+			.xpath("//div[@id='PassengerTrips']//li[3]/a");
 
 	private static Logger log = Logger.getLogger(PassengerService.class);
 
@@ -38,7 +43,7 @@ public class PassengerService extends MethodsPage {
 		Thread.sleep(3000);
 		log.info("Passenger counts trips on the page");
 		myTripsPage.countTripsOnPage();
-		numPassPage = myTripsPage.countTripsOnPassTab();
+		numPassPage = myTripsPage.countTrips(buttonRemove, nextPage);
 		mainPageAfterLogin = myTripsPage.gotoMainPage();
 		mainPageAfterLogin.logout();
 	}

@@ -37,7 +37,7 @@ public class TripWihoutPass extends MethodsPage {
 	private static Logger log = Logger.getLogger(TripWihoutPass.class);
 
 	@Test
-	public void withoutPassCheckTrips()
+	public void withoutPassMethod()
 			throws InterruptedException, SQLException, UnknownServerException {
 
 		driver_username = System.getProperty("US1128.driver_login");

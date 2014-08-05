@@ -3,6 +3,7 @@ package com.epam.podorozhniki.us.US_1_1_2_8;
 import java.sql.SQLException;
 
 import org.apache.log4j.Logger;
+import org.openqa.selenium.By;
 import org.openqa.selenium.support.PageFactory;
 
 import com.epam.podorozhniki.core.Driver;
@@ -41,9 +42,13 @@ public class TripWithPass extends MethodsPage {
 	protected int numFromBaseAsPassBeforeDelet;
 	protected int numFromBaseAsPassAfterDelet;
 
+	private By buttonLoin = By.xpath("//button[contains(text(),'Join')]");
+	private By nextPage = By
+			.xpath("//div[@id='routeResults']//li[3]/a");
+	
 	private static Logger log = Logger.getLogger(TripWithPass.class);
 	
-	public void withPassCheckTrips() throws InterruptedException, SQLException {
+	public void withPassMetod() throws InterruptedException, SQLException {
 		passenger_username = System.getProperty("US1128.passenger_login");
 		passenger_password = System.getProperty("US1128.passenger_password");
 		driver_username = System.getProperty("US1128.driver_login");

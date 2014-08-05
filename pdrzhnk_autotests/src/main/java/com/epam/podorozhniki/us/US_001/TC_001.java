@@ -23,11 +23,14 @@ public class TC_001 {
 	public int numFromPage;
 	public int numFromBase;
 
-	private MainPageService mainPageService;
 	private MainPageAfterLogin mainPageAfterLogin;
 	private MainPageBeforeLogin mainPageBeforeLogin;
 
 	private static Logger log = Logger.getLogger(TC_001.class);
+	
+	private By buttonJoin = By.xpath("//button[contains(text(),'Join')]");
+	private By nextPage = By
+			.xpath("//li[@class='active']/following-sibling::*[1]/self::li/a");
 
 	@BeforeClass
 	public static void setUp() throws InterruptedException {
@@ -45,14 +48,13 @@ public class TC_001 {
 		mainPageBeforeLogin = new MainPageBeforeLogin();
 		mainPageBeforeLogin.enterLoginAndPass(driver_username, driver_password);
 		mainPageAfterLogin = mainPageBeforeLogin.pressTheLoginButton();
-		mainPageAfterLogin.countTripsOnPage();
-		mainPageAfterLogin.logout();
-		mainPageService = new MainPageService();
-		mainPageService.countTripsInDatabase(query);
-		numFromPage = mainPageAfterLogin.numFromPage;
-		numFromBase = mainPageService.numFromBase;
-		System.out.println(numFromBase);
+		numFromPage = mainPageAfterLogin.countTrips(buttonJoin, nextPage);
 		System.out.println(numFromPage);
+		mainPageAfterLogin.logout();
+		mainPageAfterLogin.queryGetInt(query);
+		numFromBase = mainPageAfterLogin.queryGetInt(query);
+		log.info(numFromBase);
+		log.info(numFromPage);
 		assertEquals("Number of trips is not correct", numFromBase, numFromPage);
 	}
 
