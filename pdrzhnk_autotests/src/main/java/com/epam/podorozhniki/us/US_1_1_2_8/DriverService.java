@@ -6,7 +6,6 @@ import org.apache.log4j.Logger;
 import org.openqa.selenium.support.PageFactory;
 
 import com.epam.podorozhniki.core.Driver;
-import com.epam.podorozhniki.db.DBService;
 import com.epam.podorozhniki.ui.AddTripPage;
 import com.epam.podorozhniki.ui.MainPageAfterLogin;
 import com.epam.podorozhniki.ui.MainPageBeforeLogin;
@@ -103,8 +102,5 @@ public class DriverService extends MethodsPage {
 		numDriverBase = dbService.numDriverBase;
 	}
 
-	public VerifyNumbersOfTrips goToVerifyTrips() {
-		return new VerifyNumbersOfTrips();
-	}
 
 }

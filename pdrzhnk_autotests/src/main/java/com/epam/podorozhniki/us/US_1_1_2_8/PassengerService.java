@@ -6,7 +6,6 @@ import org.apache.log4j.Logger;
 import org.openqa.selenium.support.PageFactory;
 
 import com.epam.podorozhniki.core.Driver;
-import com.epam.podorozhniki.db.DBService;
 import com.epam.podorozhniki.ui.MainPageAfterLogin;
 import com.epam.podorozhniki.ui.MainPageBeforeLogin;
 import com.epam.podorozhniki.ui.MethodsPage;
@@ -62,10 +61,6 @@ public class PassengerService extends MethodsPage {
 		log.info("Passenger joins to the specific trip");
 		mainPageAfterLogin.joinTripByPassenger(from_address, to_address, idtr);
 		mainPageAfterLogin.logout();
-	}
-
-	public VerifyNumbersOfTrips goToVerifyTrips() {
-		return new VerifyNumbersOfTrips();
 	}
 
 }

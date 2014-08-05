@@ -1,4 +1,4 @@
-package com.epam.podorozhniki.db;
+package com.epam.podorozhniki.us.US_1_1_2_8;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -7,8 +7,8 @@ import org.apache.log4j.Logger;
 import org.openqa.selenium.support.PageFactory;
 
 import com.epam.podorozhniki.core.Driver;
+import com.epam.podorozhniki.db.DBConnection;
 import com.epam.podorozhniki.ui.MainPageAfterLogin;
-import com.epam.podorozhniki.us.US_1_1_2_8.VerifyNumbersOfTrips;
 
 public class DBService {
 	
@@ -52,7 +52,4 @@ public class DBService {
 		ResultSet rs = dbConnection.queryExecutor(query);
 	}
 
-	public VerifyNumbersOfTrips goToVerifyNumbersOfTrips() {
-		return new VerifyNumbersOfTrips();
-	}
 }

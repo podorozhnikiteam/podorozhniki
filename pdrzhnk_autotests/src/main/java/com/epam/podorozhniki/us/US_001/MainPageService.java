@@ -26,13 +26,12 @@ public class MainPageService extends MethodsPage {
 
 	public MainPageAfterLogin countTripsInDatabase(String query)
 			throws SQLException {
-		System.out.println("countRowsInDataBase start");
 		dbConnection = new DBConnection();
 		ResultSet rs = dbConnection.queryExecutor(query);
 		while (rs.next()) {
 			numFromBase = rs.getInt(1);
 		}
-		System.out.println("there are " + numFromBase + " trips in the DB");
+		log.info("there are " + numFromBase + " trips in the DB");
 		return new MainPageAfterLogin();
 	}
 

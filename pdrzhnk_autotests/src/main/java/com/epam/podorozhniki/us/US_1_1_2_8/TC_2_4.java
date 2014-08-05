@@ -9,7 +9,6 @@ import org.junit.Test;
 import org.openqa.selenium.support.PageFactory;
 
 import com.epam.podorozhniki.core.Driver;
-import com.epam.podorozhniki.db.DBService;
 import com.epam.podorozhniki.ui.MethodsPage;
 
 public class TC_2_4 extends MethodsPage {
@@ -18,7 +17,6 @@ public class TC_2_4 extends MethodsPage {
 		PageFactory.initElements(Driver.getInstance(), this);
 	}
 
-	private VerifyNumbersOfTrips numbersOfTrips;
 	private DBService dbService;
 	private TripWithPass tripWithPass;
 
@@ -54,11 +52,12 @@ public class TC_2_4 extends MethodsPage {
 	@Test
 	public void withPassInBaseAsPass() throws InterruptedException, SQLException {
 		tripWithPass = new TripWithPass();
-		numbersOfTrips = tripWithPass.withPassCheckTrips();
+		tripWithPass.withPassCheckTrips();
 		numFromBaseAsPassBeforeDelet = tripWithPass.numFromBaseAsPassBeforeDelet;
 		numFromBaseAsPassAfterDelet = tripWithPass.numFromBaseAsPassAfterDelet;
-		numbersOfTrips.VerifyNumberOfTripsOnthePageAsPassenger(
+		tripWithPass.verifyNumberOfTripsOnthePage(
 				numFromBaseAsPassBeforeDelet, numFromBaseAsPassAfterDelet);
+		log.info("OK: Verifying number of trips in the database as passenger");
 	}
 
 }

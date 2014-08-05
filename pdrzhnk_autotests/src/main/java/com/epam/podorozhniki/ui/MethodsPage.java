@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
+import org.junit.Assert;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -115,5 +116,10 @@ public class MethodsPage {
 
 	public void logout() {
 		logoutButton.click();
+	}
+
+	public void verifyNumberOfTripsOnthePage(int numBeforeDelet,
+			int numAfterDelet) {
+		Assert.assertEquals("ERROR ", numBeforeDelet - 1, numAfterDelet);
 	}
 }

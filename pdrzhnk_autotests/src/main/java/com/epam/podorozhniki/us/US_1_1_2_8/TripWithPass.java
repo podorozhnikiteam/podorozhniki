@@ -43,7 +43,7 @@ public class TripWithPass extends MethodsPage {
 
 	private static Logger log = Logger.getLogger(TripWithPass.class);
 	
-	public VerifyNumbersOfTrips withPassCheckTrips() throws InterruptedException, SQLException {
+	public void withPassCheckTrips() throws InterruptedException, SQLException {
 		passenger_username = System.getProperty("US1128.passenger_login");
 		passenger_password = System.getProperty("US1128.passenger_password");
 		driver_username = System.getProperty("US1128.driver_login");
@@ -99,6 +99,5 @@ public class TripWithPass extends MethodsPage {
 		numFromBaseAsPassAfterDelet = pasService.numPassBase;
 		log.info("Passenger has " + numFromBaseAsPassAfterDelet
 				+ " trips in the DB after deleting");
-		return new VerifyNumbersOfTrips();
 	}
 }

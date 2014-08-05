@@ -37,7 +37,7 @@ public class TripWihoutPass extends MethodsPage {
 	private static Logger log = Logger.getLogger(TripWihoutPass.class);
 
 	@Test
-	public VerifyNumbersOfTrips withoutPassCheckTrips()
+	public void withoutPassCheckTrips()
 			throws InterruptedException, SQLException, UnknownServerException {
 
 		driver_username = System.getProperty("US1128.driver_login");
@@ -68,7 +68,5 @@ public class TripWihoutPass extends MethodsPage {
 		numFromBaseAsDriverAfterDelet = driverService.numDriverBase;
 		log.info("Driver has " + numFromBaseAsDriverAfterDelet
 				+ " trips in the DB after deleting");
-
-		return new VerifyNumbersOfTrips();
 	}
 }

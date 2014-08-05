@@ -2,6 +2,7 @@ package com.epam.podorozhniki.us.US_1_1_2_8;
 
 import java.sql.SQLException;
 
+import org.apache.http.impl.conn.Wire;
 import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
@@ -9,8 +10,8 @@ import org.junit.Test;
 import org.openqa.selenium.support.PageFactory;
 
 import com.epam.podorozhniki.core.Driver;
-import com.epam.podorozhniki.db.DBService;
 import com.epam.podorozhniki.ui.MethodsPage;
+import com.google.common.util.concurrent.CycleDetectingLockFactory.WithExplicitOrdering;
 
 public class TC_1_2 extends MethodsPage {
 
@@ -18,7 +19,6 @@ public class TC_1_2 extends MethodsPage {
 		PageFactory.initElements(Driver.getInstance(), this);
 	}
 
-	private VerifyNumbersOfTrips numbersOfTrips;
 	private DBService dbService;
 	private TripWihoutPass withoutPass;
 
@@ -50,11 +50,11 @@ public class TC_1_2 extends MethodsPage {
 	@Test
 	public void withoutPassInBase() throws InterruptedException, SQLException {
 		withoutPass = new TripWihoutPass();
-		numbersOfTrips = withoutPass.withoutPassCheckTrips();
+		withoutPass.withoutPassCheckTrips();
 		numFromBaseAsDriverBeforeDelet = withoutPass.numFromBaseAsDriverBeforeDelet;
 		numFromBaseAsDriverAfterDelet = withoutPass.numFromBaseAsDriverAfterDelet;
-		numbersOfTrips.VerifyNumberOfTripsInTheDBAsDriver(
-				numFromBaseAsDriverBeforeDelet, numFromBaseAsDriverAfterDelet);
+		withoutPass.verifyNumberOfTripsOnthePage(numFromBaseAsDriverBeforeDelet, numFromBaseAsDriverAfterDelet);
+		log.info("OK: Verifying number of trips in the database as driver");
 	}
 
 	

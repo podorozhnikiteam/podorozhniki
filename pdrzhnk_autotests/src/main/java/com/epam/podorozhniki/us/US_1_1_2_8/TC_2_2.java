@@ -9,7 +9,6 @@ import org.junit.Test;
 import org.openqa.selenium.support.PageFactory;
 
 import com.epam.podorozhniki.core.Driver;
-import com.epam.podorozhniki.db.DBService;
 import com.epam.podorozhniki.ui.MethodsPage;
 
 public class TC_2_2 extends MethodsPage {
@@ -18,8 +17,6 @@ public class TC_2_2 extends MethodsPage {
 		PageFactory.initElements(Driver.getInstance(), this);
 	}
 
-
-	private VerifyNumbersOfTrips numbersOfTrips;
 	private DBService dbService;
 	private TripWithPass tripWithPass;
 
@@ -43,7 +40,7 @@ public class TC_2_2 extends MethodsPage {
 		queryDeletingAllPassengerTrips = System
 				.getProperty("US1128.queryDeletingAllPassengerTrips");
 	}
-	
+
 	@After
 	public void afterTest() throws SQLException {
 		dbService = new DBService();
@@ -51,17 +48,17 @@ public class TC_2_2 extends MethodsPage {
 		dbService.deletingTripsAsDriver(queryDeletingAllDriverTrips);
 		Driver.tearDown();
 	}
-	
-	 @Test 
-		public void withPassInBaseAsDriver() throws InterruptedException, SQLException {
-			tripWithPass = new TripWithPass();
-			numbersOfTrips = tripWithPass.withPassCheckTrips();
-			numFromBaseAsDriverBeforeDelet = tripWithPass.numFromBaseAsDriverBeforeDelet;
-			numFromBaseAsDriverAfterDelet = tripWithPass.numFromBaseAsDriverAfterDelet;
-			numbersOfTrips.VerifyNumberOfTripsInTheDBAsDriver(
-					numFromBaseAsDriverBeforeDelet, numFromBaseAsDriverAfterDelet);
-		} 
-	 
-	 
-	
+
+	@Test
+	public void withPassInBaseAsDriver() throws InterruptedException,
+			SQLException {
+		tripWithPass = new TripWithPass();
+		tripWithPass.withPassCheckTrips();
+		numFromBaseAsDriverBeforeDelet = tripWithPass.numFromBaseAsDriverBeforeDelet;
+		numFromBaseAsDriverAfterDelet = tripWithPass.numFromBaseAsDriverAfterDelet;
+		tripWithPass.verifyNumberOfTripsOnthePage(
+				numFromBaseAsDriverBeforeDelet, numFromBaseAsDriverAfterDelet);
+		log.info("OK: Verifying number of trips in the database as driver");
 	}
+
+}
