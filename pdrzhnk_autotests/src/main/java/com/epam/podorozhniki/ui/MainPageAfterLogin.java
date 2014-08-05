@@ -31,9 +31,6 @@ public class MainPageAfterLogin extends MethodsPage {
 	@FindBy(id = "my_trips")
 	protected WebElement myTripsLink;
 
-	@FindBy(xpath = "//ul[@class = 'button-list']/li[2]/a")
-	protected WebElement logoutButton;
-
 	@FindBy(id = "geoStart")
 	protected WebElement fromAddressField;
 
@@ -51,7 +48,10 @@ public class MainPageAfterLogin extends MethodsPage {
 
 	@FindBy(xpath = "//tr[1]//button[contains(text(),'Join')]")
 	protected WebElement joinTripButton;
-	
+
+    @FindBy(id = "joinSeats")
+    private WebElement AmountOfSeatsToTake;
+
 	private By join_button = By.xpath("//button[contains(text(),'Join')]");
 	private By nextPage = By
 			.xpath("//li[@class='active']/following-sibling::*[1]/self::li/a");
@@ -61,13 +61,7 @@ public class MainPageAfterLogin extends MethodsPage {
 		return new MyTripsPage();
 	}
 
-    public MainPageBeforeLogin logout(){
-        waitForElementFindBy(logoutButton);
-        logoutButton.click();
-        return new MainPageBeforeLogin();
-    }
-
-    public void joinTripByPassenger(String fromAddress, String toAddress, String idtr){
+    public void joinTripByPassenger(String fromAddress, String toAddress, String idtr, String amOfSeats){
         fromAddressField.clear();
         fromAddressField.sendKeys(fromAddress);
         toAddressField.clear();
@@ -75,6 +69,8 @@ public class MainPageAfterLogin extends MethodsPage {
         anyDateCheckPoint.click();
         findTripButton.click();
         Driver.getInstance().findElement(By.xpath("//button[@idtr='" + idtr + "']")).click();
+        AmountOfSeatsToTake.clear();
+        AmountOfSeatsToTake.sendKeys(amOfSeats);
         joinSeatsOkButton.click();
         checkAlert("Successfully");
     }
