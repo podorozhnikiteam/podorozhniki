@@ -20,7 +20,6 @@ import com.epam.podorozhniki.ui.MainPageBeforeLogin;
  * Created by Zoja_Sharova
  */
 
-
 public class TC_001 {
 
 	public int numFromPage;
@@ -28,7 +27,10 @@ public class TC_001 {
 
 	private MainPageAfterLogin mainPageAfterLogin;
 	private MainPageBeforeLogin mainPageBeforeLogin;
-	private static ReadingDatafile rd; 
+	public static String baseUrl; 
+	public static String driver_username; 
+	public static String driver_password; 
+	public static String query; 
 
 	private static Logger log = Logger.getLogger(TC_001.class);
 	
@@ -38,23 +40,25 @@ public class TC_001 {
 
 	@BeforeClass
 	public static void setUp() throws InterruptedException {
-		rd = new ReadingDatafile();
-		rd.readingDataFile();
 		Driver.init();
 		Driver.getInstance().manage().window().maximize();
-		Driver.getInstance().get(rd.baseUrl); 
+		Driver.getInstance().get("http://evbyminsd7238.minsk.epam.com:8080/pdrzh/main"); 
+		driver_username = System.getProperty("US1128.driver_login"); 
+		driver_password =System.getProperty("US1128.driver_password"); 
+		query = System.getProperty("US1128.query"); 
 	}
 
 	@Test
 	public void countRowsOnThePage() throws SQLException {
+		
 		mainPageBeforeLogin = new MainPageBeforeLogin();
-		mainPageBeforeLogin.enterLoginAndPass(rd.driver_username, rd.driver_password);
+		mainPageBeforeLogin.enterLoginAndPass(driver_username, driver_password);
 		mainPageAfterLogin = mainPageBeforeLogin.pressTheLoginButton();
 		numFromPage = mainPageAfterLogin.countTrips(buttonJoin, nextPage);
 		System.out.println(numFromPage);
 		mainPageAfterLogin.logout();
-		mainPageAfterLogin.queryGetInt(rd.query);
-		numFromBase = mainPageAfterLogin.queryGetInt(rd.query);
+		mainPageAfterLogin.queryGetInt(query);
+		numFromBase = mainPageAfterLogin.queryGetInt(query);
 		log.info(numFromBase);
 		log.info(numFromPage);
 		assertEquals("Number of trips is not correct", numFromBase, numFromPage);
