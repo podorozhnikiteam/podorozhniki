@@ -27,6 +27,7 @@ public class TC_2_4 extends BaseActions {
 
 	@Test
 	public void withPassInBaseAsPass() throws InterruptedException, SQLException {
+		log.info(" GET STARTED");
 		tripWithPass = new TripWithPass();
 		tripWithPass.withPassMetod();
 		numFromBaseAsPassBeforeDelet = tripWithPass.numFromBaseAsPassBeforeDelet;

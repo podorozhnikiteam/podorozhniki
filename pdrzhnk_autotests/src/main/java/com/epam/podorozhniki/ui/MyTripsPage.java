@@ -21,7 +21,7 @@ public class MyTripsPage extends MethodsPage {
 		PageFactory.initElements(Driver.getInstance(), this);
 	}
 
-	private static Logger log = Logger.getLogger(TC_1_2.class);
+	private static Logger log = Logger.getLogger(MyTripsPage.class);
 
 	@FindBy(xpath = "//div[@class='logo-container']/a")
 	public WebElement mainPageLink;

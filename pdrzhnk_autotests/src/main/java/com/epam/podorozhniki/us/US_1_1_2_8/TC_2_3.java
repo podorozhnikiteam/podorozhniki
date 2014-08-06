@@ -27,6 +27,7 @@ public class TC_2_3 extends BaseActions {
 	@Test
 	public void withPassOnPageAsPass() throws InterruptedException,
 			SQLException {
+		log.info(" GET STARTED");
 		tripWithPass = new TripWithPass();
 		tripWithPass.withPassMetod();
 		numFromPageAsPassBeforeDelet = tripWithPass.numFromPageAsPassBeforeDelet;

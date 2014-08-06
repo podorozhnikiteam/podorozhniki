@@ -22,15 +22,8 @@ public class TC_3_1 extends MethodsPage {
 	}
 
 	private TripWihoutPass withoutPass;
-	private MainPageBeforeLogin mainPageBeforeLogin;
-	private MyTripsPage myTripsPage;
-	private MainPageAfterLogin mainPageAfterLogin;
-
-	public String driver_username;
-	public String driver_password;
-
-	public String queryDeletingAllDriverTrips;
-	public String queryAsDriver;
+	private ReadingDatafile rd;
+	private DriverService drService; 
 
 	protected int numFromPageAsDriverBeforeDelet;
 	protected int numFromPageAsDriverAfterDelet;
@@ -40,20 +33,14 @@ public class TC_3_1 extends MethodsPage {
 	@Test
 	public void withoutPassCorrectRemoving() throws InterruptedException,
 			SQLException {
-		driver_username = System.getProperty("US1128.driver_login");
-		driver_password = System.getProperty("US1128.driver_password");
-		queryDeletingAllDriverTrips = System
-				.getProperty("US1128.queryDeletingAllDriverTrips");
-		queryAsDriver = System.getProperty("US1128.queryAsDriver");
+		log.info(" GET STARTED");
+		rd = new ReadingDatafile(); 
 		withoutPass = new TripWihoutPass();
-		withoutPass.withoutPassMethod();
+		withoutPass.addingTripsWithoutCount();
 		String idtr = withoutPass.idtr;
-		log.info("idtr " + idtr);
-		mainPageBeforeLogin = new MainPageBeforeLogin();
-		mainPageBeforeLogin.enterLoginAndPass(driver_username, driver_password);
-		mainPageAfterLogin = mainPageBeforeLogin.pressTheLoginButton();
-		myTripsPage = mainPageAfterLogin.goToMyTripsPage();
-		myTripsPage.gotoAsDriverTab();
+		log.info("idtr "+ idtr); 
+		drService = new DriverService();
+		drService.goToAsDRiverTab(rd.driver_username, rd.driver_password);
 		assertFalse(isElementPresent(By.xpath("//button[@idtr='" + idtr + "']")));
 		log.info("Test passed succesfully");
 	}

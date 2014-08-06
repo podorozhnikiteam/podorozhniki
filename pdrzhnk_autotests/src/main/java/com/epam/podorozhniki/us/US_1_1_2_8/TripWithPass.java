@@ -1,12 +1,18 @@
 package com.epam.podorozhniki.us.US_1_1_2_8;
 
+import static org.junit.Assert.assertFalse;
+
 import java.sql.SQLException;
+
+import net.sourceforge.htmlunit.corejs.javascript.tools.debugger.Main;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.PageFactory;
 
 import com.epam.podorozhniki.core.Driver;
+import com.epam.podorozhniki.ui.MainPageAfterLogin;
+import com.epam.podorozhniki.ui.MainPageBeforeLogin;
 import com.epam.podorozhniki.ui.MethodsPage;
 
 public class TripWithPass extends MethodsPage {
@@ -17,21 +23,10 @@ public class TripWithPass extends MethodsPage {
 
 	private DriverService driverService;
 	private PassengerService pasService;
-
-	public String driver_username;
-	public String driver_password;
-	public String passenger_username;
-	public String passenger_password;
-
+	private ReadingDatafile rd;
+	
 	public String idtr;
 	public String idtr_for_delete;
-	public String queryDeletingAllDriverTrips;
-	public String queryAsDriver;
-	public String queryAsPassenger;
-	public String queryDeletingAllPassengerTrips;
-
-	public String from_address;
-	public String to_address;
 
 	protected int numFromPageAsDriverBeforeDelet;
 	protected int numFromPageAsDriverAfterDelet;
@@ -42,67 +37,73 @@ public class TripWithPass extends MethodsPage {
 	protected int numFromBaseAsPassBeforeDelet;
 	protected int numFromBaseAsPassAfterDelet;
 
-	private By buttonLoin = By.xpath("//button[contains(text(),'Join')]");
-	private By nextPage = By
-			.xpath("//div[@id='routeResults']//li[3]/a");
-	
 	private static Logger log = Logger.getLogger(TripWithPass.class);
-	
+
 	public void withPassMetod() throws InterruptedException, SQLException {
-		passenger_username = System.getProperty("US1128.passenger_login");
-		passenger_password = System.getProperty("US1128.passenger_password");
-		driver_username = System.getProperty("US1128.driver_login");
-		driver_password = System.getProperty("US1128.driver_password");
-		queryDeletingAllDriverTrips = System
-				.getProperty("US1128.queryDeletingAllDriverTrips");
-		queryAsDriver = System.getProperty("US1128.queryAsDriver");
-		queryAsPassenger = System.getProperty("US1128.queryAsPassenger");
-		queryDeletingAllPassengerTrips = System
-				.getProperty("US1128.queryDeletingAllPassengerTrips");
-		from_address = System.getProperty("US1128.from_adress");
-		to_address = System.getProperty("US1128.to_adress");
+		rd = new ReadingDatafile();
+		rd.readingDataFile();
 		driverService = new DriverService();
-		driverService.addingTrips(driver_username, driver_password);
-		driverService.countTripsOnPage(driver_username, driver_password);
+		driverService.addingTrips(rd.driver_username, rd.driver_password);
+		driverService.countTripsOnPage(rd.driver_username, rd.driver_password);
 		numFromPageAsDriverBeforeDelet = driverService.numDriverPage;
 		idtr = driverService.idtr;
 		log.info("Driver has " + numFromPageAsDriverBeforeDelet
 				+ " trips on the page before deleting, idtr = " + idtr);
-		driverService.countTripsinDB(queryAsDriver);
-		numFromBaseAsDriverBeforeDelet = driverService.numDriverBase;
+		log.info("Driver counts trips in the DB");
+		numFromBaseAsDriverBeforeDelet = queryGetInt(rd.queryAsDriver);
 		log.info("Driver has " + numFromBaseAsDriverBeforeDelet
 				+ " trips in the DB before deleting");
 		pasService = new PassengerService();
-		pasService.joinToTrip(passenger_username, passenger_password,
-				from_address, to_address, idtr);
-		pasService.countTripsonPage(passenger_username, passenger_password);
+		pasService.joinToTrip(rd.passenger_username, rd.passenger_password,
+				rd.from_address, rd.to_address, idtr);
+		pasService.countTripsonPage(rd.passenger_username,
+				rd.passenger_password);
 		numFromPageAsPassBeforeDelet = pasService.numPassPage;
 		log.info("Passenger has " + numFromPageAsPassBeforeDelet
 				+ " trips on the page before deleting");
-		pasService.countTripsonInDB(queryAsPassenger);
-		numFromBaseAsPassBeforeDelet = pasService.numPassBase;
+		log.info("Passenger counts trips in the DB");
+		numFromBaseAsPassBeforeDelet = queryGetInt(rd.queryAsPassenger);
 		log.info("Passenger has " + numFromBaseAsPassBeforeDelet
 				+ " trips in the DB before deleting");
 		driverService = new DriverService();
 		idtr_for_delete = idtr;
-		driverService.deletingTripAsDriver(driver_username, driver_password,
-				idtr_for_delete);
-		driverService.countTripsOnPage(driver_username, driver_password);
+		driverService.deletingTripAsDriver(rd.driver_username,
+				rd.driver_password, idtr_for_delete);
+		driverService.countTripsOnPage(rd.driver_username, rd.driver_password);
 		numFromPageAsDriverAfterDelet = driverService.numDriverPage;
 		log.info("Driver has " + numFromPageAsDriverAfterDelet
 				+ " trips on the page after deleting");
-		driverService.countTripsinDB(queryAsDriver);
-		numFromBaseAsDriverAfterDelet = driverService.numDriverBase;
+		log.info("Driver counts trips in the DB");
+		numFromBaseAsDriverAfterDelet = queryGetInt(rd.queryAsDriver);
 		log.info("Driver has " + numFromBaseAsDriverAfterDelet
 				+ " trips in the DB after deleting");
 		pasService = new PassengerService();
-		pasService.countTripsonPage(passenger_username, passenger_password);
+		pasService.countTripsonPage(rd.passenger_username,
+				rd.passenger_password);
 		numFromPageAsPassAfterDelet = pasService.numPassPage;
 		log.info("Passenger has " + numFromPageAsPassAfterDelet
 				+ " trips on page after deleting");
-		pasService.countTripsonInDB(queryAsPassenger);
-		numFromBaseAsPassAfterDelet = pasService.numPassBase;
+		log.info("Passenger counts trips in the DB");
+		numFromBaseAsPassAfterDelet = queryGetInt(rd.queryAsPassenger);
 		log.info("Passenger has " + numFromBaseAsPassAfterDelet
 				+ " trips in the DB after deleting");
+	}
+	
+
+	public String withPassAddingTripsWithoutCount() throws InterruptedException, SQLException {
+		rd = new ReadingDatafile();
+		rd.readingDataFile();
+		driverService = new DriverService();
+		driverService.addingTrips(rd.driver_username, rd.driver_password);
+		idtr = driverService.idtr;
+		pasService = new PassengerService();
+		pasService.joinToTrip(rd.passenger_username, rd.passenger_password,
+				rd.from_address, rd.to_address, idtr);
+		driverService = new DriverService();
+		idtr_for_delete = idtr;
+		driverService.deletingTripAsDriver(rd.driver_username,
+				rd.driver_password, idtr_for_delete);
+		driverService.logout();
+		return idtr; 
 	}
 }

@@ -133,7 +133,7 @@ public class MethodsPage {
 		int numElem = buttonJoins.size();
 		if (numElem == 0) {
 			numFromPage = 0;
-			 log.error("Preconditions are wrong: there is no trip");
+			 log.error("There is no trip on the page");
 		} else {
 			numFromPage = 0;
 			try {

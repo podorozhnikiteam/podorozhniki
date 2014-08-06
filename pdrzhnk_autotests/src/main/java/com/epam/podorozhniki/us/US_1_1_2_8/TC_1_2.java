@@ -25,6 +25,7 @@ public class TC_1_2 extends BaseActions {
 
 	@Test
 	public void withoutPassInBase() throws InterruptedException, SQLException {
+		log.info(" GET STARTED");
 		withoutPass = new TripWihoutPass();
 		withoutPass.withoutPassMethod();
 		numFromBaseAsDriverBeforeDelet = withoutPass.numFromBaseAsDriverBeforeDelet;

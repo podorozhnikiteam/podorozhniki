@@ -19,16 +19,15 @@ public class PassengerService extends MethodsPage {
 
 	private MainPageAfterLogin mainPageAfterLogin;
 	private MainPageBeforeLogin mainPageBeforeLogin;
-	private DBService dbService;
 	private MyTripsPage myTripsPage;
+	private ReadingDatafile rd; 
 
 	public int numPassPage;
 	public int numPassBase;
 	public String idtr;
-	
+
 	private By buttonRemove = By.xpath("//div[@id='PassengerTrips']//td[4]/a");
-	private By nextPage = By
-			.xpath("//div[@id='PassengerTrips']//li[3]/a");
+	private By nextPage = By.xpath("//div[@id='PassengerTrips']//li[3]/a");
 
 	private static Logger log = Logger.getLogger(PassengerService.class);
 
@@ -51,9 +50,7 @@ public class PassengerService extends MethodsPage {
 	public void countTripsonInDB(String query) throws InterruptedException,
 			SQLException {
 		log.info("Passenger counts trips in the DB");
-		dbService = new DBService();
-		dbService.countingTripsAsPassenger(query);
-		numPassBase = dbService.numPassBase;
+		numPassBase = queryGetInt(query);
 	}
 
 	public void joinToTrip(String passenger_username,
@@ -66,6 +63,15 @@ public class PassengerService extends MethodsPage {
 		log.info("Passenger joins to the specific trip");
 		mainPageAfterLogin.joinTripByPassenger(from_address, to_address, idtr);
 		mainPageAfterLogin.logout();
+	}
+	
+	public void goToAsPassengerTab(String username, String password) {
+		mainPageBeforeLogin = new MainPageBeforeLogin();
+		mainPageBeforeLogin.enterLoginAndPass(username,
+				password);
+		mainPageAfterLogin = mainPageBeforeLogin.pressTheLoginButton();
+		myTripsPage = mainPageAfterLogin.goToMyTripsPage();
+		myTripsPage.gotoAsPassengerTab();
 	}
 
 }

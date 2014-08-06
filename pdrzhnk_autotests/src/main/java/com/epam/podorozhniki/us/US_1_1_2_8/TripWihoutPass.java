@@ -17,17 +17,10 @@ public class TripWihoutPass extends MethodsPage {
 	}
 
 	private DriverService driverService;
-
-	public String driver_username;
-	public String driver_password;
+	private ReadingDatafile rd; 
 
 	public String idtr;
 	public String idtr_for_delete;
-	public String queryDeletingAllDriverTrips;
-	public String queryAsDriver;
-
-	public String from_address;
-	public String to_address;
 
 	protected int numFromPageAsDriverBeforeDelet;
 	protected int numFromPageAsDriverAfterDelet;
@@ -39,34 +32,42 @@ public class TripWihoutPass extends MethodsPage {
 	@Test
 	public void withoutPassMethod()
 			throws InterruptedException, SQLException, UnknownServerException {
-
-		driver_username = System.getProperty("US1128.driver_login");
-		driver_password = System.getProperty("US1128.driver_password");
-		queryDeletingAllDriverTrips = System
-				.getProperty("US1128.queryDeletingAllDriverTrips");
-		queryAsDriver = System.getProperty("US1128.queryAsDriver");
-		
+		log.info(" withoutPassMethod STARTED");
+		rd = new ReadingDatafile();
+		rd.readingDataFile();
 		driverService = new DriverService();
-		driverService.addingTrips(driver_username, driver_password);
-		driverService.countTripsOnPage(driver_username, driver_password);
+		driverService.addingTrips(rd.driver_username, rd.driver_password);
+		driverService.countTripsOnPage(rd.driver_username, rd.driver_password);
 		numFromPageAsDriverBeforeDelet = driverService.numDriverPage;
 		log.info("Driver has " + numFromPageAsDriverBeforeDelet
 				+ " trips on the page before deleting");
-		driverService.countTripsinDB(queryAsDriver);
-		numFromBaseAsDriverBeforeDelet = driverService.numDriverBase;
+		log.info("Driver counts trips in the DB");
+		numFromBaseAsDriverBeforeDelet = queryGetInt(rd.queryAsDriver); 
 		idtr = driverService.idtr;
 		idtr_for_delete = idtr;
 		log.info("Driver has " + numFromBaseAsDriverBeforeDelet
 				+ " trips in the DB before deleting");
-		driverService.deletingTripAsDriver(driver_username, driver_password,
+		driverService.deletingTripAsDriver(rd.driver_username, rd.driver_password,
 				idtr_for_delete);
-		driverService.countTripsOnPage(driver_username, driver_password);
+		driverService.countTripsOnPage(rd.driver_username, rd.driver_password);
 		numFromPageAsDriverAfterDelet = driverService.numDriverPage;
 		log.info("Driver has " + numFromPageAsDriverAfterDelet
 				+ " trips on the page after deleting");
-		driverService.countTripsinDB(queryAsDriver);
-		numFromBaseAsDriverAfterDelet = driverService.numDriverBase;
+		log.info("Driver counts trips in the DB");
+		numFromBaseAsDriverAfterDelet = queryGetInt(rd.queryAsDriver); 
 		log.info("Driver has " + numFromBaseAsDriverAfterDelet
 				+ " trips in the DB after deleting");
+	}
+	
+	public void addingTripsWithoutCount() throws InterruptedException, SQLException {
+		rd = new ReadingDatafile();
+		rd.readingDataFile();
+		driverService = new DriverService();
+		driverService.addingTrips(rd.driver_username, rd.driver_password);
+		idtr = driverService.idtr;
+		idtr_for_delete = idtr;
+		driverService.deletingTripAsDriver(rd.driver_username,
+				rd.driver_password, idtr_for_delete);
+		driverService.logout();
 	}
 }

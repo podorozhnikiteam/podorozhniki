@@ -30,6 +30,7 @@ public class TC_2_2 extends BaseActions {
 	@Test
 	public void withPassInBaseAsDriver() throws InterruptedException,
 			SQLException {
+		log.info(" GET STARTED");
 		tripWithPass = new TripWithPass();
 		tripWithPass.withPassMetod();
 		numFromBaseAsDriverBeforeDelet = tripWithPass.numFromBaseAsDriverBeforeDelet;
