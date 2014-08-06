@@ -8,26 +8,30 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.epam.podorozhniki.core.Driver;
 
-public class TC_1_2 extends BaseActions {
+/*
+ * Created by Zoja_Sharova
+ */
 
-	public TC_1_2() {
+public class TC_1128_1_2 extends BaseActions {
+
+	public TC_1128_1_2() {
 		PageFactory.initElements(Driver.getInstance(), this);
 	}
 
-	private TripWihoutPass withoutPass;
+	private DeletingTrip withoutPass;
 
 	public String queryDeletingAllDriverTrips;
 
 	protected int numFromBaseAsDriverBeforeDelet;
 	protected int numFromBaseAsDriverAfterDelet;
 
-	private static Logger log = Logger.getLogger(TC_1_2.class);
+	private static Logger log = Logger.getLogger(TC_1128_1_2.class);
 
 	@Test
 	public void withoutPassInBase() throws InterruptedException, SQLException {
 		log.info(" GET STARTED");
-		withoutPass = new TripWihoutPass();
-		withoutPass.withoutPassMethod();
+		withoutPass = new DeletingTrip();
+		withoutPass.deletingTripWithoutPassenger();
 		numFromBaseAsDriverBeforeDelet = withoutPass.numFromBaseAsDriverBeforeDelet;
 		numFromBaseAsDriverAfterDelet = withoutPass.numFromBaseAsDriverAfterDelet;
 		withoutPass.verifyNumberOfTripsOnthePage(

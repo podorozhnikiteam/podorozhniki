@@ -1,5 +1,7 @@
 package com.epam.podorozhniki.ui;
 
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
 import java.io.IOException;
 import java.sql.ResultSet;
@@ -7,9 +9,16 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NotFoundException;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebElement;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.openqa.selenium.*;
@@ -22,15 +31,20 @@ import com.epam.podorozhniki.core.Driver;
 import com.epam.podorozhniki.db.DBConnection;
 import com.epam.podorozhniki.us.US_001.TC_001;
 
-import static org.junit.Assert.assertTrue;
-
 public class MethodsPage {
 
-	public static int numFromPage;
-	private static Logger log = Logger.getLogger(TC_001.class);
+	public int numFromPage;
 
-	@FindBy(xpath = "//ul[@class = 'button-list']/li[2]/a")
-	protected WebElement logoutButton;
+    @FindBy(xpath = "//ul[@class = 'button-list']/li[2]/a")
+    protected WebElement logoutButton;
+    
+    private static Logger log = Logger.getLogger(TC_001.class);
+
+    public MainPageBeforeLogin logout(){
+        waitForElementFindBy(logoutButton);
+        logoutButton.click();
+        return new MainPageBeforeLogin();
+    }
 
 	public MethodsPage waitForElementFindBy(WebElement element) {
 		WebDriverWait wait = new WebDriverWait(Driver.getInstance(), 15, 1);
@@ -78,18 +92,6 @@ public class MethodsPage {
 		}
 	}
 
-	public void catchAlert() {
-		Alert alert = null;
-		Wait<WebDriver> wait = new WebDriverWait(Driver.getInstance(), 5);
-		try {
-			alert = wait.until(ExpectedConditions.alertIsPresent());
-		} catch (TimeoutException ignored) {
-		}
-		if (alert != null) {
-			alert.accept();
-		}
-	}
-
 	public int countTripsOnPage() {
 		MethodsPage method = new MethodsPage();
 
@@ -105,11 +107,6 @@ public class MethodsPage {
 		return count;
 	}
 
-	public void logout() {
-		logoutButton.click();
-	}
-
-	
 	public void verifyNumberOfTripsOnthePage(int numBeforeDelet,
 			int numAfterDelet) {
 		Assert.assertEquals("ERROR ", numBeforeDelet - 1, numAfterDelet);
@@ -166,5 +163,32 @@ public class MethodsPage {
 		}
 		return numFromPage;
 	}
+	
+	
+	public void catchAlert() {
+		Alert alert = null;
+		Wait<WebDriver> wait = new WebDriverWait(Driver.getInstance(), 5);
+		try {
+			alert = wait.until(ExpectedConditions.alertIsPresent());
+		} catch (TimeoutException ignored) {
+		}
+		if (alert != null) {
+			alert.accept();
+		}
+	}
+	
+    public boolean isElementPresent(WebElement webElement) {
+        boolean exists = false;
 
+        Driver.getInstance().manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+
+        try {
+            webElement.getTagName();
+            exists = true;
+        } catch (NoSuchElementException e) {}
+
+        Driver.getInstance().manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+
+        return exists && webElement.isDisplayed();
+    }
 }

@@ -1,3 +1,5 @@
+Name: Passengers Calendar trip's status view.
+
 Narrative:
 In order to I could review all confirmed/declined/submitted trips in accordance with the road, I choose
 As a passenger
@@ -13,7 +15,7 @@ Scenario: US02.4.2 - TRAVELLER'S CALENDAR. TC02.4.2.2 - ACCEPTED.
 Given driver create new trip for passenger
 And passenger join the trip
 And driver accepted passenger to the trip
-When
+When passenger go to the Passengers Calendar
 Then it will see the trip's status: "accepted" by Day, Week, Month and Year view.
 
 

@@ -1,7 +1,7 @@
 package com.epam.podorozhniki.ui;
 
 import com.epam.podorozhniki.core.Driver;
-import com.epam.podorozhniki.us.US_1_1_2_8.DriverService;
+import com.epam.podorozhniki.us.US_1_1_2_8.US_Methods;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.Alert;
@@ -18,63 +18,55 @@ import static junit.framework.TestCase.assertEquals;
 
 public class AddTripPage extends MethodsPage {
 
-	public AddTripPage() {
-		PageFactory.initElements(Driver.getInstance(), this);
-	}
+    public AddTripPage() {
+        PageFactory.initElements(Driver.getInstance(), this);
+    }
 
-	private static Logger log = Logger.getLogger(AddTripPage.class);
-	private boolean acceptNextAlert = true;
+    private boolean acceptNextAlert = true;
 
-	@FindBy(id = "my_trips")
-	protected WebElement myTripsLink;
+    @FindBy(xpath = "//*[@id='starttimepicker']")
+    public static WebElement timeField;
 
-	@FindBy(xpath = "//li[@id='li_driver']/a")
-	protected WebElement asDriverTab;
+    @FindBy(xpath = "//*[@id='geoStart']")
+    private WebElement fromField;
 
-	@FindBy(xpath = "//*[@id='starttimepicker']")
-	public static WebElement timeField;
+    @FindBy(xpath = "//*[@id='geoFinish']")
+    private WebElement toField;
 
-	@FindBy(xpath = "//*[@id='geoStart']")
-	private WebElement fromField;
+    @FindBy(xpath = "//*[@id='findroute']/div/form/fieldset/div[4]/div/input[1]")
+    private WebElement buildOnMapBtn;
 
-	@FindBy(xpath = "//*[@id='geoFinish']")
-	private WebElement toField;
+    @FindBy(xpath = "//*[@id='findroute']/div/form/fieldset/div[10]/div/input")
+    private WebElement createTripBtn;
 
-	@FindBy(xpath = "//*[@id='findroute']/div/form/fieldset/div[4]/div/input[1]")
-	private WebElement buildOnMapBtn;
+    @FindBy(xpath = "//*[@id='findroute']/div/form/fieldset/div[10]/div/a")
+    private WebElement backToTripsBtn;
 
-	@FindBy(xpath = "//*[@id='findroute']/div/form/fieldset/div[10]/div/input")
-	private WebElement createTripBtn;
+    private String closeAlertAndGetItsText() {
+        try {
+            Alert alert = Driver.getInstance().switchTo().alert();
+            String alertText = alert.getText();
+            if (acceptNextAlert) {
+                alert.accept();
+            } else {
+                alert.dismiss();
+            }
+            return alertText;
+        } finally {
+            acceptNextAlert = true;
+        }
+    }
 
-	@FindBy(xpath = "//*[@id='findroute']/div/form/fieldset/div[10]/div/a")
-	private WebElement backToTripsBtn;
-
-	private String closeAlertAndGetItsText() {
-		try {
-			Alert alert = Driver.getInstance().switchTo().alert();
-			String alertText = alert.getText();
-			if (acceptNextAlert) {
-				alert.accept();
-			} else {
-				alert.dismiss();
-			}
-			return alertText;
-		} finally {
-			acceptNextAlert = true;
-		}
-	}
-
-	public MyTripsPage addTrip(String from, String to)
-			throws InterruptedException, WebDriverException {
-		fromField.clear();
-		fromField.sendKeys(from);
-		toField.clear();
-		toField.sendKeys(to);
-		buildOnMapBtn.click();
-		createTripBtn.click();
-		Thread.sleep(500);
-		assertEquals("Your trip successfully saved!", closeAlertAndGetItsText());
-		backToTripsBtn.click();
-		return new MyTripsPage();
-	}
+    public MyTripsPage addTrip(String from, String to, String alertText) throws InterruptedException {
+        fromField.clear();
+        fromField.sendKeys(from);
+        toField.clear();
+        toField.sendKeys(to);
+        buildOnMapBtn.click();
+        createTripBtn.click();
+        assertEquals(alertText, closeAlertAndGetItsText());
+        backToTripsBtn.click();
+        return new MyTripsPage();
+    }
+    
 }
