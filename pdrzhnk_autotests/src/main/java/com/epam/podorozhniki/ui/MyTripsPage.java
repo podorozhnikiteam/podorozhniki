@@ -10,11 +10,8 @@ import com.epam.podorozhniki.us.US_1_1_2_8.TC_1128_1_1;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
-<<<<<<< HEAD
 import org.openqa.selenium.TimeoutException;
-=======
-import org.openqa.selenium.NotFoundException;
->>>>>>> UC10
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
