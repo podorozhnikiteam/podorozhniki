@@ -6,16 +6,14 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import static org.junit.Assert.assertTrue;
+
 import com.epam.podorozhniki.core.Driver;
 
 /**
- * Created by Zoja_Sharova on 7/25/2014
+ * Created by Zoja_Sharova
  */
 
 public class MainPageAfterLogin extends MethodsPage {
-
-	private static Logger log = Logger.getLogger(MainPageAfterLogin.class);
-	private MethodsPage methodsPage;
 
 	public MainPageAfterLogin() {
 		PageFactory.initElements(Driver.getInstance(), this);
@@ -51,9 +49,6 @@ public class MainPageAfterLogin extends MethodsPage {
     @FindBy(id = "joinSeats")
     private WebElement AmountOfSeatsToTake;
 
-	private By join_button = By.xpath("//button[contains(text(),'Join')]");
-	private By nextPage = By.xpath("//li[@class='active']/following-sibling::*[1]/self::li/a");
-
 	public MyTripsPage goToMyTripsPage() {
 		myTripsLink.click();
 		return new MyTripsPage();
@@ -73,16 +68,24 @@ public class MainPageAfterLogin extends MethodsPage {
         checkAlert("Successfully");
     }
 
-	// count trips on the main page
-	public int countTripsOnTheMainPage(By button_for_list, By next_page_button) {
-		methodsPage = PageFactory.initElements(Driver.getInstance(), MethodsPage.class);
-		countTripsOnThePage(join_button, nextPage);
-		return numFromPage; 
-	}
-
     public void verifyLogoutButton() { assertTrue(isElementPresent(logoutButton));}
 
     public void verifyNameDisplayed(String loginName) {username.getText().equals(loginName); }
 
     public void verifyLoginError(String incorrectLoginErrorMessage) {error.getText().equals(incorrectLoginErrorMessage);}
+    
+	public void joinTripByPassenger(String fromAddress, String toAddress,
+			String idtr) {
+		fromAddressField.clear();
+		fromAddressField.sendKeys(fromAddress);
+		toAddressField.clear();
+		toAddressField.sendKeys(toAddress);
+		anyDateCheckPoint.click();
+		findTripButton.click();
+		Driver.getInstance()
+				.findElement(By.xpath("//button[@idtr='" + idtr + "']"))
+				.click();
+		joinSeatsOkButton.click();
+		checkAlert("Successfully");
+	}
 }

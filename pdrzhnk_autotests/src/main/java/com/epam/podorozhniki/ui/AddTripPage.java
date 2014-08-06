@@ -1,7 +1,11 @@
 package com.epam.podorozhniki.ui;
 
 import com.epam.podorozhniki.core.Driver;
+import com.epam.podorozhniki.us.US_1_1_2_8.US_Methods;
+
+import org.apache.log4j.Logger;
 import org.openqa.selenium.Alert;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -64,4 +68,5 @@ public class AddTripPage extends MethodsPage {
         backToTripsBtn.click();
         return new MyTripsPage();
     }
+    
 }
