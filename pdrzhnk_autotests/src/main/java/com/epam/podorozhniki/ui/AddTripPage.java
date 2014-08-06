@@ -89,4 +89,9 @@ public class AddTripPage extends MethodsPage {
     public void clickOnCreateTripBtn() {
         createTripBtn.click();
     }
+
+    public void acceptAlertMessage() {
+        Alert alert = Driver.getInstance().switchTo().alert();
+        alert.accept();
+    }
 }
