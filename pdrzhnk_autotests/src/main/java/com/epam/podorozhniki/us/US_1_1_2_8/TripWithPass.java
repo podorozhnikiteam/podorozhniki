@@ -1,18 +1,11 @@
 package com.epam.podorozhniki.us.US_1_1_2_8;
 
-import static org.junit.Assert.assertFalse;
-
 import java.sql.SQLException;
 
-import net.sourceforge.htmlunit.corejs.javascript.tools.debugger.Main;
-
 import org.apache.log4j.Logger;
-import org.openqa.selenium.By;
 import org.openqa.selenium.support.PageFactory;
 
 import com.epam.podorozhniki.core.Driver;
-import com.epam.podorozhniki.ui.MainPageAfterLogin;
-import com.epam.podorozhniki.ui.MainPageBeforeLogin;
 import com.epam.podorozhniki.ui.MethodsPage;
 
 public class TripWithPass extends MethodsPage {
@@ -24,7 +17,7 @@ public class TripWithPass extends MethodsPage {
 	private DriverService driverService;
 	private PassengerService pasService;
 	private ReadingDatafile rd;
-	
+
 	public String idtr;
 	public String idtr_for_delete;
 
@@ -88,9 +81,9 @@ public class TripWithPass extends MethodsPage {
 		log.info("Passenger has " + numFromBaseAsPassAfterDelet
 				+ " trips in the DB after deleting");
 	}
-	
 
-	public String withPassAddingTripsWithoutCount() throws InterruptedException, SQLException {
+	public String withPassAddingTripsWithoutCount()
+			throws InterruptedException, SQLException {
 		rd = new ReadingDatafile();
 		rd.readingDataFile();
 		driverService = new DriverService();
@@ -104,6 +97,6 @@ public class TripWithPass extends MethodsPage {
 		driverService.deletingTripAsDriver(rd.driver_username,
 				rd.driver_password, idtr_for_delete);
 		driverService.logout();
-		return idtr; 
+		return idtr;
 	}
 }
