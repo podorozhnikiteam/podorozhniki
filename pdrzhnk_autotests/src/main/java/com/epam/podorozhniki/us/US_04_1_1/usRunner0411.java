@@ -13,7 +13,7 @@ import org.openqa.selenium.support.PageFactory;
 /**
  * Created by Viktoriia_Ishchuk on 8/1/2014.
  */
-public class usRunner{
+public class usRunner0411 {
 
     private MainPageBeforeLogin mainPageBeforeLogin;
     private MainPageAfterLogin mainPageAfterLogin;
@@ -37,12 +37,12 @@ public class usRunner{
 
     @When("the user has entered login information into login form")
     public void enterInfo(){
-        mainPageBeforeLogin.enterLoginAndPass(System.getProperty("US0411.login"),System.getProperty("US0411.correctpassword"));
+        mainPageBeforeLogin.enterLoginAndPass(System.getProperty("US0411.login"), System.getProperty("US0411.correctpassword"));
     }
 
     @When("the user has entered incorrect login information into login form")
     public void enterIncorrectInfo(){
-        mainPageBeforeLogin.enterLoginAndPass(System.getProperty("US0411.login"),System.getProperty("US0411.incorrectpassword"));
+        mainPageBeforeLogin.enterLoginAndPass(System.getProperty("US0411.login"), System.getProperty("US0411.incorrectpassword"));
     }
 
     @When("login button are pressed")

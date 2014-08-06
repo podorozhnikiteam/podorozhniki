@@ -1,11 +1,9 @@
 package com.epam.podorozhniki.ui;
 
 import java.sql.SQLException;
-
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
 import com.epam.podorozhniki.core.Driver;
 import com.epam.podorozhniki.db.DBConnection;
 
@@ -22,12 +20,18 @@ public class RegistrationPage {
 	
 	@FindBy(id = "phone")
 	WebElement phone;
+
+    @FindBy(id = "email")
+    private WebElement email;
 	
 	@FindBy(name = "agree")
 	WebElement checkbox;
 
 	@FindBy (id = "b")
 	WebElement submitButton;
+
+    @FindBy(xpath = "//span[@id='login.errors']")
+    WebElement error;
 	
 	public RegistrationPage() {
 		PageFactory.initElements(Driver.getInstance(), this);
@@ -38,7 +42,6 @@ public class RegistrationPage {
 		this.login.sendKeys(System.getProperty("test.loginForRegistrationNewUser"));
 	}
 
-
 	public void typePassword() {
 		this.password.clear();
 		this.password.sendKeys(System.getProperty("test.passwordForRegistrationNewUser"));
@@ -48,7 +51,12 @@ public class RegistrationPage {
 		this.confirmPassword.clear();
 		this.confirmPassword.sendKeys(System.getProperty("test.passwordForRegistrationNewUser"));
 	}
-	
+
+    public void typeEmail() {
+        this.email.clear();
+        this.email.sendKeys(System.getProperty("test.emailForRegistrationNewUser"));
+    }
+
 	public void typephone() {
 		this.phone.clear();
 		this.phone.sendKeys(System.getProperty("test.phoneForRegistrationNewUser"));
@@ -63,6 +71,8 @@ public class RegistrationPage {
 		this.submitButton.click();
 		return new MainPageAfterLogin();
 	}
+
+    public void verifyError(String incorrectLoginErrorMessage) {error.getText().equals(incorrectLoginErrorMessage); }
 	
 	public void deleteNewUserFromDB() throws SQLException{
 		DBConnection db = new DBConnection();
