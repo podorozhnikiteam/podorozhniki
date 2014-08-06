@@ -1,18 +1,11 @@
 package com.epam.podorozhniki.ui;
 
-import java.util.List;
-
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.NotFoundException;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
+import static org.junit.Assert.assertTrue;
 import com.epam.podorozhniki.core.Driver;
 
 /**
@@ -28,7 +21,7 @@ public class MainPageAfterLogin extends MethodsPage {
 		PageFactory.initElements(Driver.getInstance(), this);
 	}
 
-	@FindBy(xpath = "//div[@class='col-lg-3']/span")
+	@FindBy(xpath = "//div[1]/div[1]/div[2]/div/div[1]/span")
 	protected WebElement username;
 
 	@FindBy(className = "errorblock")
@@ -59,8 +52,7 @@ public class MainPageAfterLogin extends MethodsPage {
     private WebElement AmountOfSeatsToTake;
 
 	private By join_button = By.xpath("//button[contains(text(),'Join')]");
-	private By nextPage = By
-			.xpath("//li[@class='active']/following-sibling::*[1]/self::li/a");
+	private By nextPage = By.xpath("//li[@class='active']/following-sibling::*[1]/self::li/a");
 
 	public MyTripsPage goToMyTripsPage() {
 		myTripsLink.click();
@@ -88,4 +80,9 @@ public class MainPageAfterLogin extends MethodsPage {
 		return numFromPage; 
 	}
 
+    public void verifyLogoutButton() { assertTrue(isElementPresent(logoutButton));}
+
+    public void verifyNameDisplayed(String loginName) {username.getText().equals(loginName); }
+
+    public void verifyLoginError(String incorrectLoginErrorMessage) {error.getText().equals(incorrectLoginErrorMessage);}
 }

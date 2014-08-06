@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.Alert;
@@ -24,7 +26,6 @@ import com.epam.podorozhniki.core.Driver;
 public class MethodsPage {
 
 	public int numFromPage;
-
 
     @FindBy(xpath = "//ul[@class = 'button-list']/li[2]/a")
     protected WebElement logoutButton;
@@ -73,7 +74,8 @@ public class MethodsPage {
 
 	// count trips on the page
 	public int countTripsOnThePage(By button_for_list, By nextPage) {
-		List<WebElement> buttonJoins = Driver.getInstance().findElements(button_for_list);
+		List<WebElement> buttonJoins = Driver.getInstance().findElements(
+				button_for_list);
 		int numElem = buttonJoins.size();
 		if (numElem == 0) {
 			numFromPage = 0;
@@ -83,12 +85,15 @@ public class MethodsPage {
 		} else {
 			numFromPage = 0;
 			try {
-				List<WebElement> allPages = Driver.getInstance().findElements(nextPage);
+				List<WebElement> allPages = Driver.getInstance().findElements(
+						nextPage);
 				int next = allPages.size();
 				outer: while (next != 0) {
-					buttonJoins = Driver.getInstance().findElements(button_for_list);
+					buttonJoins = Driver.getInstance().findElements(
+							button_for_list);
 					numFromPage = numFromPage + buttonJoins.size();
-					if (Driver.getInstance().findElement(nextPage).getText().contains("�")) {
+					if (Driver.getInstance().findElement(nextPage).getText()
+							.contains("»")) {
 						break;
 					} else {
 						(new WebDriverWait(Driver.getInstance(), 10)).until(
@@ -112,4 +117,26 @@ public class MethodsPage {
 				+ " trips on the main page");
 		return numFromPage;
 	}
+	
+	public boolean isElementPresent(By locator) {
+		Driver.getInstance().manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+		List<WebElement> elements = Driver.getInstance().findElements(locator);
+		Driver.getInstance().manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		return elements.size() > 0 && elements.get(0).isDisplayed();
+	}
+	
+    public boolean isElementPresent(WebElement webElement) {
+        boolean exists = false;
+
+        Driver.getInstance().manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+
+        try {
+            webElement.getTagName();
+            exists = true;
+        } catch (NoSuchElementException e) {}
+
+        Driver.getInstance().manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+
+        return exists && webElement.isDisplayed();
+    }
 }
