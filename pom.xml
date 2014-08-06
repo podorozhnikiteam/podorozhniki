@@ -28,7 +28,6 @@
             <artifactId>junit</artifactId>
             <version>4.11</version>
         </dependency>
-
         <dependency>
             <groupId>org.jbehave</groupId>
             <artifactId>jbehave-core</artifactId>

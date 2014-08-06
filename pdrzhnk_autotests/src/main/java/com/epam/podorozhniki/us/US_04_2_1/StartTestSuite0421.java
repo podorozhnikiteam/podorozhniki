@@ -1,5 +1,6 @@
-package com.epam.podorozhniki.us.US_04_1_1;
+package com.epam.podorozhniki.us.US_04_2_1;
 
+import com.epam.podorozhniki.us.US_04_1_1.usRunner0411;
 import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.configuration.MostUsefulConfiguration;
 import org.jbehave.core.i18n.LocalizedKeywords;
@@ -23,11 +24,11 @@ import static org.jbehave.core.reporters.Format.*;
 /**
  * Created by Viktoriia_Ishchuk on 8/1/2014.
  */
-public class StartTestSuite extends JUnitStories{
+public class StartTestSuite0421 extends JUnitStories{
 
     @Override
     public Configuration configuration() {
-        Class<? extends StartTestSuite> embeddableClass = this.getClass();
+        Class<? extends StartTestSuite0421> embeddableClass = this.getClass();
         ParameterConverters parameterConverters = new ParameterConverters();
         ExamplesTableFactory examplesTableFactory = new ExamplesTableFactory(
                 new LocalizedKeywords(), new LoadFromClasspath(embeddableClass), parameterConverters);
@@ -44,7 +45,7 @@ public class StartTestSuite extends JUnitStories{
     @Override
     public List<CandidateSteps> candidateSteps() {
         try {
-            return new InstanceStepsFactory(configuration(), new usRunner()).createCandidateSteps();
+            return new InstanceStepsFactory(configuration(), new usRunner0421()).createCandidateSteps();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -53,12 +54,11 @@ public class StartTestSuite extends JUnitStories{
 
     @Override
     protected List<String> storyPaths() {
-        return Arrays.asList("US_04_1_1.story");
+        return Arrays.asList("US_04_2_1.story");
     }
 
     @Test
     public void run() throws Throwable {
         super.run();
     }
-
 }
