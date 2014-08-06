@@ -17,6 +17,7 @@ import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -25,6 +26,15 @@ import com.epam.podorozhniki.core.Driver;
 public class MethodsPage {
 
 	public int numFromPage;
+
+    @FindBy(xpath = "//ul[@class = 'button-list']/li[2]/a")
+    protected WebElement logoutButton;
+
+    public MainPageBeforeLogin logout(){
+        waitForElementFindBy(logoutButton);
+        logoutButton.click();
+        return new MainPageBeforeLogin();
+    }
 
 	public MethodsPage waitForElementFindBy(WebElement element) {
 		WebDriverWait wait = new WebDriverWait(Driver.getInstance(), 15, 1);

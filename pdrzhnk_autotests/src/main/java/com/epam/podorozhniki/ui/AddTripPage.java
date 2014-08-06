@@ -56,14 +56,14 @@ public class AddTripPage extends MethodsPage {
         }
     }
 
-    public MyTripsPage addTrip(String from, String to) throws InterruptedException {
+    public MyTripsPage addTrip(String from, String to, String alertText) throws InterruptedException {
         fromField.clear();
         fromField.sendKeys(from);
         toField.clear();
         toField.sendKeys(to);
         buildOnMapBtn.click();
         createTripBtn.click();
-        assertEquals("Your trip successfully saved!", closeAlertAndGetItsText());
+        assertEquals(alertText, closeAlertAndGetItsText());
         backToTripsBtn.click();
         return new MyTripsPage();
     }
