@@ -10,7 +10,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import com.epam.podorozhniki.core.Driver;
-import com.epam.podorozhniki.us.US_1_1_2_8.TC_1_2;
+import com.epam.podorozhniki.us.US_1_1_2_8.TC_1128_1_2;
 
 /**
  * Created by Viktoriia_Ishchuk on 7/25/2014.

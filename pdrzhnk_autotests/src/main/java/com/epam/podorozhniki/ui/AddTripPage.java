@@ -1,7 +1,7 @@
 package com.epam.podorozhniki.ui;
 
 import com.epam.podorozhniki.core.Driver;
-import com.epam.podorozhniki.us.US_1_1_2_8.DriverService;
+import com.epam.podorozhniki.us.US_1_1_2_8.US_Methods;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.Alert;

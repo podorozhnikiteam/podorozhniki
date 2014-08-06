@@ -11,32 +11,38 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.epam.podorozhniki.core.Driver;
 
-public class TC_3_2 extends BaseActions {
+public class TC_1128_1_4 extends BaseActions {
 
-	public TC_3_2() {
+	public TC_1128_1_4() {
 		PageFactory.initElements(Driver.getInstance(), this);
 	}
 
-	private TripWithPass tripWithPass;
 	private ReadingDatafile rd;
-	private DriverService drService;
+	private US_Methods us_Methods;
 
+	public String idtr;
+	public String idtr_for_delete;
+	
 	protected int numFromPageAsDriverBeforeDelet;
 	protected int numFromPageAsDriverAfterDelet;
 
-	private static Logger log = Logger.getLogger(TC_3_2.class);
+	private static Logger log = Logger.getLogger(TC_1128_1_4.class);
 
 	@Test
 	public void withPassCorrectRemovingFromDriverTab()
 			throws InterruptedException, SQLException {
 		log.info(" GET STARTED");
 		rd = new ReadingDatafile();
-		tripWithPass = new TripWithPass();
-		tripWithPass.withPassAddingTripsWithoutCount();
-		String idtr = tripWithPass.idtr;
-		log.info("idtr " + idtr);
-		drService = new DriverService();
-		drService.goToAsDRiverTab(rd.driver_username, rd.driver_password);
+		rd.readingDataFile();
+		us_Methods = new US_Methods();
+		us_Methods.addingTrips(rd.driver_username, rd.driver_password);
+		idtr = us_Methods.idtr;
+		us_Methods.joinToTrip(rd.passenger_username, rd.passenger_password,
+				rd.from_address, rd.to_address, idtr);
+		idtr_for_delete = idtr;
+		us_Methods.deletingTripAsDriver(rd.driver_username,
+				rd.driver_password, idtr_for_delete);
+		us_Methods.goToAsDRiverTab(rd.driver_username, rd.driver_password);
 		assertFalse(isElementPresent(By.xpath("//button[@idtr='" + idtr + "']")));
 		log.info("Test passed succesfully");
 

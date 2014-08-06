@@ -8,13 +8,13 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.epam.podorozhniki.core.Driver;
 
-public class TC_2_1 extends BaseActions {
+public class TC_1128_2_1 extends BaseActions {
 
-	public TC_2_1() {
+	public TC_1128_2_1() {
 		PageFactory.initElements(Driver.getInstance(), this);
 	}
 
-	private TripWithPass tripWithPass;
+	private DeletingTrip deletingTrip;
 
 	public String queryDeletingAllDriverTrips;
 	public String queryDeletingAllPassengerTrips;
@@ -22,17 +22,17 @@ public class TC_2_1 extends BaseActions {
 	protected int numFromPageAsDriverBeforeDelet;
 	protected int numFromPageAsDriverAfterDelet;
 
-	private static Logger log = Logger.getLogger(TC_2_1.class);
+	private static Logger log = Logger.getLogger(TC_1128_2_1.class);
 
 	@Test
 	public void withPassOnPageAsDriver() throws InterruptedException,
 			SQLException {
 		log.info(" GET STARTED");
-		tripWithPass = new TripWithPass();
-		tripWithPass.withPassMetod();
-		numFromPageAsDriverBeforeDelet = tripWithPass.numFromPageAsDriverBeforeDelet;
-		numFromPageAsDriverAfterDelet = tripWithPass.numFromPageAsDriverAfterDelet;
-		tripWithPass.verifyNumberOfTripsOnthePage(
+		deletingTrip = new DeletingTrip();
+		deletingTrip.deletingTripWithPassenger();
+		numFromPageAsDriverBeforeDelet = deletingTrip.numFromPageAsDriverBeforeDelet;
+		numFromPageAsDriverAfterDelet = deletingTrip.numFromPageAsDriverAfterDelet;
+		deletingTrip.verifyNumberOfTripsOnthePage(
 				numFromPageAsDriverBeforeDelet, numFromPageAsDriverAfterDelet);
 		log.info("OK: Verifying number of trips on the page as driver");
 	}
