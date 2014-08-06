@@ -2,11 +2,13 @@ package com.epam.podorozhniki.ui;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import com.epam.podorozhniki.core.Driver;
 import com.epam.podorozhniki.db.DBConnection;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -379,7 +381,6 @@ public class MyTripsPage extends MethodsPage {
 
 	public int countTripsInColume(int num) {
 		MethodsPage method = new MethodsPage();
-		
 		int n = 1;
 		int count = 0;
 				
@@ -392,19 +393,11 @@ public class MyTripsPage extends MethodsPage {
 		return count;
 	}
 
-
 	public int countRecordsInColumnFromDb(String query) throws SQLException{
 			DBConnection db = new DBConnection();
-			String countTrips = "select count(*)as qty"
-					+ " from point"
-					+ " where name = '"+query+"'";
-			ResultSet expectedResult = db.queryExecutor(countTrips);
+			ResultSet expectedResult = db.queryExecutor(query);
 			expectedResult.next();
-				
 			int count = expectedResult.getInt(1);
-			
 		return count;
-		
 	}
-
 }
