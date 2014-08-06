@@ -6,3 +6,5 @@
 *.iml
 target/**
 /bin
+/pom.xml
+/.gitignore
