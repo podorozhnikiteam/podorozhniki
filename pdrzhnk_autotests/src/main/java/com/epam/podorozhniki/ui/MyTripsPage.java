@@ -164,6 +164,13 @@ public class MyTripsPage extends MethodsPage {
     @FindBy (id = "requests")
     protected WebElement locatorForRequestsFilter;
 
+    // US1.1.2.3
+    @FindBy(xpath = ".//*[@id='routeResults']/div/table/tbody/tr/td[4]")
+    private WebElement totalSeats;
+
+    @FindBy(xpath = ".//*[@id='routeResults']/div/table/tbody/tr/td[6]")
+    private WebElement freeSeats;
+
     //Methods
     public MainPageAfterLogin gotoMainPage() {
         mainPageLink.click();
@@ -406,5 +413,14 @@ public class MyTripsPage extends MethodsPage {
 		return count;
 		
 	}
+
+    // US1.1.2.3
+    public String getTotalSeatsNumber() {
+        return totalSeats.getText();
+    }
+
+    public String getFreeSeatsNumber() {
+        return freeSeats.getText();
+    }
 
 }

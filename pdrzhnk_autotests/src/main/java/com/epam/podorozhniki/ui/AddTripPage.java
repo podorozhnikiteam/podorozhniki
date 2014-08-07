@@ -41,6 +41,9 @@ public class AddTripPage extends MethodsPage {
     @FindBy(xpath = "//*[@id='seats']")
     private WebElement passengerSeatsField;
 
+    @FindBy(id = "my_trips")
+    private WebElement myTripsPageBtn;
+
     private String closeAlertAndGetItsText() {
         try {
             Alert alert = Driver.getInstance().switchTo().alert();
@@ -83,6 +86,7 @@ public class AddTripPage extends MethodsPage {
     }
 
     public void setPassengerSeats(Integer num) {
+        passengerSeatsField.clear();
         passengerSeatsField.sendKeys(num.toString());
     }
 
@@ -93,5 +97,15 @@ public class AddTripPage extends MethodsPage {
     public void acceptAlertMessage() {
         Alert alert = Driver.getInstance().switchTo().alert();
         alert.accept();
+    }
+
+    public String getAlertMessage() {
+        Alert alert = Driver.getInstance().switchTo().alert();
+        return alert.getText();
+    }
+
+    public MyTripsPage clickOnMyTripsPage() {
+        myTripsPageBtn.click();
+        return new MyTripsPage();
     }
 }
