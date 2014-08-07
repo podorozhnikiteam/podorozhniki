@@ -30,6 +30,9 @@ public class ReadingDatafile {
 	public String queryDeletingAllPassengerTrips;
 	public String alert;
 	public String baseUrl;
+	public String submitted; 
+	public String denied;
+	public String accepted;
 	
 
 	public void readingDataFile() {
@@ -54,5 +57,7 @@ public class ReadingDatafile {
 		to_address_2 = System.getProperty("US1128.to_adress_2");
 		alert = System.getProperty("US1128.alert");
 		baseUrl = System.getProperty("baseUrl");
+		submitted = System.getProperty("US1128.submitted_status"); 
+		denied  = System.getProperty(key)
 	}
 }

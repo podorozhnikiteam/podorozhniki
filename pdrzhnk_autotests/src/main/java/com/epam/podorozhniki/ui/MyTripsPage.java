@@ -216,7 +216,13 @@ public class MyTripsPage extends MethodsPage {
 		asDriverConfirmButton.click();
 	}
 
-
+	public void setStatusToPassengerTrip(String pass_status) {
+		asDriverTab.click();
+		asDriverDetailsButton.click();
+		waitForElementClickableFindBy(By.id(pass_status)); 
+		asDriverConfirmButton.click();
+	}
+	
 	public void acceptPassengerTrip(String idtr) {
 		asDriverTab.click();
 		Driver.getInstance()

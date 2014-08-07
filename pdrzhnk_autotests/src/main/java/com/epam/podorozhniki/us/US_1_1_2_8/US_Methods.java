@@ -4,6 +4,8 @@ import java.sql.SQLException;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import com.epam.podorozhniki.core.Driver;
@@ -118,15 +120,15 @@ public class US_Methods extends MethodsPage {
 		myTripsPage.gotoAsPassengerTab();
 	}
 	
-	public void goToSubmittedStatus (String username, String password, String idtr) {
+	public void goToPassStatus (String username, String password, String idtr, String pass_status) {
 		mainPageBeforeLogin = new MainPageBeforeLogin();
 		mainPageBeforeLogin.enterLoginAndPass(username,
 				password);
 		mainPageAfterLogin = mainPageBeforeLogin.pressTheLoginButton();
 		log.info("DRIVER OPEN 'My Trips' TAB.");
 		myTripsPage = mainPageAfterLogin.goToMyTripsPage();
-		log.info("DRIVER ACCEPT PASSENGER'S TRIP.");
-		myTripsPage.acceptPassengerTrip(idtr);
+		log.info("DRIVER SET PASSENGER'S STATUS.");
+		myTripsPage.setStatusToPassengerTrip(pass_status);
 		log.info("DRIVER OPEN MAIN PAGE.");
 		mainPageAfterLogin = myTripsPage.gotoMainPage();
 		log.info("DRIVER LOGOUT FROM THE SYSTEM.");
