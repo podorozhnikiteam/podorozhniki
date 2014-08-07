@@ -64,6 +64,7 @@ public class AddTripPage extends MethodsPage {
         toField.sendKeys(to);
         buildOnMapBtn.click();
         createTripBtn.click();
+        Thread.sleep(1000);
         assertEquals(alertText, closeAlertAndGetItsText());
         backToTripsBtn.click();
         return new MyTripsPage();

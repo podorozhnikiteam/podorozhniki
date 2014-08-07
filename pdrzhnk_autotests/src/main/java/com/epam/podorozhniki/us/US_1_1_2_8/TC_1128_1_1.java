@@ -16,7 +16,7 @@ public class TC_1128_1_1 extends BaseActions {
 		PageFactory.initElements(Driver.getInstance(), this);
 	}
 
-	private DeletingTrip withoutPass;
+	private DeletingTrip deletingTrips; 
 
 	public String queryDeletingAllDriverTrips;
 
@@ -25,14 +25,15 @@ public class TC_1128_1_1 extends BaseActions {
 
 	private static Logger log = Logger.getLogger(TC_1128_1_1.class);
 
+	// check page after deleting trip without passenger 
 	@Test
 	public void withoutPassOnPage() throws InterruptedException, SQLException {
 		log.info(" GET STARTED");
-		withoutPass = new DeletingTrip();
-		withoutPass.deletingTripWithoutPassenger();
-		numFromPageAsDriverBeforeDelet = withoutPass.numFromPageAsDriverBeforeDelet;
-		numFromPageAsDriverAfterDelet = withoutPass.numFromPageAsDriverAfterDelet;
-		withoutPass.verifyNumberOfTripsOnthePage(
+		deletingTrips = new DeletingTrip();
+		deletingTrips.deletingTripWithoutPassenger();
+		numFromPageAsDriverBeforeDelet = deletingTrips.numFromPageAsDriverBeforeDelet;
+		numFromPageAsDriverAfterDelet = deletingTrips.numFromPageAsDriverAfterDelet;
+		deletingTrips.verifyNumberOfTripsOnthePage(
 				numFromPageAsDriverBeforeDelet, numFromPageAsDriverAfterDelet);
 		log.info("OK: Verifying number of trips on the page as driver");
 	}

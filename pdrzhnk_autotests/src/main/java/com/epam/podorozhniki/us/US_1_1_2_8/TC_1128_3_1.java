@@ -34,33 +34,21 @@ public class TC_1128_3_1 extends BaseActions {
 	protected int numFromPageAsDriverAfterDelet;
 
 	private ReadingDatafile rd;
-
+	private DeletingTrip deletingTrips; 
 	private US_Methods us_Methods;
+	
 	private static Logger log = Logger.getLogger(TC_1128_3_1.class);
 
-	private By buttonDetails = By.xpath("//a[contains(text(),'Details')]");
-	private By nextPageDriverTab = By
-			.xpath("//div[@id='routeResults']//li[3]/a");
-
+	// 
 	@Test
 	public void deletingTripsWithAcceptedStatus() throws SQLException,
 			InterruptedException {
-		rd = new ReadingDatafile();
-		rd.readingDataFile();
-		rd = new ReadingDatafile();
-		rd.readingDataFile();
-		us_Methods = new US_Methods();
-		us_Methods.addingTrips(rd.driver_username, rd.driver_password);
-		idtr = us_Methods.idtr;
-		us_Methods.joinToTrip(rd.passenger_username, rd.passenger_password,
-				rd.from_address, rd.to_address, idtr);
-		idtr_for_delete = idtr;
-		us_Methods.goToAsDRiverTab(rd.driver_username, rd.driver_password);
-		us_Methods.goToSubmittedStatus(rd.driver_username, rd.driver_password, idtr);
-		us_Methods.deletingTripAsDriver(rd.driver_username, rd.driver_password, idtr_for_delete);
-		us_Methods.countTrips(buttonDetails, nextPageDriverTab); 
-		numFromPageAsDriverBeforeDelet = us_Methods.numPage;
-		numFromPageAsDriverAfterDelet = withoutPass.numFromPageAsDriverAfterDelet;
-
+		deletingTrips = new DeletingTrip();
+		deletingTrips.deletingTripWithPassenger();
+		numFromPageAsDriverBeforeDelet = deletingTrips.numFromPageAsDriverBeforeDelet;
+		numFromPageAsDriverAfterDelet = deletingTrips.numFromPageAsDriverAfterDelet;
+		deletingTrips.verifyNumberOfTripsOnthePage(
+				numFromPageAsDriverBeforeDelet, numFromPageAsDriverAfterDelet);
+		log.info("OK: Verifying number of trips on the page as driver");
 	}
 }

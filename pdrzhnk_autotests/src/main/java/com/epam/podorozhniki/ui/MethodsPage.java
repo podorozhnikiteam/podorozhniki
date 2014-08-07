@@ -52,12 +52,6 @@ public class MethodsPage {
 		return this;
 	}
 	
-	public MethodsPage waitForElementClickableFindBy(By locator) {
-		WebDriverWait wait = new WebDriverWait(Driver.getInstance(), 15, 1);
-		wait.until(ExpectedConditions.elementToBeClickable(locator));
-		return this;
-	}
-	
 	public boolean isElementPresent(By locator) {
 		Driver.getInstance().manage().timeouts()
 				.implicitlyWait(0, TimeUnit.SECONDS);

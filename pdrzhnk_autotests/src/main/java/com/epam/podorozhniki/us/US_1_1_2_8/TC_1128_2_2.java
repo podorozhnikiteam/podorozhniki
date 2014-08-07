@@ -6,6 +6,8 @@ import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import com.epam.podorozhniki.core.Driver;
@@ -30,13 +32,19 @@ public class TC_1128_2_2 extends BaseActions {
 	protected int numFromBaseAsDriverAfterDelet;
 
 	private static Logger log = Logger.getLogger(TC_1128_2_2.class);
+	
+	@FindBy(xpath = "//li[@id='li_driver']/a")
+	protected WebElement asDriverTab;
 
+	// check driver database after deleting trip with passenger
 	@Test
 	public void withPassInBaseAsDriver() throws InterruptedException,
 			SQLException {
+		rd = new ReadingDatafile();
+		rd.readingDataFile();
 		log.info(" GET STARTED");
 		deletingTrip = new DeletingTrip();
-		deletingTrip.deletingTripWithPassenger();
+		deletingTrip.deletingTripWithPassenger("accept0", asDriverTab);
 		numFromBaseAsDriverBeforeDelet = deletingTrip.numFromBaseAsDriverBeforeDelet;
 		numFromBaseAsDriverAfterDelet = deletingTrip.numFromBaseAsDriverAfterDelet;
 		deletingTrip.verifyNumberOfTripsOnthePage(

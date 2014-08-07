@@ -9,27 +9,33 @@ import com.epam.podorozhniki.us.US_1_1_2_8.TC_1128_1_1;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
  * Created by Viktoriia_Ishchuk on 7/25/2014.
+ * 
+ * @param <MyTrips>
  */
-public class MyTripsPage extends MethodsPage {
+public class MyTripsPage<MyTrips> extends MethodsPage {
 	public MyTripsPage() {
 		PageFactory.initElements(Driver.getInstance(), this);
 	}
 
 	private static Logger log = Logger.getLogger(TC_1128_1_1.class);
-	
+
 	@FindBy(xpath = "//div[@class='logo-container']/a")
 	public WebElement mainPageLink;
+
 	@FindBy(css = ".btn.btn-default")
 	public WebElement logout;
 
@@ -186,7 +192,15 @@ public class MyTripsPage extends MethodsPage {
 	public void gotoAsPassengerTab() {
 		asPassengerTab.click();
 	}
-
+	
+	public void gotoRoleTab(WebElement user_role) {
+		try{
+		user_role.click();} 
+		catch (NoSuchElementException e){
+			log.error(e.getMessage());
+		} 
+	}
+	
 	public void gotoDriverCalendar() {
 		driverCalendarTab.click();
 	}
@@ -201,7 +215,7 @@ public class MyTripsPage extends MethodsPage {
 		asDriverAddTripButton.click();
 		return new AddTripPage();
 	}
-	
+
 	public void acceptPassengerTrip() {
 		asDriverTab.click();
 		asDriverDetailsButton.click();
@@ -219,10 +233,18 @@ public class MyTripsPage extends MethodsPage {
 	public void setStatusToPassengerTrip(String pass_status) {
 		asDriverTab.click();
 		asDriverDetailsButton.click();
-		waitForElementClickableFindBy(By.id(pass_status)); 
-		asDriverConfirmButton.click();
+		log.info("Setting status ");
+		try {
+			new WebDriverWait(Driver.getInstance(), 15, 1)
+					.until(ExpectedConditions.elementToBeClickable(By
+							.id(pass_status))).click();
+			asDriverConfirmButton.click();
+			log.info("Status was clicked ");
+		} catch (TimeoutException e) {
+			log.error("Submitted status is present ");
+		}
 	}
-	
+
 	public void acceptPassengerTrip(String idtr) {
 		asDriverTab.click();
 		Driver.getInstance()
@@ -278,7 +300,7 @@ public class MyTripsPage extends MethodsPage {
 		}
 		catchAlert();
 	}
-	
+
 	public boolean amountOfSeatsLeft(String ammOfSeats) {
 		int totalLeft = 0;
 		int actualAmountOfSeatsTaken = Integer.valueOf(ammOfSeats);
@@ -470,7 +492,5 @@ public class MyTripsPage extends MethodsPage {
 
 		return count;
 	}
-
-	
 
 }

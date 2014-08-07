@@ -27,6 +27,7 @@ public class TC_1128_1_2 extends BaseActions {
 
 	private static Logger log = Logger.getLogger(TC_1128_1_2.class);
 
+	// check database after deleting without passenger
 	@Test
 	public void withoutPassInBase() throws InterruptedException, SQLException {
 		log.info(" GET STARTED");

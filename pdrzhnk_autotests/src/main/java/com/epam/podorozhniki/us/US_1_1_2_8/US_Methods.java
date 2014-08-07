@@ -50,13 +50,15 @@ public class US_Methods extends MethodsPage {
 		log.info("Driver adds the trips");
 		myTripsPage = addTripPage.addTrip(rd.from_address, rd.to_address,
 				rd.alert);
+		myTripsPage.catchAlert();
 		idtr = myTripsPage.getTripId();
-		addTripPage = myTripsPage.gotoAddTripPage();
-		myTripsPage = addTripPage.addTrip(rd.from_address_1, rd.to_address_1,
-				rd.alert);
-		addTripPage = myTripsPage.gotoAddTripPage();
-		myTripsPage = addTripPage.addTrip(rd.from_address_2, rd.to_address_2,
-				rd.alert);
+//		addTripPage = myTripsPage.gotoAddTripPage();
+//		myTripsPage = addTripPage.addTrip(rd.from_address_1, rd.to_address_1,
+//				rd.alert);
+//		myTripsPage.catchAlert();
+//		addTripPage = myTripsPage.gotoAddTripPage();
+//		myTripsPage = addTripPage.addTrip(rd.from_address_2, rd.to_address_2,
+//				rd.alert);
 		myTripsPage.catchAlert();
 		mainPageAfterLogin = myTripsPage.gotoMainPage();
 		mainPageAfterLogin.logout();
@@ -77,15 +79,15 @@ public class US_Methods extends MethodsPage {
 		mainPageAfterLogin.logout();
 	}
 
-	// user counts trips on page
+	// user counts trips on page depends on user's role
 	public void countTripsOnPage(String username, String password,
-			By button_for_list, By nextPage) throws SQLException,
-			InterruptedException {
+			By button_for_list, By nextPage, WebElement user_role)
+			throws SQLException, InterruptedException {
 		mainPageBeforeLogin = new MainPageBeforeLogin();
 		mainPageBeforeLogin.enterLoginAndPass(username, password);
 		mainPageAfterLogin = mainPageBeforeLogin.pressTheLoginButton();
 		myTripsPage = mainPageAfterLogin.goToMyTripsPage();
-		myTripsPage.gotoAsDriverTab();
+		myTripsPage.gotoRoleTab(user_role);
 		Thread.sleep(3000);
 		log.info("User counts trips on the page");
 		numPage = myTripsPage.countTrips(button_for_list, nextPage);
@@ -104,37 +106,29 @@ public class US_Methods extends MethodsPage {
 		mainPageAfterLogin.logout();
 	}
 
-	public void goToAsDRiverTab(String username, String password) {
+	// go to specific tab depends on user"s role
+	public void goToUserTab(String username, String password,
+			WebElement user_role) {
+		log.info(" on  the goToUserTab mathod");
 		mainPageBeforeLogin = new MainPageBeforeLogin();
+		log.info(" enter loginpassword");
 		mainPageBeforeLogin.enterLoginAndPass(username, password);
 		mainPageAfterLogin = mainPageBeforeLogin.pressTheLoginButton();
+		log.info(" goToMyTripsPage");
 		myTripsPage = mainPageAfterLogin.goToMyTripsPage();
-		myTripsPage.gotoAsDriverTab();
+		log.info(" gotoRoleTab");
+		myTripsPage.gotoRoleTab(user_role);
+		log.info("gotoRoleTab was succesful "); 
 	}
 
-	public void goToAsPassengerTab(String username, String password) {
-		mainPageBeforeLogin = new MainPageBeforeLogin();
-		mainPageBeforeLogin.enterLoginAndPass(username, password);
-		mainPageAfterLogin = mainPageBeforeLogin.pressTheLoginButton();
-		myTripsPage = mainPageAfterLogin.goToMyTripsPage();
-		myTripsPage.gotoAsPassengerTab();
-	}
-	
-	public void goToPassStatus (String username, String password, String idtr, String pass_status) {
-		mainPageBeforeLogin = new MainPageBeforeLogin();
-		mainPageBeforeLogin.enterLoginAndPass(username,
-				password);
-		mainPageAfterLogin = mainPageBeforeLogin.pressTheLoginButton();
-		log.info("DRIVER OPEN 'My Trips' TAB.");
-		myTripsPage = mainPageAfterLogin.goToMyTripsPage();
-		log.info("DRIVER SET PASSENGER'S STATUS.");
+	public void goToPassStatus(String username, String password, String idtr,
+			String pass_status) {
+		log.info("Passenger set status");
 		myTripsPage.setStatusToPassengerTrip(pass_status);
 		log.info("DRIVER OPEN MAIN PAGE.");
 		mainPageAfterLogin = myTripsPage.gotoMainPage();
 		log.info("DRIVER LOGOUT FROM THE SYSTEM.");
-		mainPageBeforeLogin = mainPageAfterLogin.logout();
-		
+		mainPageAfterLogin.logout();
 	}
-	
 
 }

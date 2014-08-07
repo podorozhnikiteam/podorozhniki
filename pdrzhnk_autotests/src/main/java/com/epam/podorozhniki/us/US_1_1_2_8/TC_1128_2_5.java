@@ -17,9 +17,9 @@ import com.epam.podorozhniki.core.Driver;
  * Created by Zoja_Sharova
  */
 
-public class TC_1128_1_3 extends BaseActions {
+public class TC_1128_2_5 extends BaseActions {
 
-	public TC_1128_1_3() {
+	public TC_1128_2_5() {
 		PageFactory.initElements(Driver.getInstance(), this);
 	}
 
@@ -32,27 +32,29 @@ public class TC_1128_1_3 extends BaseActions {
 	protected int numFromPageAsDriverBeforeDelet;
 	protected int numFromPageAsDriverAfterDelet;
 
-	private static Logger log = Logger.getLogger(TC_1128_1_3.class);
+	private static Logger log = Logger.getLogger(TC_1128_2_5.class);
 	
 	@FindBy(xpath = "//li[@id='li_driver']/a")
 	protected WebElement asDriverTab;
- 
-	// check correct deleting on the page without passenger  
-	@Test
-	public void withoutPassCorrectDeleting() throws InterruptedException,
-			SQLException {
 
+	// check correct deleting on the driver page with passenger  status accepted 
+	@Test
+	public void withPassCorrectRemovingFromDriverTab()
+			throws InterruptedException, SQLException {
 		log.info(" GET STARTED");
 		rd = new ReadingDatafile();
 		rd.readingDataFile();
 		us_Methods = new US_Methods();
 		us_Methods.addingTrips(rd.driver_username, rd.driver_password);
 		idtr = us_Methods.idtr;
+		us_Methods.joinToTrip(rd.passenger_username, rd.passenger_password,
+				rd.from_address, rd.to_address, idtr);
 		idtr_for_delete = idtr;
 		us_Methods.deletingTripAsDriver(rd.driver_username, rd.driver_password,
 				idtr_for_delete);
 		us_Methods.goToUserTab(rd.driver_username, rd.driver_password, asDriverTab);
 		assertFalse(isElementPresent(By.xpath("//button[@idtr='" + idtr + "']")));
 		log.info("Test passed succesfully");
+
 	}
 }

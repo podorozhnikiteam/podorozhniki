@@ -15,9 +15,9 @@ import com.epam.podorozhniki.core.Driver;
  * Created by Zoja_Sharova
  */
 
-public class TC_1128_1_5 extends BaseActions {
+public class TC_1128_2_7 extends BaseActions {
 
-	public TC_1128_1_5() {
+	public TC_1128_2_7() {
 		PageFactory.initElements(Driver.getInstance(), this);
 	}
 
@@ -30,8 +30,9 @@ public class TC_1128_1_5 extends BaseActions {
 	public String idtr;
 	public String idtr_for_delete;
 
-	private static Logger log = Logger.getLogger(TC_1128_1_5.class);
+	private static Logger log = Logger.getLogger(TC_1128_2_7.class);
 
+	// check correct deleting on the passenger page with passenger  
 	@Test
 	public void withPassCorrectRemovingFromPassTab()
 			throws InterruptedException, SQLException {

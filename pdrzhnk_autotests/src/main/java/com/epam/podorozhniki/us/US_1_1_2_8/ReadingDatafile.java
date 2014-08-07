@@ -42,7 +42,7 @@ public class ReadingDatafile {
 		passenger_password = System.getProperty("US1128.passenger_password");
 		driver_username = System.getProperty("US1128.driver_login");
 		driver_password = System.getProperty("US1128.driver_password");
-		query = System.getProperty("US1128.query");
+		query = System.getProperty("US001.query");
 		queryDeletingAllDriverTrips = System
 				.getProperty("US1128.queryDeletingAllDriverTrips");
 		queryAsDriver = System.getProperty("US1128.queryAsDriver");
@@ -58,6 +58,7 @@ public class ReadingDatafile {
 		alert = System.getProperty("US1128.alert");
 		baseUrl = System.getProperty("baseUrl");
 		submitted = System.getProperty("US1128.submitted_status"); 
-		denied  = System.getProperty(key)
+		denied  = System.getProperty("US1128.declined_status"); 
+		accepted = System.getProperty("US1128.accepted_status");
 	}
 }
