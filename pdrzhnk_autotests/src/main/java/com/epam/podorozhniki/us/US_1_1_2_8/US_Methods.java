@@ -40,7 +40,6 @@ public class US_Methods extends MethodsPage {
 		rd = new ReadingDatafile();
 		rd.readingDataFile();
 		log.info("Driver service statrted");
-
 		mainPageBeforeLogin = new MainPageBeforeLogin();
 		mainPageBeforeLogin.enterLoginAndPass(username, password);
 		mainPageAfterLogin = mainPageBeforeLogin.pressTheLoginButton();
@@ -49,7 +48,6 @@ public class US_Methods extends MethodsPage {
 		log.info("Driver adds the trips");
 		myTripsPage = addTripPage.addTrip(rd.from_address, rd.to_address,
 				rd.alert);
-
 		idtr = myTripsPage.getTripId();
 		addTripPage = myTripsPage.gotoAddTripPage();
 		myTripsPage = addTripPage.addTrip(rd.from_address_1, rd.to_address_1,
@@ -119,5 +117,22 @@ public class US_Methods extends MethodsPage {
 		myTripsPage = mainPageAfterLogin.goToMyTripsPage();
 		myTripsPage.gotoAsPassengerTab();
 	}
+	
+	public void goToSubmittedStatus (String username, String password, String idtr) {
+		mainPageBeforeLogin = new MainPageBeforeLogin();
+		mainPageBeforeLogin.enterLoginAndPass(username,
+				password);
+		mainPageAfterLogin = mainPageBeforeLogin.pressTheLoginButton();
+		log.info("DRIVER OPEN 'My Trips' TAB.");
+		myTripsPage = mainPageAfterLogin.goToMyTripsPage();
+		log.info("DRIVER ACCEPT PASSENGER'S TRIP.");
+		myTripsPage.acceptPassengerTrip(idtr);
+		log.info("DRIVER OPEN MAIN PAGE.");
+		mainPageAfterLogin = myTripsPage.gotoMainPage();
+		log.info("DRIVER LOGOUT FROM THE SYSTEM.");
+		mainPageBeforeLogin = mainPageAfterLogin.logout();
+		
+	}
+	
 
 }

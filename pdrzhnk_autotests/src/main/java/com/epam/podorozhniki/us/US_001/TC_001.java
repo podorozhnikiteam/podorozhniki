@@ -28,11 +28,6 @@ public class TC_001 {
 	private MainPageBeforeLogin mainPageBeforeLogin;
 	private ReadingDatafile rd; 
 	
-	public String baseUrl;
-//	public String driver_username;
-//	public String driver_password;
-//	public String query;
-
 	private static Logger log = Logger.getLogger(TC_001.class);
 
 	private By buttonJoin = By.xpath("//button[contains(text(),'Join')]");
@@ -44,10 +39,8 @@ public class TC_001 {
 		Driver.init();
 		rd = new ReadingDatafile(); 
 		rd.readingDataFile();
-		baseUrl = rd.baseUrl; 
-		System.out.println(baseUrl);
 		Driver.getInstance().manage().window().maximize();
-		Driver.getInstance().get(baseUrl);
+		Driver.getInstance().get(rd.baseUrl);
 	}
 
 	@Test
