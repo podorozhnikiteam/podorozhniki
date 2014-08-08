@@ -57,8 +57,9 @@ public class ReadingDatafile {
 		to_address_2 = System.getProperty("US1128.to_adress_2");
 		alert = System.getProperty("US1128.alert");
 		baseUrl = System.getProperty("baseUrl");
-		submitted = System.getProperty("US1128.submitted_status"); 
-		denied  = System.getProperty("US1128.declined_status"); 
-		accepted = System.getProperty("US1128.accepted_status");
+		accepted = System.getProperty("US1128.accepted");
+		denied = System.getProperty("US1128.denied");
+		submitted =System.getProperty("US1128.submitted");
 	}
+	
 }

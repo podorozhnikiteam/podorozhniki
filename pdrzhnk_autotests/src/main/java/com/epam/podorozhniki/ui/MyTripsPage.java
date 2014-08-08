@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 import com.epam.podorozhniki.core.Driver;
 import com.epam.podorozhniki.db.DBConnection;
-import com.epam.podorozhniki.us.US_1_1_2_8.TC_1128_1_1;
+import com.epam.podorozhniki.us.US_1_1_2_8.TC_1128_1;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
@@ -31,7 +31,7 @@ public class MyTripsPage<MyTrips> extends MethodsPage {
 		PageFactory.initElements(Driver.getInstance(), this);
 	}
 
-	private static Logger log = Logger.getLogger(TC_1128_1_1.class);
+	private static Logger log = Logger.getLogger(TC_1128_1.class);
 
 	@FindBy(xpath = "//div[@class='logo-container']/a")
 	public WebElement mainPageLink;
@@ -60,6 +60,9 @@ public class MyTripsPage<MyTrips> extends MethodsPage {
 	private WebElement asPassengerStatusSubmitted;
 
 	// As Driver Tab
+	@FindBy(xpath = "//td[@id='actual_status0']")
+	private WebElement asPasStatusSubmittedOnDriverPage;
+	
 	@FindBy(xpath = "//div[@class ='control-group span8']/a")
 	protected WebElement asDriverAddTripButton;
 
@@ -83,6 +86,9 @@ public class MyTripsPage<MyTrips> extends MethodsPage {
 
 	@FindBy(xpath = "//div[@id='removeModalWithoutPassengers']//button[contains(text(),'Remove')]")
 	protected WebElement asDriverRemoveWithOutPassengersButton;
+
+	@FindBy(xpath = "//button[contains(text(),'Yes')]")
+	protected WebElement asPassRemoveConfirmButton;
 
 	@FindBy(xpath = "//div[@id='routeResults']//td[1]/a")
 	protected WebElement fromTripLink;
@@ -192,15 +198,15 @@ public class MyTripsPage<MyTrips> extends MethodsPage {
 	public void gotoAsPassengerTab() {
 		asPassengerTab.click();
 	}
-	
+
 	public void gotoRoleTab(WebElement user_role) {
-		try{
-		user_role.click();} 
-		catch (NoSuchElementException e){
-			log.error(e.getMessage());
-		} 
+		try {
+			user_role.click();
+		} catch (Exception e) {
+			log.error("Expected exception");
+		}
 	}
-	
+
 	public void gotoDriverCalendar() {
 		driverCalendarTab.click();
 	}
@@ -232,16 +238,18 @@ public class MyTripsPage<MyTrips> extends MethodsPage {
 
 	public void setStatusToPassengerTrip(String pass_status) {
 		asDriverTab.click();
+		waitForElementFindBy(asDriverDetailsButton);
 		asDriverDetailsButton.click();
 		log.info("Setting status ");
 		try {
-			new WebDriverWait(Driver.getInstance(), 15, 1)
+			new WebDriverWait(Driver.getInstance(), 10, 1)
 					.until(ExpectedConditions.elementToBeClickable(By
 							.id(pass_status))).click();
+			catchAlert();
 			asDriverConfirmButton.click();
 			log.info("Status was clicked ");
-		} catch (TimeoutException e) {
-			log.error("Submitted status is present ");
+		} catch (Exception e) {
+			log.error("Expected exception ");
 		}
 	}
 
@@ -278,7 +286,7 @@ public class MyTripsPage<MyTrips> extends MethodsPage {
 		}
 	}
 
-	public void removeSpecificTrip(String idtr) {
+	public void removeSpecificTripAsDriver(String idtr) {
 		asDriverTab.click();
 		asDriverRemoveLink = Driver.getInstance().findElement(
 				By.xpath("//a[@href = 'javascript:checkIsTripHasPassenger("
@@ -288,16 +296,21 @@ public class MyTripsPage<MyTrips> extends MethodsPage {
 			waitForElementFindBy(asDriverRemoveWithPassengersButton);
 			asDriverRemoveWithPassengersButton.click();
 		} catch (TimeoutException e1) {
-			e1.printStackTrace();
-			log.error("asDriverRemoveWithPassengersButton was niot found");
+			log.error("Expected exception: asDriverRemoveWithPassengersButton was not found");
 		}
 		try {
 			waitForElementFindBy(asDriverRemoveWithOutPassengersButton);
 			asDriverRemoveWithOutPassengersButton.click();
 		} catch (TimeoutException e2) {
-			e2.printStackTrace();
-			log.error("asDriverRemoveWithoutPassengersButton was niot found");
+			log.error("Expected exception:  asDriverRemoveWithoutPassengersButton was not found");
 		}
+		catchAlert();
+	}
+
+	public void removeSpecificTripAsPass(String idtr) {
+		asPassengerTab.click();
+		asDriverRemoveLink.click();
+		asPassRemoveConfirmButton.click();
 		catchAlert();
 	}
 
@@ -317,12 +330,21 @@ public class MyTripsPage<MyTrips> extends MethodsPage {
 		return Integer.valueOf(SeatsTaken.getText());
 	}
 
+	
 	public void statusIsSubmitted(String verification) {
 		assertEquals(verification, getStatus());
 	}
 
 	public String getStatus() {
 		return asPassengerStatusSubmitted.getText().toLowerCase();
+	}
+	
+	public void statusIsSubmittedOnDriverPage(String verification) {
+		assertEquals(verification, getStatusFromDriverPage());
+	}
+
+	public String getStatusFromDriverPage() {
+		return asPasStatusSubmittedOnDriverPage.getText().toLowerCase();
 	}
 
 	public String getTripId() {

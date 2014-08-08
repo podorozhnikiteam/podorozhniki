@@ -1,4 +1,10 @@
-US17
+As a driver 
+I can delete trip
+So that 
+And 
 
-Removing the trip
+Given driver submitted trips in the system
+When driver browses calendar from his account
+Then driver is able to filter his trips with appropriate filters
+
 
