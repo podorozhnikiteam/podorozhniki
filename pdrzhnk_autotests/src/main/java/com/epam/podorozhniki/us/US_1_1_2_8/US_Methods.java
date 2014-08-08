@@ -4,6 +4,8 @@ import java.sql.SQLException;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import com.epam.podorozhniki.core.Driver;
@@ -21,9 +23,16 @@ public class US_Methods extends MethodsPage {
 	public US_Methods() {
 		PageFactory.initElements(Driver.getInstance(), this);
 	}
+	@FindBy(xpath = "//li[@id='li_driver']/a")
+	protected WebElement asDriverTab;
 
+	@FindBy(xpath = "//li[@id='li_passenger']/a")
+	protected WebElement asPassengerTab;
+	
 	private MainPageAfterLogin mainPageAfterLogin;
 	private MainPageBeforeLogin mainPageBeforeLogin;
+	
+	@SuppressWarnings("rawtypes")
 	private MyTripsPage myTripsPage;
 	private AddTripPage addTripPage;
 	private ReadingDatafile rd;
@@ -39,55 +48,74 @@ public class US_Methods extends MethodsPage {
 			throws InterruptedException {
 		rd = new ReadingDatafile();
 		rd.readingDataFile();
-		log.info("Driver service statrted");
-
+		log.info("Driver is adding the trips");
 		mainPageBeforeLogin = new MainPageBeforeLogin();
 		mainPageBeforeLogin.enterLoginAndPass(username, password);
 		mainPageAfterLogin = mainPageBeforeLogin.pressTheLoginButton();
 		myTripsPage = mainPageAfterLogin.goToMyTripsPage();
 		addTripPage = myTripsPage.gotoAddTripPage();
-		log.info("Driver adds the trips");
 		myTripsPage = addTripPage.addTrip(rd.from_address, rd.to_address,
 				rd.alert);
-
+		myTripsPage.catchAlert();
 		idtr = myTripsPage.getTripId();
-		addTripPage = myTripsPage.gotoAddTripPage();
-		myTripsPage = addTripPage.addTrip(rd.from_address_1, rd.to_address_1,
-				rd.alert);
-		addTripPage = myTripsPage.gotoAddTripPage();
-		myTripsPage = addTripPage.addTrip(rd.from_address_2, rd.to_address_2,
-				rd.alert);
+		// addTripPage = myTripsPage.gotoAddTripPage();
+		// myTripsPage = addTripPage.addTrip(rd.from_address_1, rd.to_address_1,
+		// rd.alert);
+		// myTripsPage.catchAlert();
+		// addTripPage = myTripsPage.gotoAddTripPage();
+		// myTripsPage = addTripPage.addTrip(rd.from_address_2, rd.to_address_2,
+		// rd.alert);
 		myTripsPage.catchAlert();
 		mainPageAfterLogin = myTripsPage.gotoMainPage();
 		mainPageAfterLogin.logout();
 	}
 
 	// driver deletes specific trip
-	public void deletingTripAsDriver(String driver_username,
-			String driver_password, String idtr_for_delete)
+	public void deletingTripAsDriver(String username,
+			String password, String idtr_for_delete)
 			throws SQLException, InterruptedException {
+		log.info("Driver is deleting specific trip");
 		mainPageBeforeLogin = new MainPageBeforeLogin();
-		mainPageBeforeLogin.enterLoginAndPass(driver_username, driver_password);
+		mainPageBeforeLogin.enterLoginAndPass(username, password);
 		mainPageAfterLogin = mainPageBeforeLogin.pressTheLoginButton();
 		myTripsPage = mainPageAfterLogin.goToMyTripsPage();
-		log.info("Drives removes specific trip");
-		myTripsPage.removeSpecificTrip(idtr_for_delete);
+		myTripsPage.removeSpecificTripAsDriver(idtr_for_delete);
+		myTripsPage.catchAlert();
+		mainPageAfterLogin = myTripsPage.gotoMainPage();
+		mainPageAfterLogin.logout();
+	}
+	
+	// driver deletes specific trip
+	public void deletingTripAsPass(String username,
+			String password, String idtr_for_delete)
+			throws SQLException, InterruptedException {
+		log.info("Passenger is deleting specific trip");
+		mainPageBeforeLogin = new MainPageBeforeLogin();
+		mainPageBeforeLogin.enterLoginAndPass(username, password);
+		mainPageAfterLogin = mainPageBeforeLogin.pressTheLoginButton();
+		myTripsPage = mainPageAfterLogin.goToMyTripsPage();
+		myTripsPage.removeSpecificTripAsPass(idtr_for_delete);
 		myTripsPage.catchAlert();
 		mainPageAfterLogin = myTripsPage.gotoMainPage();
 		mainPageAfterLogin.logout();
 	}
 
-	// user counts trips on page
+	// user counts trips on page depends on user's role
 	public void countTripsOnPage(String username, String password,
-			By button_for_list, By nextPage) throws SQLException,
-			InterruptedException {
+			By button_for_list, By nextPage, WebElement user_role)
+			throws SQLException, InterruptedException {
+		log.info("User counts trips on the page");
 		mainPageBeforeLogin = new MainPageBeforeLogin();
 		mainPageBeforeLogin.enterLoginAndPass(username, password);
 		mainPageAfterLogin = mainPageBeforeLogin.pressTheLoginButton();
 		myTripsPage = mainPageAfterLogin.goToMyTripsPage();
-		myTripsPage.gotoAsDriverTab();
+		try {
+			myTripsPage.gotoRoleTab(user_role);
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error("Expected exception was catched");
+		}
 		Thread.sleep(3000);
-		log.info("User counts trips on the page");
 		numPage = myTripsPage.countTrips(button_for_list, nextPage);
 		mainPageAfterLogin = myTripsPage.gotoMainPage();
 		mainPageAfterLogin.logout();
@@ -96,28 +124,71 @@ public class US_Methods extends MethodsPage {
 	// passenger joins to the specific trip
 	public void joinToTrip(String username, String password,
 			String from_address, String to_address, String idtr) {
+		log.info("Passenger joins to the specific trip");
 		mainPageBeforeLogin = new MainPageBeforeLogin();
 		mainPageBeforeLogin.enterLoginAndPass(username, password);
 		mainPageAfterLogin = mainPageBeforeLogin.pressTheLoginButton();
-		log.info("Passenger joins to the specific trip");
 		mainPageAfterLogin.joinTripByPassenger(from_address, to_address, idtr);
 		mainPageAfterLogin.logout();
 	}
 
-	public void goToAsDRiverTab(String username, String password) {
+	// go to specific tab depends on user"s role
+	public void goToUserTab(String username, String password,
+			WebElement user_role) {
+		log.info(" User goes the goToUserTab method");
 		mainPageBeforeLogin = new MainPageBeforeLogin();
 		mainPageBeforeLogin.enterLoginAndPass(username, password);
 		mainPageAfterLogin = mainPageBeforeLogin.pressTheLoginButton();
 		myTripsPage = mainPageAfterLogin.goToMyTripsPage();
-		myTripsPage.gotoAsDriverTab();
+		try {
+			myTripsPage.gotoRoleTab(user_role);
+		} catch (Exception e) {
+			log.error("Expected exception was catched");
+		}
+		log.info("gotoRoleTab was succesful ");
 	}
 
-	public void goToAsPassengerTab(String username, String password) {
+	@SuppressWarnings("rawtypes")
+	public void goToPassStatus(String username, String password, String idtr,
+			String pass_status) {
+		log.info("Passenger set specific status");
+		myTripsPage = new MyTripsPage();
+		try {
+			myTripsPage.setStatusToPassengerTrip(pass_status);
+		} catch (Exception e) {
+			log.error("Expected exception was catched");
+		}
+		mainPageAfterLogin = myTripsPage.gotoMainPage();
+		mainPageAfterLogin.logout();
+	}
+	
+	public void getStatusFromPassPage(String username, String password, String verification) {
 		mainPageBeforeLogin = new MainPageBeforeLogin();
 		mainPageBeforeLogin.enterLoginAndPass(username, password);
 		mainPageAfterLogin = mainPageBeforeLogin.pressTheLoginButton();
 		myTripsPage = mainPageAfterLogin.goToMyTripsPage();
-		myTripsPage.gotoAsPassengerTab();
+		try {
+			myTripsPage.gotoRoleTab(asPassengerTab);
+		} catch (Exception e) {
+			log.error("Expected exception was catched");
+		}
+		log.info("gotoRoleTab was succesful");
+		myTripsPage.statusIsSubmitted(verification);
 	}
 
+	public void getStatusFromDriverPage(String username, String password, String verification) {
+		mainPageBeforeLogin = new MainPageBeforeLogin();
+		mainPageBeforeLogin.enterLoginAndPass(username, password);
+		mainPageAfterLogin = mainPageBeforeLogin.pressTheLoginButton();
+		myTripsPage = mainPageAfterLogin.goToMyTripsPage();
+		try {
+			myTripsPage.gotoRoleTab(asDriverTab);
+		} catch (Exception e) {
+			log.error("Expected exception was catched");
+		}
+		log.info("gotoRoleTab was succesful ");
+		myTripsPage.gotoMyDetailsAsDriver();
+		myTripsPage.statusIsSubmittedOnDriverPage(verification);
+	}
+	
 }

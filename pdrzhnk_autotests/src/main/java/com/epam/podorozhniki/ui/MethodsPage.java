@@ -38,7 +38,7 @@ public class MethodsPage {
     @FindBy(xpath = "//ul[@class = 'button-list']/li[2]/a")
     protected WebElement logoutButton;
     
-    private static Logger log = Logger.getLogger(TC_001.class);
+    private static Logger log = Logger.getLogger(MethodsPage.class);
 
     public MainPageBeforeLogin logout(){
         waitForElementFindBy(logoutButton);
@@ -51,7 +51,7 @@ public class MethodsPage {
 		wait.until(ExpectedConditions.visibilityOf(element));
 		return this;
 	}
-
+	
 	public boolean isElementPresent(By locator) {
 		Driver.getInstance().manage().timeouts()
 				.implicitlyWait(0, TimeUnit.SECONDS);
@@ -167,7 +167,7 @@ public class MethodsPage {
 	
 	public void catchAlert() {
 		Alert alert = null;
-		Wait<WebDriver> wait = new WebDriverWait(Driver.getInstance(), 5);
+		Wait<WebDriver> wait = new WebDriverWait(Driver.getInstance(), 3);
 		try {
 			alert = wait.until(ExpectedConditions.alertIsPresent());
 		} catch (TimeoutException ignored) {

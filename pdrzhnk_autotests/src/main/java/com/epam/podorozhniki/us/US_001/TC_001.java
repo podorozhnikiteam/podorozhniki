@@ -2,19 +2,18 @@ package com.epam.podorozhniki.us.US_001;
 
 import static org.junit.Assert.assertEquals;
 
-import com.epam.podorozhniki.us.US_1_1_2_8.*;
-
 import java.sql.SQLException;
 
 import org.apache.log4j.Logger;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 
 import com.epam.podorozhniki.core.Driver;
 import com.epam.podorozhniki.ui.MainPageAfterLogin;
 import com.epam.podorozhniki.ui.MainPageBeforeLogin;
+import com.epam.podorozhniki.us.US_1_1_2_8.ReadingDatafile;
 
 /*
  * Created by Zoja_Sharova
@@ -27,30 +26,36 @@ public class TC_001 {
 
 	private MainPageAfterLogin mainPageAfterLogin;
 	private MainPageBeforeLogin mainPageBeforeLogin;
+	private ReadingDatafile rd; 
+
 	public static String baseUrl; 
 	public static String driver_username; 
 	public static String driver_password; 
 	public static String query; 
 
 	private static Logger log = Logger.getLogger(TC_001.class);
-	
+
 	private By buttonJoin = By.xpath("//button[contains(text(),'Join')]");
 	private By nextPage = By
 			.xpath("//li[@class='active']/following-sibling::*[1]/self::li/a");
 
-	@BeforeClass
-	public static void setUp() throws InterruptedException {
+
+	@Before
+	public void setUp() throws InterruptedException {
 		Driver.init();
+		rd = new ReadingDatafile(); 
+		rd.readingDataFile();
 		Driver.getInstance().manage().window().maximize();
-		Driver.getInstance().get("http://evbyminsd7238.minsk.epam.com:8080/pdrzh/main"); 
 		driver_username = System.getProperty("US1128.driver_login"); 
 		driver_password =System.getProperty("US1128.driver_password"); 
 		query = System.getProperty("US1128.query"); 
+		Driver.getInstance().get(rd.baseUrl);
 	}
-
 	@Test
+	
 	public void countRowsOnThePage() throws SQLException {
-		
+		rd = new ReadingDatafile();
+		rd.readingDataFile();
 		mainPageBeforeLogin = new MainPageBeforeLogin();
 		mainPageBeforeLogin.enterLoginAndPass(driver_username, driver_password);
 		mainPageAfterLogin = mainPageBeforeLogin.pressTheLoginButton();
@@ -64,8 +69,8 @@ public class TC_001 {
 		assertEquals("Number of trips is not correct", numFromBase, numFromPage);
 	}
 
-	@AfterClass
-	public static void tearDown() throws Exception {
+	@After
+	public void tearDown() throws Exception {
 		Driver.tearDown();
 	}
 }

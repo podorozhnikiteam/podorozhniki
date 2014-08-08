@@ -20,6 +20,8 @@ public class BaseActions extends MethodsPage {
 	public ReadingDatafile rd;
 	private DBConnection dbConnect;
 
+	private String baseUrl;
+
 	private static Logger log = Logger.getLogger(BaseActions.class);
 
 	ResultSet rs_driver;
@@ -27,10 +29,9 @@ public class BaseActions extends MethodsPage {
 
 	@Before
 	public void setUp() {
+			Driver.init();
 		rd = new ReadingDatafile();
 		rd.readingDataFile();
-
-		Driver.init();
 		Driver.getInstance().manage().window().maximize();
 		Driver.getInstance().get(rd.baseUrl); 
 	}

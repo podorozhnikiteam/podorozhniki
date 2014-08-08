@@ -30,6 +30,9 @@ public class ReadingDatafile {
 	public String queryDeletingAllPassengerTrips;
 	public String alert;
 	public String baseUrl;
+	public String submitted; 
+	public String denied;
+	public String accepted;
 	
 
 	public void readingDataFile() {
@@ -39,7 +42,7 @@ public class ReadingDatafile {
 		passenger_password = System.getProperty("US1128.passenger_password");
 		driver_username = System.getProperty("US1128.driver_login");
 		driver_password = System.getProperty("US1128.driver_password");
-		query = System.getProperty("US1128.query");
+		query = System.getProperty("US001.query");
 		queryDeletingAllDriverTrips = System
 				.getProperty("US1128.queryDeletingAllDriverTrips");
 		queryAsDriver = System.getProperty("US1128.queryAsDriver");
@@ -54,5 +57,9 @@ public class ReadingDatafile {
 		to_address_2 = System.getProperty("US1128.to_adress_2");
 		alert = System.getProperty("US1128.alert");
 		baseUrl = System.getProperty("baseUrl");
+		accepted = System.getProperty("US1128.accepted");
+		denied = System.getProperty("US1128.denied");
+		submitted =System.getProperty("US1128.submitted");
 	}
+	
 }
