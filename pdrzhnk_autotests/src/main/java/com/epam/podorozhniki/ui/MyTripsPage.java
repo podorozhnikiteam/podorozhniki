@@ -461,4 +461,9 @@ public class MyTripsPage extends MethodsPage {
 			int count = expectedResult.getInt(1);
 		return count;
 	}
+
+    // US1.1.2.3
+    public String getTotalSeatsNumber(int num) {
+        return Driver.getInstance().findElement(By.xpath(".//td[text()='" + num + "'][1]")).getText();
+    }
 }

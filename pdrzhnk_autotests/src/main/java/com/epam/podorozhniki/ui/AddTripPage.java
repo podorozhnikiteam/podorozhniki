@@ -42,6 +42,12 @@ public class AddTripPage extends MethodsPage {
     @FindBy(xpath = "//*[@id='findroute']/div/form/fieldset/div[10]/div/a")
     private WebElement backToTripsBtn;
 
+    @FindBy(xpath = "//*[@id='seats']")
+    private WebElement passengerSeatsField;
+
+    @FindBy(id = "my_trips")
+    private WebElement myTripsPageBtn;
+
     private String closeAlertAndGetItsText() {
         try {
             Alert alert = Driver.getInstance().switchTo().alert();
@@ -68,5 +74,42 @@ public class AddTripPage extends MethodsPage {
         backToTripsBtn.click();
         return new MyTripsPage();
     }
-    
+
+    public void setFromField(String text) {
+        fromField.clear();
+        fromField.sendKeys(text);
+    }
+
+    public void setToField(String text) {
+        toField.clear();
+        toField.sendKeys(text);
+    }
+
+    public void clickOnBuildOnMapButton() {
+        buildOnMapBtn.click();
+    }
+
+    public void setPassengerSeats(Integer num) {
+        passengerSeatsField.clear();
+        passengerSeatsField.sendKeys(num.toString());
+    }
+
+    public void clickOnCreateTripBtn() {
+        createTripBtn.click();
+    }
+
+    public void acceptAlertMessage() {
+        Alert alert = Driver.getInstance().switchTo().alert();
+        alert.accept();
+    }
+
+    public String getAlertMessage() {
+        Alert alert = Driver.getInstance().switchTo().alert();
+        return alert.getText();
+    }
+
+    public MyTripsPage clickOnMyTripsPage() {
+        myTripsPageBtn.click();
+        return new MyTripsPage();
+    }
 }
