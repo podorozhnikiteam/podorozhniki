@@ -191,6 +191,10 @@ public class MyTripsPage<MyTrips> extends MethodsPage {
 		myTripsLink.click();
 	}
 
+	public void gotoMyDetailsAsDriver() {
+		asDriverDetailsButton.click();
+	}
+	
 	public void gotoAsDriverTab() {
 		asDriverTab.click();
 	}
@@ -245,13 +249,15 @@ public class MyTripsPage<MyTrips> extends MethodsPage {
 			new WebDriverWait(Driver.getInstance(), 10, 1)
 					.until(ExpectedConditions.elementToBeClickable(By
 							.id(pass_status))).click();
-			catchAlert();
+			Thread.sleep(1000);
 			asDriverConfirmButton.click();
 			log.info("Status was clicked ");
 		} catch (Exception e) {
 			log.error("Expected exception ");
 		}
 	}
+	
+	
 
 	public void acceptPassengerTrip(String idtr) {
 		asDriverTab.click();
