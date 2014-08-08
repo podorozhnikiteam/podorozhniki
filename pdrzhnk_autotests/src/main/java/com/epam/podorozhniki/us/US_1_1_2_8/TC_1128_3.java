@@ -119,20 +119,12 @@ public class TC_1128_3 extends BaseActions {
 	@Test
 	public void withPassDeniedStatuCorrectRemovingFromDriverTab()
 			throws InterruptedException, SQLException {
-		log.info("CHECKING OF CORRECT DELETING ON DRIVER'S PAGE GET STARTED");
-		rd = new ReadingDatafile();
-		rd.readingDataFile();
-		us_Methods = new US_Methods();
-		us_Methods.addingTrips(rd.driver_username, rd.driver_password);
-		idtr = us_Methods.idtr;
-		us_Methods.joinToTrip(rd.passenger_username, rd.passenger_password,
-				rd.from_address, rd.to_address, idtr);
-		idtr_for_delete = idtr;
-		us_Methods.deletingTripAsDriver(rd.driver_username, rd.driver_password,
-				idtr_for_delete);
+		log.info(" CHECKING OF CORRECT DELETING ON DRIVER's PAGE  GET STARTED");
+		commonTests = new CommonTests();
+		us_Methods = commonTests.withPassCorrectRemovingFromTab(rd.denied);
 		us_Methods.goToUserTab(rd.driver_username, rd.driver_password,
 				asDriverTab);
-		Assert.assertFalse(isElementPresent(By.xpath("//button[@idtr='" + idtr + "']")));
+		assertFalse(isElementPresent(By.xpath("//button[@idtr='" + idtr + "']")));
 		log.info("Test passed succesfully");
 	}
 

@@ -169,10 +169,9 @@ public class CommonTests extends MethodsPage {
 	}
 	
 
-	// checknig of correct deleting from page, depends on user's role
+	// checknig of correct deleting from passenger page, depends on pass_status
 	public US_Methods withPassCorrectRemovingFromTab(String pass_status)
 			throws InterruptedException, SQLException {
-		log.info(" CHECKING OF CORRECT DELETING ON PASSENGER'S PAGE  GET STARTED");
 		rd = new ReadingDatafile();
 		rd.readingDataFile();
 		us_Methods = new US_Methods();
@@ -196,7 +195,6 @@ public class CommonTests extends MethodsPage {
 	// checknig of correct deleting from db, depends on passenger status
 	public void withPassCorrectRemovingFromDataBase(String pass_status)
 			throws InterruptedException, SQLException {
-		log.info("CHECKING OF CORRECT DELETING FROM DATABASE GET STARTED");
 		rd = new ReadingDatafile();
 		rd.readingDataFile();
 		us_Methods = new US_Methods();
