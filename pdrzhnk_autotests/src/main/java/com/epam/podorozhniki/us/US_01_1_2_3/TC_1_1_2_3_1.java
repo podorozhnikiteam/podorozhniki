@@ -38,10 +38,8 @@ public class TC_1_1_2_3_1 extends BaseTest{
         addTripPage.clickOnBuildOnMapButton();
         addTripPage.setPassengerSeats(4);
         addTripPage.clickOnCreateTripBtn();
-        addTripPage.acceptAlertMessage();
-        myTripsPage = addTripPage.clickOnMyTripsPage();
 
-        Assert.assertEquals(expected, myTripsPage.getTotalSeatsNumber());
+        Assert.assertEquals("Trip hasn't passed validation!", addTripPage.getAlertMessage());
     }
 
     @Test
@@ -72,5 +70,23 @@ public class TC_1_1_2_3_1 extends BaseTest{
         addTripPage.clickOnCreateTripBtn();
 
         Assert.assertEquals("Trip hasn't passed validation!", addTripPage.getAlertMessage());
+    }
+
+    @Test
+    public void addTrip_withThreeSeats_threeFreeSeats() {
+        String expected = "3";
+        mainPageAfterLogin = new MainPageAfterLogin();
+        myTripsPage = mainPageAfterLogin.goToMyTripsPage();
+        addTripPage = myTripsPage.gotoAddTripPage();
+
+        addTripPage.setFromField("Жилянская, 75");
+        addTripPage.setToField("Кудряшова, 18");
+        addTripPage.clickOnBuildOnMapButton();
+        addTripPage.setPassengerSeats(3);
+        addTripPage.clickOnCreateTripBtn();
+        addTripPage.acceptAlertMessage();
+        myTripsPage = addTripPage.clickOnMyTripsPage();
+
+        Assert.assertEquals(expected, myTripsPage.getTotalSeatsNumber(3));
     }
 }
