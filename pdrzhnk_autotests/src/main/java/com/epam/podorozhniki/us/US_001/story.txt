@@ -1,0 +1,7 @@
+As a driver 
+I can go to the main page 
+So that research all functionality 
+
+Given user login to the system   
+When user check trips on the main page 
+Then number of trips on the main page has to be equal to the number of trips in database  
