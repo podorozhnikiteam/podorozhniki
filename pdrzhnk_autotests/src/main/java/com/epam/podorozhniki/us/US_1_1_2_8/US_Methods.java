@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import com.epam.podorozhniki.core.Driver;
@@ -22,9 +23,15 @@ public class US_Methods extends MethodsPage {
 	public US_Methods() {
 		PageFactory.initElements(Driver.getInstance(), this);
 	}
+	@FindBy(xpath = "//li[@id='li_driver']/a")
+	protected WebElement asDriverTab;
 
+	@FindBy(xpath = "//li[@id='li_passenger']/a")
+	protected WebElement asPassengerTab;
+	
 	private MainPageAfterLogin mainPageAfterLogin;
 	private MainPageBeforeLogin mainPageBeforeLogin;
+	
 	@SuppressWarnings("rawtypes")
 	private MyTripsPage myTripsPage;
 	private AddTripPage addTripPage;
@@ -155,31 +162,32 @@ public class US_Methods extends MethodsPage {
 		mainPageAfterLogin.logout();
 	}
 	
-	public void getStatusFromPassPage(String username, String password, String verification, WebElement user_role) {
+	public void getStatusFromPassPage(String username, String password, String verification) {
 		mainPageBeforeLogin = new MainPageBeforeLogin();
 		mainPageBeforeLogin.enterLoginAndPass(username, password);
 		mainPageAfterLogin = mainPageBeforeLogin.pressTheLoginButton();
 		myTripsPage = mainPageAfterLogin.goToMyTripsPage();
 		try {
-			myTripsPage.gotoRoleTab(user_role);
+			myTripsPage.gotoRoleTab(asPassengerTab);
 		} catch (Exception e) {
 			log.error("Expected exception was catched");
 		}
-		log.info("gotoRoleTab was succesful ");
+		log.info("gotoRoleTab was succesful");
 		myTripsPage.statusIsSubmitted(verification);
 	}
 
-	public void getStatusFromDriverPage(String username, String password, String verification, WebElement user_role) {
+	public void getStatusFromDriverPage(String username, String password, String verification) {
 		mainPageBeforeLogin = new MainPageBeforeLogin();
 		mainPageBeforeLogin.enterLoginAndPass(username, password);
 		mainPageAfterLogin = mainPageBeforeLogin.pressTheLoginButton();
 		myTripsPage = mainPageAfterLogin.goToMyTripsPage();
 		try {
-			myTripsPage.gotoRoleTab(user_role);
+			myTripsPage.gotoRoleTab(asDriverTab);
 		} catch (Exception e) {
 			log.error("Expected exception was catched");
 		}
 		log.info("gotoRoleTab was succesful ");
+		myTripsPage.gotoMyDetailsAsDriver();
 		myTripsPage.statusIsSubmittedOnDriverPage(verification);
 	}
 	

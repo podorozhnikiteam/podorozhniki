@@ -157,4 +157,5 @@ public class TC_1128_3 extends BaseActions {
 		commonTests = new CommonTests();
 		commonTests.withPassCorrectRemovingFromDataBase(rd.denied);
 	}
+	
 }
