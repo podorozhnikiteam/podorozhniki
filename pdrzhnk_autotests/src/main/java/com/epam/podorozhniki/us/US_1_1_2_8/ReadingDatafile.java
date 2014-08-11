@@ -33,6 +33,7 @@ public class ReadingDatafile {
 	public String submitted; 
 	public String denied;
 	public String accepted;
+	public String filePath; 
 	
 
 	public void readingDataFile() {
@@ -60,6 +61,7 @@ public class ReadingDatafile {
 		accepted = System.getProperty("US1128.accepted");
 		denied = System.getProperty("US1128.denied");
 		submitted =System.getProperty("US1128.submitted");
+		filePath = System.getProperty("US1128.filePath"); 
 	}
 	
 }

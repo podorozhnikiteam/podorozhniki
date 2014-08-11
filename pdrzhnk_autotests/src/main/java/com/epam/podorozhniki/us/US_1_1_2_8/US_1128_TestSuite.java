@@ -10,9 +10,9 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
 //	TC_1128_1.class,
-//	TC_1128_2.class, 
+	TC_1128_2.class, 
 //	TC_1128_3.class,
-	TC_1128_4.class, 
+//	TC_1128_4.class, 
 //	TC_1128_5.class
 
 })

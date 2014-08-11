@@ -58,28 +58,36 @@ public class TC_1128_2 extends BaseActions {
 		rd = new ReadingDatafile();
 		rd.readingDataFile();
 		commonTests = new CommonTests();
-		commonTests.deletingTripWithPassenger(rd.accepted, asDriverTab);
-		numFromPageAsDriverBeforeDelet = commonTests.numFromPageAsDriverBeforeDelet;
-		numFromPageAsDriverAfterDelet = commonTests.numFromPageAsDriverAfterDelet;
-		commonTests.verifyNumberOfTripsOnthePage(
-				numFromPageAsDriverBeforeDelet, numFromPageAsDriverAfterDelet);
-		log.info("Test passed succesfully");
+		try {
+			commonTests.deletingTripWithPassenger(rd.accepted, asDriverTab);
+			numFromPageAsDriverBeforeDelet = commonTests.numFromPageAsDriverBeforeDelet;
+			numFromPageAsDriverAfterDelet = commonTests.numFromPageAsDriverAfterDelet;
+			commonTests.verifyNumberOfTripsOnthePage(
+					numFromPageAsDriverBeforeDelet, numFromPageAsDriverAfterDelet);
+			log.info("Test passed succesfully");
+		} catch (Throwable e) {
+			getCurrentScreenshots(rd.filePath, "On_Page_As_Driver"); 
+		}
 	}
 
 	// check driver database after deleting trip
 	@Test
-	public void withPassAcceptedStatusAsDriverInBaseAsDriver()
+	public void withPassAcceptedStatusAsDriverInBase()
 			throws InterruptedException, SQLException {
 		rd = new ReadingDatafile();
 		rd.readingDataFile();
 		log.info("CHECKING OF DRIVER'INFO IN DATABASE GET STARTED");
 		commonTests = new CommonTests();
-		commonTests.deletingTripWithPassenger(rd.accepted, asDriverTab);
-		numFromBaseAsDriverBeforeDelet = commonTests.numFromBaseAsDriverBeforeDelet;
-		numFromBaseAsDriverAfterDelet = commonTests.numFromBaseAsDriverAfterDelet;
-		commonTests.verifyNumberOfTripsOnthePage(
-				numFromBaseAsDriverBeforeDelet, numFromBaseAsDriverAfterDelet);
-		log.info("Test passed succesfully");
+		try {
+			commonTests.deletingTripWithPassenger(rd.accepted, asDriverTab);
+			numFromBaseAsDriverBeforeDelet = commonTests.numFromBaseAsDriverBeforeDelet;
+			numFromBaseAsDriverAfterDelet = commonTests.numFromBaseAsDriverAfterDelet;
+			commonTests.verifyNumberOfTripsOnthePage(
+					numFromBaseAsDriverBeforeDelet, numFromBaseAsDriverAfterDelet);
+			log.info("Test passed succesfully");
+		} catch (Throwable e) {
+			getCurrentScreenshots(rd.filePath, "In_Base_As_SDriver"); 
+		}
 	}
 
 	// check passenger page after deleting trip
@@ -90,12 +98,16 @@ public class TC_1128_2 extends BaseActions {
 		rd = new ReadingDatafile();
 		rd.readingDataFile();
 		commonTests = new CommonTests();
-		commonTests.deletingTripWithPassenger(rd.accepted, asPassengerTab);
-		numFromPageAsPassBeforeDelet = commonTests.numFromPageAsPassBeforeDelet;
-		numFromPageAsPassAfterDelet = commonTests.numFromPageAsPassAfterDelet;
-		commonTests.verifyNumberOfTripsOnthePage(numFromPageAsPassBeforeDelet,
-				numFromPageAsPassAfterDelet);
-		log.info("Test passed succesfully");
+		try {
+			commonTests.deletingTripWithPassenger(rd.accepted, asPassengerTab);
+			numFromPageAsPassBeforeDelet = commonTests.numFromPageAsPassBeforeDelet;
+			numFromPageAsPassAfterDelet = commonTests.numFromPageAsPassAfterDelet;
+			commonTests.verifyNumberOfTripsOnthePage(numFromPageAsPassBeforeDelet,
+					numFromPageAsPassAfterDelet);
+			log.info("Test passed succesfully");
+		} catch (Throwable e) {
+			getCurrentScreenshots(rd.filePath, "as_Pass_On_Page"); 
+		}
 	}
 
 	// check passenger database after deleting trip
@@ -106,12 +118,16 @@ public class TC_1128_2 extends BaseActions {
 		rd = new ReadingDatafile();
 		rd.readingDataFile();
 		commonTests = new CommonTests();
-		commonTests.deletingTripWithPassenger(rd.accepted, asPassengerTab);
-		numFromBaseAsPassBeforeDelet = commonTests.numFromBaseAsPassBeforeDelet;
-		numFromBaseAsPassAfterDelet = commonTests.numFromBaseAsPassAfterDelet;
-		commonTests.verifyNumberOfTripsOnthePage(numFromBaseAsPassBeforeDelet,
-				numFromBaseAsPassAfterDelet);
-		log.info("Test passed succesfully");
+		try {
+			commonTests.deletingTripWithPassenger(rd.accepted, asPassengerTab);
+			numFromBaseAsPassBeforeDelet = commonTests.numFromBaseAsPassBeforeDelet;
+			numFromBaseAsPassAfterDelet = commonTests.numFromBaseAsPassAfterDelet;
+			commonTests.verifyNumberOfTripsOnthePage(numFromBaseAsPassBeforeDelet,
+					numFromBaseAsPassAfterDelet);
+			log.info("Test passed succesfully");
+		} catch (Throwable e) {
+			getCurrentScreenshots(rd.filePath, "as_Pass_In_Base");
+		}
 	}
 
 	// check correct deleting on the driver page
@@ -119,6 +135,7 @@ public class TC_1128_2 extends BaseActions {
 	public void withPassAcceptedStatusCorrectRemovingFromDriverTab()
 			throws InterruptedException, SQLException {
 		log.info("CHECKING OF CORRECT DELETING ON DRIVER'S PAGE GET STARTED");
+		try { 
 		rd = new ReadingDatafile();
 		rd.readingDataFile();
 		us_Methods = new US_Methods();
@@ -133,6 +150,9 @@ public class TC_1128_2 extends BaseActions {
 				asDriverTab);
 		assertFalse(isElementPresent(By.xpath("//button[@idtr='" + idtr + "']")));
 		log.info("Test passed succesfully");
+			} catch (Throwable e) {
+				getCurrentScreenshots(rd.filePath, "correct_Deleting_On_Driver_Page");
+			}
 	}
 
 	// check correct deleting on the passenger page
@@ -141,11 +161,15 @@ public class TC_1128_2 extends BaseActions {
 			throws InterruptedException, SQLException {
 		log.info(" CHECKING OF CORRECT DELETING ON PASSENGER'S PAGE  GET STARTED");
 		commonTests = new CommonTests();
+		try { 
 		us_Methods = commonTests.withPassCorrectRemovingFromTab(rd.accepted);
 		us_Methods.goToUserTab(rd.passenger_username, rd.passenger_password,
 				asPassengerTab);
 		assertFalse(isElementPresent(By.xpath("//button[@idtr='" + idtr + "']")));
 		log.info("Test passed succesfully");
+			} catch (Throwable e) {
+				getCurrentScreenshots(rd.filePath, "correct_Deleting_On_Pass_Page");
+			}
 	}
 
 	// check correct deleting of trip in database
