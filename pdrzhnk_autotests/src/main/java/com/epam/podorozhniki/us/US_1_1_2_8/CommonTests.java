@@ -13,7 +13,6 @@ import org.openqa.selenium.support.PageFactory;
 import com.epam.podorozhniki.core.Driver;
 import com.epam.podorozhniki.db.DBConnection;
 import com.epam.podorozhniki.ui.MethodsPage;
-import com.epam.podorozhniki.ui.MyTripsPage;
 
 /*
  * Created by Zoja_Sharova
@@ -85,8 +84,8 @@ public class CommonTests extends MethodsPage {
 		log.info("Driver has " + numFromBaseAsDriverAfterDelet
 				+ " trips in the DB after deleting");
 	}
-	
-// driver deletes trips with passenger 	
+
+	// driver deletes trips with passenger
 	public void deletingTripWithPassenger(String pass_status,
 			WebElement user_role) throws InterruptedException, SQLException {
 		rd = new ReadingDatafile();
@@ -144,7 +143,7 @@ public class CommonTests extends MethodsPage {
 		log.info("Passenger has " + numFromBaseAsPassAfterDelet
 				+ " trips in the DB after deleting");
 	}
-	
+
 	// passenger deletes trips, depends on pass_status
 	public void deletingTripWithPassengerByPass(String pass_status)
 			throws InterruptedException, SQLException {
@@ -167,7 +166,6 @@ public class CommonTests extends MethodsPage {
 		us_Methods.deletingTripAsPass(rd.passenger_username,
 				rd.passenger_password, idtr_for_delete);
 	}
-	
 
 	// checknig of correct deleting from passenger page, depends on pass_status
 	public US_Methods withPassCorrectRemovingFromTab(String pass_status)

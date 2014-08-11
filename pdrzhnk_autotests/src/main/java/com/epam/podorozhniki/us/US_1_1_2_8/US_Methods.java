@@ -23,15 +23,16 @@ public class US_Methods extends MethodsPage {
 	public US_Methods() {
 		PageFactory.initElements(Driver.getInstance(), this);
 	}
+
 	@FindBy(xpath = "//li[@id='li_driver']/a")
 	protected WebElement asDriverTab;
 
 	@FindBy(xpath = "//li[@id='li_passenger']/a")
 	protected WebElement asPassengerTab;
-	
+
 	private MainPageAfterLogin mainPageAfterLogin;
 	private MainPageBeforeLogin mainPageBeforeLogin;
-	
+
 	@SuppressWarnings("rawtypes")
 	private MyTripsPage myTripsPage;
 	private AddTripPage addTripPage;
@@ -58,22 +59,21 @@ public class US_Methods extends MethodsPage {
 				rd.alert);
 		myTripsPage.catchAlert();
 		idtr = myTripsPage.getTripId();
-		// addTripPage = myTripsPage.gotoAddTripPage();
-		// myTripsPage = addTripPage.addTrip(rd.from_address_1, rd.to_address_1,
-		// rd.alert);
-		// myTripsPage.catchAlert();
-		// addTripPage = myTripsPage.gotoAddTripPage();
-		// myTripsPage = addTripPage.addTrip(rd.from_address_2, rd.to_address_2,
-		// rd.alert);
+		addTripPage = myTripsPage.gotoAddTripPage();
+		myTripsPage = addTripPage.addTrip(rd.from_address_1, rd.to_address_1,
+				rd.alert);
+		myTripsPage.catchAlert();
+		addTripPage = myTripsPage.gotoAddTripPage();
+		myTripsPage = addTripPage.addTrip(rd.from_address_2, rd.to_address_2,
+				rd.alert);
 		myTripsPage.catchAlert();
 		mainPageAfterLogin = myTripsPage.gotoMainPage();
 		mainPageAfterLogin.logout();
 	}
 
 	// driver deletes specific trip
-	public void deletingTripAsDriver(String username,
-			String password, String idtr_for_delete)
-			throws SQLException, InterruptedException {
+	public void deletingTripAsDriver(String username, String password,
+			String idtr_for_delete) throws SQLException, InterruptedException {
 		log.info("Driver is deleting specific trip");
 		mainPageBeforeLogin = new MainPageBeforeLogin();
 		mainPageBeforeLogin.enterLoginAndPass(username, password);
@@ -84,11 +84,10 @@ public class US_Methods extends MethodsPage {
 		mainPageAfterLogin = myTripsPage.gotoMainPage();
 		mainPageAfterLogin.logout();
 	}
-	
-	// driver deletes specific trip
-	public void deletingTripAsPass(String username,
-			String password, String idtr_for_delete)
-			throws SQLException, InterruptedException {
+
+	// passenger deletes specific trip
+	public void deletingTripAsPass(String username, String password,
+			String idtr_for_delete) throws SQLException, InterruptedException {
 		log.info("Passenger is deleting specific trip");
 		mainPageBeforeLogin = new MainPageBeforeLogin();
 		mainPageBeforeLogin.enterLoginAndPass(username, password);
@@ -147,7 +146,7 @@ public class US_Methods extends MethodsPage {
 		}
 		log.info("gotoRoleTab was succesful ");
 	}
-
+// go to passenger status depends on status
 	@SuppressWarnings("rawtypes")
 	public void goToPassStatus(String username, String password, String idtr,
 			String pass_status) {
@@ -161,8 +160,9 @@ public class US_Methods extends MethodsPage {
 		mainPageAfterLogin = myTripsPage.gotoMainPage();
 		mainPageAfterLogin.logout();
 	}
-	
-	public void getStatusFromPassPage(String username, String password, String verification) {
+// get trip status from passenger page 
+	public void getStatusFromPassPage(String username, String password,
+			String verification) {
 		mainPageBeforeLogin = new MainPageBeforeLogin();
 		mainPageBeforeLogin.enterLoginAndPass(username, password);
 		mainPageAfterLogin = mainPageBeforeLogin.pressTheLoginButton();
@@ -175,8 +175,10 @@ public class US_Methods extends MethodsPage {
 		log.info("gotoRoleTab was succesful");
 		myTripsPage.statusIsSubmitted(verification);
 	}
-
-	public void getStatusFromDriverPage(String username, String password, String verification) {
+	
+	// get trip status from driver page 
+	public void getStatusFromDriverPage(String username, String password,
+			String verification) {
 		mainPageBeforeLogin = new MainPageBeforeLogin();
 		mainPageBeforeLogin.enterLoginAndPass(username, password);
 		mainPageAfterLogin = mainPageBeforeLogin.pressTheLoginButton();
@@ -190,5 +192,5 @@ public class US_Methods extends MethodsPage {
 		myTripsPage.gotoMyDetailsAsDriver();
 		myTripsPage.statusIsSubmittedOnDriverPage(verification);
 	}
-	
+
 }
