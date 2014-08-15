@@ -3,6 +3,7 @@ package com.epam.podorozhniki.us.US_1_1_2_8;
 import java.sql.SQLException;
 
 import org.apache.log4j.Logger;
+import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -19,19 +20,21 @@ import com.epam.podorozhniki.ui.MyTripsPage;
  * Created by Zoja_Sharova
  */
 
+@RunWith(RerunFailedRunner.class)
 public class US_Methods extends MethodsPage {
 	public US_Methods() {
 		PageFactory.initElements(Driver.getInstance(), this);
 	}
+
 	@FindBy(xpath = "//li[@id='li_driver']/a")
 	protected WebElement asDriverTab;
 
 	@FindBy(xpath = "//li[@id='li_passenger']/a")
 	protected WebElement asPassengerTab;
-	
+
 	private MainPageAfterLogin mainPageAfterLogin;
 	private MainPageBeforeLogin mainPageBeforeLogin;
-	
+
 	@SuppressWarnings("rawtypes")
 	private MyTripsPage myTripsPage;
 	private AddTripPage addTripPage;
@@ -65,15 +68,14 @@ public class US_Methods extends MethodsPage {
 		// addTripPage = myTripsPage.gotoAddTripPage();
 		// myTripsPage = addTripPage.addTrip(rd.from_address_2, rd.to_address_2,
 		// rd.alert);
-		myTripsPage.catchAlert();
+		// myTripsPage.catchAlert();
 		mainPageAfterLogin = myTripsPage.gotoMainPage();
 		mainPageAfterLogin.logout();
 	}
 
 	// driver deletes specific trip
-	public void deletingTripAsDriver(String username,
-			String password, String idtr_for_delete)
-			throws SQLException, InterruptedException {
+	public void deletingTripAsDriver(String username, String password,
+			String idtr_for_delete) throws SQLException, InterruptedException {
 		log.info("Driver is deleting specific trip");
 		mainPageBeforeLogin = new MainPageBeforeLogin();
 		mainPageBeforeLogin.enterLoginAndPass(username, password);
@@ -84,11 +86,10 @@ public class US_Methods extends MethodsPage {
 		mainPageAfterLogin = myTripsPage.gotoMainPage();
 		mainPageAfterLogin.logout();
 	}
-	
+
 	// driver deletes specific trip
-	public void deletingTripAsPass(String username,
-			String password, String idtr_for_delete)
-			throws SQLException, InterruptedException {
+	public void deletingTripAsPass(String username, String password,
+			String idtr_for_delete) throws SQLException, InterruptedException {
 		log.info("Passenger is deleting specific trip");
 		mainPageBeforeLogin = new MainPageBeforeLogin();
 		mainPageBeforeLogin.enterLoginAndPass(username, password);
@@ -161,8 +162,9 @@ public class US_Methods extends MethodsPage {
 		mainPageAfterLogin = myTripsPage.gotoMainPage();
 		mainPageAfterLogin.logout();
 	}
-	
-	public void getStatusFromPassPage(String username, String password, String verification) {
+
+	public void getStatusFromPassPage(String username, String password,
+			String verification) {
 		mainPageBeforeLogin = new MainPageBeforeLogin();
 		mainPageBeforeLogin.enterLoginAndPass(username, password);
 		mainPageAfterLogin = mainPageBeforeLogin.pressTheLoginButton();
@@ -176,7 +178,8 @@ public class US_Methods extends MethodsPage {
 		myTripsPage.statusIsSubmitted(verification);
 	}
 
-	public void getStatusFromDriverPage(String username, String password, String verification) {
+	public void getStatusFromDriverPage(String username, String password,
+			String verification) {
 		mainPageBeforeLogin = new MainPageBeforeLogin();
 		mainPageBeforeLogin.enterLoginAndPass(username, password);
 		mainPageAfterLogin = mainPageBeforeLogin.pressTheLoginButton();
@@ -190,5 +193,16 @@ public class US_Methods extends MethodsPage {
 		myTripsPage.gotoMyDetailsAsDriver();
 		myTripsPage.statusIsSubmittedOnDriverPage(verification);
 	}
-	
+
+	public static String getMethodName(final int depth) {
+		final StackTraceElement[] ste = Thread.currentThread().getStackTrace();
+
+		// System.
+		// out.println(ste[ste.length-depth].getClassName()+"#"+ste[ste.length-depth].getMethodName());
+		// return ste[ste.length - depth].getMethodName(); //Wrong, fails for
+		// depth = 0
+		return ste[ste.length - 1 - depth].getMethodName(); // Thank you Tom
+															// Tresansky
+	}
+
 }

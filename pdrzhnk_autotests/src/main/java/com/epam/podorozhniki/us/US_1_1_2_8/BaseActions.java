@@ -5,7 +5,9 @@ import java.sql.SQLException;
 
 import org.apache.log4j.Logger;
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 
 import com.epam.podorozhniki.core.Driver;
 import com.epam.podorozhniki.db.DBConnection;
@@ -17,23 +19,21 @@ import com.epam.podorozhniki.ui.MethodsPage;
 
 public class BaseActions extends MethodsPage {
 
-	public ReadingDatafile rd;
-	private DBConnection dbConnect;
-
-	private String baseUrl;
+	public static ReadingDatafile rd;
+	private static DBConnection dbConnect;
 
 	private static Logger log = Logger.getLogger(BaseActions.class);
 
-	ResultSet rs_driver;
-	ResultSet rs_pass;
+	static ResultSet rs_driver;
+	static ResultSet rs_pass;
 
 	@Before
 	public void setUp() {
-			Driver.init();
+		Driver.init();
 		rd = new ReadingDatafile();
 		rd.readingDataFile();
 		Driver.getInstance().manage().window().maximize();
-		Driver.getInstance().get(rd.baseUrl); 
+		Driver.getInstance().get(rd.baseUrl);
 	}
 
 	@After
@@ -43,7 +43,7 @@ public class BaseActions extends MethodsPage {
 		dbConnect = new DBConnection();
 		rs_pass = dbConnect.queryExecutor(rd.queryDeletingAllPassengerTrips);
 		rs_driver = dbConnect.queryExecutor(rd.queryDeletingAllDriverTrips);
-		log.info("Trips were deleted");
+		log.info("AfterClass: Trips were deleted");
 		Driver.tearDown();
 	}
 }
