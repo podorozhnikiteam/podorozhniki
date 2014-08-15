@@ -1,36 +1,28 @@
 package com.epam.podorozhniki.us.US_1_1_2_8;
 
 import static org.junit.Assert.assertFalse;
-
 import java.sql.SQLException;
-
 import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
 import com.epam.podorozhniki.core.Driver;
 
 /*
  * Created by Zoja_Sharova
  */
-
 public class TC_1128_4 extends BaseActions {
-
 	// deleting trip with passenger status submitted
-
 	public TC_1128_4() {
 		PageFactory.initElements(Driver.getInstance(), this);
 	}
 
 	private CommonTests commonTests;
 	private US_Methods us_Methods;
-
 	public String idtr;
 	public String idtr_for_delete;
-
 	protected int numFromPageAsDriverBeforeDelet;
 	protected int numFromPageAsDriverAfterDelet;
 	protected int numFromBaseAsDriverBeforeDelet;
@@ -40,12 +32,9 @@ public class TC_1128_4 extends BaseActions {
 	protected int numFromBaseAsPassBeforeDelet;
 	protected int numFromBaseAsPassAfterDelet;
 	protected int deletedTripFromBase;
-
 	private static Logger log = Logger.getLogger(TC_1128_4.class);
-
 	@FindBy(xpath = "//li[@id='li_driver']/a")
 	protected WebElement asDriverTab;
-
 	@FindBy(xpath = "//li[@id='li_passenger']/a")
 	protected WebElement asPassengerTab;
 
@@ -118,7 +107,7 @@ public class TC_1128_4 extends BaseActions {
 	@Test
 	public void withPassSubmittedStatusCorrectRemovingFromDriverTab()
 			throws InterruptedException, SQLException {
-		log.info(" CHECKING OF CORRECT DELETING ON DRIVER's PAGE  GET STARTED");
+		log.info(" CHECKING OF CORRECT DELETING ON DRIVER's PAGE GET STARTED");
 		commonTests = new CommonTests();
 		us_Methods = commonTests.withPassCorrectRemovingFromTab(rd.submitted);
 		us_Methods.goToUserTab(rd.driver_username, rd.driver_password,
@@ -131,7 +120,7 @@ public class TC_1128_4 extends BaseActions {
 	@Test
 	public void withPassSubmittedStatusCorrectRemovingFromPassTab()
 			throws InterruptedException, SQLException {
-		log.info(" CHECKING OF CORRECT DELETING ON PASSENGER'S PAGE  GET STARTED");
+		log.info(" CHECKING OF CORRECT DELETING ON PASSENGER'S PAGE GET STARTED");
 		commonTests = new CommonTests();
 		us_Methods = commonTests.withPassCorrectRemovingFromTab(rd.submitted);
 		us_Methods.goToUserTab(rd.passenger_username, rd.passenger_password,
@@ -141,7 +130,6 @@ public class TC_1128_4 extends BaseActions {
 	}
 
 	// check correct deleting of trip in database
-
 	@Test
 	public void withPassSubmittedStatusCorrectRemovingFromDataBase()
 			throws InterruptedException, SQLException {

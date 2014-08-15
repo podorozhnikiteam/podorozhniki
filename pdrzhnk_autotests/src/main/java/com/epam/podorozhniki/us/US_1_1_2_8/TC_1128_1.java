@@ -36,46 +36,44 @@ public class TC_1128_1 extends BaseActions {
 	protected int numFromPageAsDriverAfterDelet;
 	protected int numFromBaseAsDriverBeforeDelet;
 	protected int numFromBaseAsDriverAfterDelet;
-	protected int deletedTripFromBase; 
-	
+	protected int deletedTripFromBase;
+
+	private static Logger log = Logger.getLogger(US_Methods.class);
+
 	@FindBy(xpath = "//li[@id='li_driver']/a")
 	protected WebElement asDriverTab;
 
-	private static Logger log = Logger.getLogger(TC_1128_1.class);
-
-	// check page after deleting trip 
+	// check page after deleting trip
 	@Test
 	public void withoutPassOnPage() throws InterruptedException, SQLException {
-		log.info("DELETING TRIP WITJOUT PASSENGER GET STARTED");
-		log.info(" CHECKING OF DRIVER PAGE GET STARTED");
+		log.info("TEST STARTED");
 		deletingTrips = new CommonTests();
 		deletingTrips.deletingTripWithoutPassenger();
 		numFromPageAsDriverBeforeDelet = deletingTrips.numFromPageAsDriverBeforeDelet;
 		numFromPageAsDriverAfterDelet = deletingTrips.numFromPageAsDriverAfterDelet;
 		deletingTrips.verifyNumberOfTripsOnthePage(
 				numFromPageAsDriverBeforeDelet, numFromPageAsDriverAfterDelet);
-		log.info("Test passed succesfully");
+		log.info("TEST FINISHED");
 	}
 
-	// check database after deleting 
+	// check database after deleting
 	@Test
 	public void withoutPassInBase() throws InterruptedException, SQLException {
-		log.info("CHECKING OF DRIVER'INFO IN DATABASE GET STARTED");
+		log.info("TEST STARTED");
 		deletingTrips = new CommonTests();
 		deletingTrips.deletingTripWithoutPassenger();
 		numFromBaseAsDriverBeforeDelet = deletingTrips.numFromBaseAsDriverBeforeDelet;
 		numFromBaseAsDriverAfterDelet = deletingTrips.numFromBaseAsDriverAfterDelet;
 		deletingTrips.verifyNumberOfTripsOnthePage(
 				numFromBaseAsDriverBeforeDelet, numFromBaseAsDriverAfterDelet);
-		log.info("Test passed succesfully");
+		log.info("TEST FINISHED");
 	}
 
-	// check correct deleting on the page 
+	// check correct deleting on the page
 	@Test
 	public void withoutPassCorrectDeleting() throws InterruptedException,
 			SQLException {
-
-		log.info("CHECKING OF CORRECT DELETING ON DRIVER'S PAGE GET STARTED");
+		log.info("TEST STARTED");
 		rd = new ReadingDatafile();
 		rd.readingDataFile();
 		us_Methods = new US_Methods();
@@ -87,15 +85,15 @@ public class TC_1128_1 extends BaseActions {
 		us_Methods.goToUserTab(rd.driver_username, rd.driver_password,
 				asDriverTab);
 		assertFalse(isElementPresent(By.xpath("//button[@idtr='" + idtr + "']")));
-		log.info("Test passed succesfully");
+		log.info("TEST FINISHED");
 	}
 
-	// check correct deleting in database 
+	// check correct deleting in database
 
 	@Test
 	public void withoutPassCorrectDeletinginBase() throws InterruptedException,
 			SQLException {
-		log.info(" CHECKING OF CORRECT DELETING ON PASSENGER'S PAGE  GET STARTED");
+		log.info("TEST STARTED");
 		rd = new ReadingDatafile();
 		rd.readingDataFile();
 		us_Methods = new US_Methods();
@@ -106,10 +104,9 @@ public class TC_1128_1 extends BaseActions {
 				idtr_for_delete);
 		deletedTripFromBase = queryGetInt("select * from trip where id_trip = "
 				+ idtr + "");
-		log.info("deletedTripFromBase =" + deletedTripFromBase);
 		Assert.assertEquals("Deleted trip is present in database",
 				deletedTripFromBase, 0);
-		log.info("Test passed succesfully");
+		log.info("TEST FINISHED");
 	}
 
 }

@@ -13,15 +13,16 @@ import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.log4j.Logger;
+import org.junit.Assert;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.apache.log4j.Logger;
-import org.junit.Assert;
-import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Wait;
@@ -29,29 +30,28 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.epam.podorozhniki.core.Driver;
 import com.epam.podorozhniki.db.DBConnection;
-import com.epam.podorozhniki.us.US_001.TC_001;
 
 public class MethodsPage {
 
 	public int numFromPage;
 
-    @FindBy(xpath = "//ul[@class = 'button-list']/li[2]/a")
-    protected WebElement logoutButton;
-    
-    private static Logger log = Logger.getLogger(MethodsPage.class);
+	@FindBy(xpath = "//ul[@class = 'button-list']/li[2]/a")
+	protected WebElement logoutButton;
 
-    public MainPageBeforeLogin logout(){
-        waitForElementFindBy(logoutButton);
-        logoutButton.click();
-        return new MainPageBeforeLogin();
-    }
+	private static Logger log = Logger.getLogger(MethodsPage.class);
+
+	public MainPageBeforeLogin logout() {
+		waitForElementFindBy(logoutButton);
+		logoutButton.click();
+		return new MainPageBeforeLogin();
+	}
 
 	public MethodsPage waitForElementFindBy(WebElement element) {
 		WebDriverWait wait = new WebDriverWait(Driver.getInstance(), 15, 1);
 		wait.until(ExpectedConditions.visibilityOf(element));
 		return this;
 	}
-	
+
 	public boolean isElementPresent(By locator) {
 		Driver.getInstance().manage().timeouts()
 				.implicitlyWait(0, TimeUnit.SECONDS);
@@ -112,7 +112,6 @@ public class MethodsPage {
 		Assert.assertEquals("ERROR ", numBeforeDelet - 1, numAfterDelet);
 	}
 
-	
 	public int queryGetInt(String query) throws SQLException {
 		int queryGetInt = 0;
 		DBConnection dbConnect = new DBConnection();
@@ -123,14 +122,14 @@ public class MethodsPage {
 		return queryGetInt;
 	}
 
-	// count trips on the page 
+	// count trips on the page
 	public int countTrips(By button_for_list, By nextPage) {
 		List<WebElement> buttonJoins = Driver.getInstance().findElements(
 				button_for_list);
 		int numElem = buttonJoins.size();
 		if (numElem == 0) {
 			numFromPage = 0;
-			 log.error("There is no trip on the page");
+			log.error("There is no trip on the page");
 		} else {
 			numFromPage = 0;
 			try {
@@ -163,8 +162,7 @@ public class MethodsPage {
 		}
 		return numFromPage;
 	}
-	
-	
+
 	public void catchAlert() {
 		Alert alert = null;
 		Wait<WebDriver> wait = new WebDriverWait(Driver.getInstance(), 3);
@@ -176,19 +174,22 @@ public class MethodsPage {
 			alert.accept();
 		}
 	}
-	
-    public boolean isElementPresent(WebElement webElement) {
-        boolean exists = false;
 
-        Driver.getInstance().manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+	public boolean isElementPresent(WebElement webElement) {
+		boolean exists = false;
 
-        try {
-            webElement.getTagName();
-            exists = true;
-        } catch (NoSuchElementException e) {}
+		Driver.getInstance().manage().timeouts()
+				.implicitlyWait(0, TimeUnit.SECONDS);
 
-        Driver.getInstance().manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		try {
+			webElement.getTagName();
+			exists = true;
+		} catch (NoSuchElementException e) {
+		}
 
-        return exists && webElement.isDisplayed();
-    }
+		Driver.getInstance().manage().timeouts()
+				.implicitlyWait(30, TimeUnit.SECONDS);
+
+		return exists && webElement.isDisplayed();
+	}
 }

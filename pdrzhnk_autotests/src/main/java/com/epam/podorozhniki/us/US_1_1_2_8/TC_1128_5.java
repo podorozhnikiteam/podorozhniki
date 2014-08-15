@@ -19,7 +19,6 @@ import com.epam.podorozhniki.db.DBConnection;
 public class TC_1128_5 extends BaseActions {
 
 	// deleting trip by passenger
-
 	public TC_1128_5() {
 		PageFactory.initElements(Driver.getInstance(), this);
 	}
@@ -41,7 +40,7 @@ public class TC_1128_5 extends BaseActions {
 	protected int numFromBaseAsPassAfterDelet;
 	protected int tripStatus;
 
-	private static Logger log = Logger.getLogger(TC_1128_2.class);
+	private static Logger log = Logger.getLogger(US_Methods.class);
 
 	@FindBy(xpath = "//li[@id='li_driver']/a")
 	protected WebElement asDriverTab;
@@ -49,12 +48,11 @@ public class TC_1128_5 extends BaseActions {
 	@FindBy(xpath = "//li[@id='li_passenger']/a")
 	protected WebElement asPassengerTab;
 
-	// checking after deleting trip by passenger on passenger page 
+	// checking after deleting trip by passenger on passenger page
 	@Test
-	public void passRemovesTripAcceptedStatusOnPassPage() throws InterruptedException,
-			SQLException {
-		log.info("DELETING TRIP BY PASSENGER GET STARTED");
-		log.info("CHECKING OF PASSENGER PAGE STATUS ACCEPTED GET STARTED");
+	public void passRemovesTripAcceptedStatusOnPassPage()
+			throws InterruptedException, SQLException {
+		log.info("TEST STARTED");
 		rd = new ReadingDatafile();
 		rd.readingDataFile();
 		commonTests = new CommonTests();
@@ -62,13 +60,13 @@ public class TC_1128_5 extends BaseActions {
 		us_Methods = new US_Methods();
 		us_Methods.getStatusFromPassPage(rd.passenger_username,
 				rd.passenger_password, "cancelled");
-		log.info("test passed succesfully");
+		log.info("TEST FINISHED");
 	}
 
 	@Test
-	public void passRemovesTripDeniedStatusOnPassPage() throws InterruptedException,
-			SQLException {
-		log.info("CHECKING OF PASSENGER PAGE STATUS DENIED GET STARTED");
+	public void passRemovesTripDeniedStatusOnPassPage()
+			throws InterruptedException, SQLException {
+		log.info("TEST STARTED");
 		rd = new ReadingDatafile();
 		rd.readingDataFile();
 		commonTests = new CommonTests();
@@ -76,13 +74,13 @@ public class TC_1128_5 extends BaseActions {
 		us_Methods = new US_Methods();
 		us_Methods.getStatusFromPassPage(rd.passenger_username,
 				rd.passenger_password, "cancelled");
-		log.info("test passed succesfully");
+		log.info("TEST FINISHED");
 	}
 
 	@Test
-	public void passRemovesTripSubmittedStatusOnPassPage() throws InterruptedException,
-			SQLException {
-		log.info("CHECKING OF PASSENGER PAGE STATUS SUBMITTED GET STARTED");
+	public void passRemovesTripSubmittedStatusOnPassPage()
+			throws InterruptedException, SQLException {
+		log.info("TEST STARTED");
 		rd = new ReadingDatafile();
 		rd.readingDataFile();
 		commonTests = new CommonTests();
@@ -90,14 +88,14 @@ public class TC_1128_5 extends BaseActions {
 		us_Methods = new US_Methods();
 		us_Methods.getStatusFromPassPage(rd.passenger_username,
 				rd.passenger_password, "cancelled");
-		log.info("test passed succesfully");
+		log.info("TEST FINISHED");
 	}
 
 	// checking after deleting trip by passenger on driver page
 	@Test
 	public void passRemovesTripAcceptedStatusCheckOnDriverPage()
 			throws InterruptedException, SQLException {
-		log.info("CHECKING OF DRIVER PAGE STATUS ACCEPTED GET STARTED");
+		log.info("TEST STARTED");
 		rd = new ReadingDatafile();
 		rd.readingDataFile();
 		commonTests = new CommonTests();
@@ -105,13 +103,13 @@ public class TC_1128_5 extends BaseActions {
 		us_Methods = new US_Methods();
 		us_Methods.getStatusFromDriverPage(rd.driver_username,
 				rd.driver_password, "cancelled");
-		log.info("test passed succesfully");
+		log.info("TEST FINISHED");
 	}
 
 	@Test
 	public void passRemovesTripDeniedStatusCheckOnDriverPage()
 			throws InterruptedException, SQLException {
-		log.info("CHECKING OF DRIVER PAGE STATUS DENIED GET STARTED");
+		log.info("TEST STARTED");
 		rd = new ReadingDatafile();
 		rd.readingDataFile();
 		commonTests = new CommonTests();
@@ -119,13 +117,13 @@ public class TC_1128_5 extends BaseActions {
 		us_Methods = new US_Methods();
 		us_Methods.getStatusFromDriverPage(rd.driver_username,
 				rd.driver_password, "cancelled");
-		log.info("test passed succesfully");
+		log.info("TEST FINISHED");
 	}
 
 	@Test
 	public void passRemovesTripSubmittedStatusCheckOnDriverPage()
 			throws InterruptedException, SQLException {
-		log.info("CHECKING OF DRIVER PAGE STATUS SUBMITTED GET STARTED");
+		log.info("TEST STARTED");
 		rd = new ReadingDatafile();
 		rd.readingDataFile();
 		commonTests = new CommonTests();
@@ -133,54 +131,54 @@ public class TC_1128_5 extends BaseActions {
 		us_Methods = new US_Methods();
 		us_Methods.getStatusFromDriverPage(rd.driver_username,
 				rd.driver_password, "cancelled");
-		log.info("test passed succesfully");
+		log.info("TEST FINISHED");
 	}
-	
+
 	@Test
 	public void passRemovesTripSubmittedStatusFromBase()
 			throws InterruptedException, SQLException {
-		log.info("CHECKING OF DATABASE STATUS SUBMITTED GET STARTED");
+		log.info("TEST STARTED");
 		rd = new ReadingDatafile();
 		rd.readingDataFile();
 		commonTests = new CommonTests();
 		commonTests.deletingTripWithPassengerByPass(rd.submitted);
-		idtr_for_delete = commonTests.idtr_for_delete; 
-		log.info("idtr_for_delete");
-		new DBConnection(); 
-		tripStatus = queryGetInt("select count(id_trip) as rowcout from trip where id_trip = "+idtr_for_delete+""); 
+		idtr_for_delete = commonTests.idtr_for_delete;
+		new DBConnection();
+		tripStatus = queryGetInt("select count(id_trip) as rowcout from trip where id_trip = "
+				+ idtr_for_delete + "");
 		Assert.assertEquals(tripStatus, 2);
-		log.info("test passed succesfully");
+		log.info("TEST FINISHED");
 	}
 
 	@Test
 	public void passRemovesTripDeniedStatusFromBase()
 			throws InterruptedException, SQLException {
-		log.info("CHECKING OF DATABASE STATUS DENIED GET STARTED");
+		log.info("TEST STARTED");
 		rd = new ReadingDatafile();
 		rd.readingDataFile();
 		commonTests = new CommonTests();
 		commonTests.deletingTripWithPassengerByPass(rd.denied);
-		idtr_for_delete = commonTests.idtr_for_delete; 
-		log.info("idtr_for_delete");
-		new DBConnection(); 
-		tripStatus = queryGetInt("select count(id_trip) as rowcout from trip where id_trip = "+idtr_for_delete+""); 
+		idtr_for_delete = commonTests.idtr_for_delete;
+		new DBConnection();
+		tripStatus = queryGetInt("select count(id_trip) as rowcout from trip where id_trip = "
+				+ idtr_for_delete + "");
 		Assert.assertEquals(tripStatus, 2);
-		log.info("test passed succesfully");
+		log.info("TEST FINISHED");
 	}
-	
+
 	@Test
 	public void passRemovesTripAcceptedStatusFromBase()
 			throws InterruptedException, SQLException {
-		log.info("CHECKING OF DATABASE STATUS ACCEPTED GET STARTED");
+		log.info("TEST STARTED");
 		rd = new ReadingDatafile();
 		rd.readingDataFile();
 		commonTests = new CommonTests();
 		commonTests.deletingTripWithPassengerByPass(rd.accepted);
-		idtr_for_delete = commonTests.idtr_for_delete; 
-		log.info("idtr_for_delete");
-		new DBConnection(); 
-		tripStatus = queryGetInt("select count(id_trip) as rowcout from trip where id_trip = "+idtr_for_delete+""); 
+		idtr_for_delete = commonTests.idtr_for_delete;
+		new DBConnection();
+		tripStatus = queryGetInt("select count(id_trip) as rowcout from trip where id_trip = "
+				+ idtr_for_delete + "");
 		Assert.assertEquals(tripStatus, 2);
-		log.info("test passed succesfully");
+		log.info("TEST FINISHED");
 	}
 }

@@ -1,13 +1,11 @@
 package com.epam.podorozhniki.us.US_1_1_2_8;
 
 import java.sql.SQLException;
-
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
 import com.epam.podorozhniki.core.Driver;
 import com.epam.podorozhniki.ui.AddTripPage;
 import com.epam.podorozhniki.ui.MainPageAfterLogin;
@@ -18,7 +16,6 @@ import com.epam.podorozhniki.ui.MyTripsPage;
 /*
  * Created by Zoja_Sharova
  */
-
 public class US_Methods extends MethodsPage {
 	public US_Methods() {
 		PageFactory.initElements(Driver.getInstance(), this);
@@ -26,22 +23,16 @@ public class US_Methods extends MethodsPage {
 
 	@FindBy(xpath = "//li[@id='li_driver']/a")
 	protected WebElement asDriverTab;
-
 	@FindBy(xpath = "//li[@id='li_passenger']/a")
 	protected WebElement asPassengerTab;
-
 	private MainPageAfterLogin mainPageAfterLogin;
 	private MainPageBeforeLogin mainPageBeforeLogin;
-
 	@SuppressWarnings("rawtypes")
 	private MyTripsPage myTripsPage;
 	private AddTripPage addTripPage;
 	private ReadingDatafile rd;
-
 	public String idtr;
-
 	public int numPage;
-
 	private static Logger log = Logger.getLogger(US_Methods.class);
 
 	// driver adds 3 trips
@@ -146,7 +137,8 @@ public class US_Methods extends MethodsPage {
 		}
 		log.info("gotoRoleTab was succesful ");
 	}
-// go to passenger status depends on status
+
+	// go to passenger status depends on status
 	@SuppressWarnings("rawtypes")
 	public void goToPassStatus(String username, String password, String idtr,
 			String pass_status) {
@@ -160,7 +152,8 @@ public class US_Methods extends MethodsPage {
 		mainPageAfterLogin = myTripsPage.gotoMainPage();
 		mainPageAfterLogin.logout();
 	}
-// get trip status from passenger page 
+
+	// get trip status from passenger page
 	public void getStatusFromPassPage(String username, String password,
 			String verification) {
 		mainPageBeforeLogin = new MainPageBeforeLogin();
@@ -175,8 +168,8 @@ public class US_Methods extends MethodsPage {
 		log.info("gotoRoleTab was succesful");
 		myTripsPage.statusIsSubmitted(verification);
 	}
-	
-	// get trip status from driver page 
+
+	// get trip status from driver page
 	public void getStatusFromDriverPage(String username, String password,
 			String verification) {
 		mainPageBeforeLogin = new MainPageBeforeLogin();
@@ -192,5 +185,4 @@ public class US_Methods extends MethodsPage {
 		myTripsPage.gotoMyDetailsAsDriver();
 		myTripsPage.statusIsSubmittedOnDriverPage(verification);
 	}
-
 }
