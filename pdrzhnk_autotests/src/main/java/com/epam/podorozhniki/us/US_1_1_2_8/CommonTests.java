@@ -4,7 +4,6 @@ import java.sql.SQLException;
 
 import org.apache.log4j.Logger;
 import org.junit.Assert;
-import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.ErrorHandler.UnknownServerException;
@@ -18,8 +17,7 @@ import com.epam.podorozhniki.ui.MethodsPage;
 /*
  * Created by Zoja_Sharova
  */
-//@RunWith(SeleniumRunner.class)
-@RunWith(RerunFailedRunner.class)
+
 public class CommonTests extends MethodsPage {
 
 	public CommonTests() {

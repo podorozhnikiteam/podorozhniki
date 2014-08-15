@@ -3,7 +3,6 @@ package com.epam.podorozhniki.us.US_1_1_2_8;
 import java.sql.SQLException;
 
 import org.apache.log4j.Logger;
-import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -20,7 +19,6 @@ import com.epam.podorozhniki.ui.MyTripsPage;
  * Created by Zoja_Sharova
  */
 
-@RunWith(RerunFailedRunner.class)
 public class US_Methods extends MethodsPage {
 	public US_Methods() {
 		PageFactory.initElements(Driver.getInstance(), this);
