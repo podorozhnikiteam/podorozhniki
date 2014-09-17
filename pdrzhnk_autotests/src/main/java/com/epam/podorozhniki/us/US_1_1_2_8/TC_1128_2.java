@@ -1,5 +1,6 @@
 package com.epam.podorozhniki.us.US_1_1_2_8;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 import java.sql.SQLException;
@@ -49,6 +50,8 @@ public class TC_1128_2 extends BaseActions {
 	@FindBy(xpath = "//li[@id='li_passenger']/a")
 	protected WebElement asPassengerTab;
 
+	
+//
 	// check driver page after deleting trip
 	@Test
 	public void withPassAcceptedStatusAsDriverOnPage()
